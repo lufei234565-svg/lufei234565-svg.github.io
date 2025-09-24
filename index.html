@@ -1,62 +1,80 @@
 <!DOCTYPE html>
 <html lang="zh" data-theme="">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>大胆专属 · 首页</title>
-  <style>
-    /* 主题变量：默认（蓝） */
-    :root{
-      --pri:#0d6efd; --pri-hover:#0b5ed7;
-      --danger:#dc3545; --danger-hover:#bb2d3b;
-      --bg1:#f9f9f9; --bg2:#eef2ff; --text:#111; --panel:#fff; --border:#eee;
-    }
-    /* 绿色 */
-    html[data-theme="green"]{
-      --pri:#22c55e; --pri-hover:#16a34a;
-      --danger:#ef4444; --danger-hover:#dc2626;
-      --bg1:#f0fdf4; --bg2:#dcfce7; --text:#0b0f10;
-    }
-    /* 黑金（深色） */
-    html[data-theme="blackgold"]{
-      --pri:#d4af37; --pri-hover:#b8860b;
-      --danger:#ff4d4f; --danger-hover:#d9363e;
-      --bg1:#0f0f0f; --bg2:#1a1a1a; --text:#f5f5f5; --panel:#151515; --border:#2a2a2a;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>大胆专属 · 冒险起航</title>
+<style>
+  /* 主题变量 */
+  :root{
+    --pri:#0d6efd; --pri-hover:#0b5ed7;
+    --danger:#dc3545; --danger-hover:#bb2d3b;
+    --bg1:#f9fbff; --bg2:#eef2ff; --text:#111; --panel:#fff; --border:#e6e8ef;
+    --node:#cbd5e1; --node-on:var(--pri);
+  }
+  html[data-theme="green"]{
+    --pri:#22c55e; --pri-hover:#16a34a;
+    --danger:#ef4444; --danger-hover:#dc2626;
+    --bg1:#f0fdf4; --bg2:#dcfce7; --text:#0b0f10; --panel:#fff; --border:#d1fae5;
+    --node:#a7f3d0; --node-on:#10b981;
+  }
+  html[data-theme="blackgold"]{
+    --pri:#d4af37; --pri-hover:#b8860b;
+    --danger:#ff4d4f; --danger-hover:#d9363e;
+    --bg1:#0f0f0f; --bg2:#1a1a1a; --text:#f5f5f5; --panel:#151515; --border:#2a2a2a;
+    --node:#3a3a3a; --node-on:#d4af37;
+  }
 
-    body{
-      margin:0; min-height:100vh; display:flex; flex-direction:column;
-      font-family:"Microsoft YaHei",Segoe UI,Roboto,sans-serif;
-      background:linear-gradient(160deg,var(--bg1),var(--bg2)); color:var(--text);
-    }
-    header{ text-align:center; padding:60px 20px 20px; }
-    header h1{ margin:0 0 12px; font-size:2.4rem; color:var(--pri); }
-    header p{ margin:0; color:#666; }
-    .toolbar{ display:flex; gap:12px; justify-content:center; margin-top:16px; }
-    select{ padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:var(--panel); color:var(--text); }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; display:flex; flex-direction:column;
+    font-family:"Microsoft YaHei",Segoe UI,Roboto,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -200px,var(--bg2),var(--bg1));
+    color:var(--text);
+  }
+  header{ text-align:center; padding:56px 16px 10px; }
+  header h1{ margin:0 0 8px; font-size:2.2rem; color:var(--pri) }
+  header p{ margin:0; color:#6b7280 }
+  .toolbar{ display:flex; gap:10px; justify-content:center; margin:14px 0 6px; }
+  select{ padding:8px 10px; border-radius:10px; border:1px solid var(--border); background:var(--panel); color:var(--text); }
 
-    main{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; padding:20px; }
-    .progress-box{ width:90%; max-width:520px; text-align:center; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px; }
-    .progress-bar{ height:20px; background:#ddd; border-radius:10px; overflow:hidden; }
-    .fill{ height:100%; width:0; background:var(--pri); transition:.5s; }
-
-    .btn{
-      display:inline-block; padding:14px 24px; border-radius:999px;
-      background:var(--pri); color:#fff; text-decoration:none; border:none; cursor:pointer;
-      box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 35%, transparent);
-      transition:.2s;
-    }
-    .btn:hover{ background:var(--pri-hover); transform:translateY(-2px); }
-    .btn.danger{ background:var(--danger); }
-    .btn.danger:hover{ background:var(--danger-hover); }
-
-    footer{ text-align:center; padding:16px; background:var(--panel); border-top:1px solid var(--border); color:#777; }
-  </style>
+  main{ flex:1; display:grid; place-items:center; padding:16px }
+  .map{
+    width:min(900px,92vw); aspect-ratio:16/9; position:relative;
+    border:1px solid var(--border); border-radius:16px; background:linear-gradient(180deg,#a7f3ff22,transparent 30%), radial-gradient(600px 300px at 80% 0%,#ffe9b322,transparent 60%), var(--panel);
+    overflow:hidden;
+  }
+  .path{ position:absolute; inset:0; pointer-events:none }
+  .node{
+    --s:22px;
+    position:absolute; width:var(--s); height:var(--s); border-radius:999px; background:var(--node);
+    border:2px solid #ffffff55; box-shadow:0 4px 10px rgba(0,0,0,.15);
+    transform:translate(-50%,-50%); transition:.25s;
+  }
+  .node.on{ background:var(--node-on); box-shadow:0 0 0 6px color-mix(in srgb, var(--node-on) 25%, transparent), 0 8px 20px color-mix(in srgb, var(--node-on) 35%, transparent); }
+  .node label{
+    position:absolute; top:26px; left:50%; transform:translateX(-50%);
+    font-size:12px; color:#6b7280; white-space:nowrap; user-select:none;
+  }
+  .legend{ position:absolute; left:12px; bottom:12px; background:color-mix(in srgb, var(--panel) 85%, transparent); padding:10px 12px; border:1px solid var(--border); border-radius:12px; }
+  .actions{ display:flex; gap:12px; justify-content:center; margin-top:16px }
+  .btn{
+    display:inline-block; padding:12px 18px; border-radius:999px; border:1px solid var(--border);
+    background:var(--pri); color:#fff; text-decoration:none; cursor:pointer;
+    box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 35%, transparent);
+    transition:.2s;
+  }
+  .btn:hover{ background:var(--pri-hover); transform:translateY(-2px) }
+  .btn.danger{ background:var(--danger) }
+  .btn.danger:hover{ background:var(--danger-hover) }
+  footer{ text-align:center; padding:14px; border-top:1px solid var(--border); background:var(--panel); color:#777 }
+  @media (max-width:700px){ header{padding-top:40px} .legend{font-size:12px} }
+</style>
 </head>
 <body>
   <header>
-    <h1>👋 欢迎来到大胆专属</h1>
-    <p>这是我的第一个编程学习网站，里面有我做的小游戏</p>
+    <h1>🏝 大胆专属 · 代码探险岛</h1>
+    <p>完成关卡点亮航线，向终章前进！</p>
     <div class="toolbar">
       <label for="theme">🎨 主题：</label>
       <select id="theme">
@@ -68,49 +86,74 @@
   </header>
 
   <main>
-    <div class="progress-box">
-      <h3>🎯 通关进度</h3>
-      <div class="progress-bar"><div class="fill" id="fill"></div></div>
-      <div id="progress-text">尚未开始</div>
+    <div class="map" id="map">
+      <!-- 航线（SVG 只做装饰） -->
+      <svg class="path" viewBox="0 0 1600 900" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="var(--pri)" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="var(--pri)" stop-opacity="0.05"/>
+          </linearGradient>
+        </defs>
+        <path d="M120,760 C280,700 400,620 520,620 660,620 740,680 860,640 960,606 1020,520 1120,520 1260,520 1360,600 1480,560"
+              stroke="url(#g)" stroke-width="10" fill="none" stroke-linecap="round" />
+      </svg>
+
+      <!-- 10 个节点（根据通关数点亮） -->
+      <!-- 行列定位用百分比好适配不同屏幕 -->
+      <div class="node" style="left:10%; top:80%"><label>L1</label></div>
+      <div class="node" style="left:20%; top:74%"><label>L2</label></div>
+      <div class="node" style="left:30%; top:70%"><label>L3</label></div>
+      <div class="node" style="left:40%; top:68%"><label>L4</label></div>
+      <div class="node" style="left:50%; top:68%"><label>L5</label></div>
+      <div class="node" style="left:60%; top:66%"><label>L6</label></div>
+      <div class="node" style="left:70%; top:60%"><label>L7</label></div>
+      <div class="node" style="left:80%; top:58%"><label>L8</label></div>
+      <div class="node" style="left:88%; top:56%"><label>L9</label></div>
+      <div class="node" style="left:94%; top:52%"><label>L10</label></div>
+
+      <div class="legend">
+        <div>🌟 进度：<strong id="progressText">0 / 10</strong></div>
+        <div style="font-size:12px;color:#6b7280">点击下方按钮进入游戏继续解锁</div>
+      </div>
     </div>
 
-    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
-      <a href="game/" class="btn">🎮 进入我的小游戏</a>
-      <button id="resetBtn" class="btn danger">🔄 重新开始</button>
+    <div class="actions">
+      <a class="btn" href="game/">🎮 进入小游戏</a>
+      <button class="btn danger" id="resetBtn">🔄 重新开始</button>
     </div>
   </main>
 
   <footer>© 2025 大胆专属 | Powered by GitHub Pages</footer>
 
-  <script>
-    // 主题初始化
-    const themeSel = document.getElementById('theme');
-    const savedTheme = localStorage.getItem('siteTheme') || '';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    themeSel.value = savedTheme;
-    themeSel.onchange = () => {
-      document.documentElement.setAttribute('data-theme', themeSel.value);
-      localStorage.setItem('siteTheme', themeSel.value);
-    };
+<script>
+  // 主题
+  const themeSel = document.getElementById('theme');
+  const savedTheme = localStorage.getItem('siteTheme') || '';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeSel.value = savedTheme;
+  themeSel.onchange = () => {
+    document.documentElement.setAttribute('data-theme', themeSel.value);
+    localStorage.setItem('siteTheme', themeSel.value);
+  };
 
-    // 进度条
-    const total = 10;
-    function updateProgress(){
-      const passed = Number(localStorage.getItem("passedLevels")||0);
-      const percent = Math.min(100, Math.round((passed/total)*100));
-      document.getElementById("fill").style.width = percent + "%";
-      document.getElementById("progress-text").textContent = passed>0 ? `已完成 ${passed} / ${total} 关` : "尚未开始";
+  // 点亮地图节点
+  function updateMap(){
+    const passed = Number(localStorage.getItem('passedLevels')||0);
+    document.getElementById('progressText').textContent = `${passed} / 10`;
+    const nodes = document.querySelectorAll('.node');
+    nodes.forEach((n,i)=> n.classList.toggle('on', i < passed));
+  }
+  updateMap();
+
+  // 清空进度
+  document.getElementById('resetBtn').onclick = ()=>{
+    if(confirm('确定清空通关进度吗？')){
+      localStorage.removeItem('passedLevels');
+      updateMap();
+      alert('进度已清空，重新出发！');
     }
-    updateProgress();
-
-    // 重新开始
-    document.getElementById("resetBtn").onclick = ()=>{
-      if(confirm("确定要清空进度，重新开始吗？")){
-        localStorage.removeItem("passedLevels");
-        updateProgress();
-        alert("进度已清空，可以重新挑战！");
-      }
-    };
-  </script>
+  };
+</script>
 </body>
 </html>
