@@ -1,150 +1,162 @@
-<!DOCTYPE html>
-<html lang="zh" data-theme="">
+<!doctype html>
+<html lang="zh">
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>大胆专属 · 冒险起航</title>
+<title>你的品牌｜把价值说清楚</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pri:#0d6efd; --pri-hover:#0b5ed7;
-    --danger:#dc3545; --danger-hover:#bb2d3b;
-    --bg1:#f9fbff; --bg2:#eef2ff; --text:#111; --panel:#fff; --border:#e6e8ef;
-    --node:#cbd5e1; --node-on:var(--pri);
+    --bg:#0b0f14; --text:#eaf2ff; --muted:#9fb2c7;
+    --brand:#6aa4ff; --brand2:#a78bfa; --accent:#22d3ee;
+    --glass: rgba(255,255,255,.06); --stroke: rgba(255,255,255,.12);
   }
-  html[data-theme="green"]{
-    --pri:#22c55e; --pri-hover:#16a34a;
-    --danger:#ef4444; --danger-hover:#dc2626;
-    --bg1:#f0fdf4; --bg2:#dcfce7; --text:#0b0f10; --panel:#fff; --border:#d1fae5;
-    --node:#a7f3d0; --node-on:#10b981;
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
+  nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  nav a{color:var(--muted);text-decoration:none;margin:0 10px}
+  .btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25)}
+  .ghost{background:var(--glass);color:#fff}
+  .hero{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(800px 400px at 10% -10%, #6aa4ff22, transparent 60%),
+      radial-gradient(600px 300px at 90% 0%, #a78bfa22, transparent 60%),
+      linear-gradient(180deg,#0c1117 0, #0b0f14 60%);
+    border-bottom:1px solid var(--stroke);
   }
-  html[data-theme="blackgold"]{
-    --pri:#d4af37; --pri-hover:#b8860b;
-    --danger:#ff4d4f; --danger-hover:#d9363e;
-    --bg1:#0f0f0f; --bg2:#1a1a1a; --text:#f5f5f5; --panel:#151515; --border:#2a2a2a;
-    --node:#3a3a3a; --node-on:#d4af37;
-  }
-
-  *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh; display:flex; flex-direction:column;
-    font-family:"Microsoft YaHei",Segoe UI,Roboto,sans-serif;
-    background:radial-gradient(1200px 600px at 50% -200px,var(--bg2),var(--bg1));
-    color:var(--text);
-  }
-  header{ text-align:center; padding:56px 16px 10px; }
-  header h1{ margin:0 0 8px; font-size:2.2rem; color:var(--pri) }
-  header p{ margin:0; color:#6b7280 }
-  .toolbar{ display:flex; gap:10px; justify-content:center; margin:14px 0 6px; }
-  select{ padding:8px 10px; border-radius:10px; border:1px solid var(--border); background:var(--panel); color:var(--text); }
-
-  main{ flex:1; display:grid; place-items:center; padding:16px }
-  .map{
-    width:min(980px,94vw); aspect-ratio:16/9; position:relative;
-    border:1px solid var(--border); border-radius:16px; background:linear-gradient(180deg,#a7f3ff22,transparent 30%), radial-gradient(600px 300px at 80% 0%,#ffe9b322,transparent 60%), var(--panel);
-    overflow:hidden;
-  }
-  .path{ position:absolute; inset:0; pointer-events:none }
-  .node{
-    --s:20px;
-    position:absolute; width:var(--s); height:var(--s); border-radius:999px; background:var(--node);
-    border:2px solid #ffffff55; box-shadow:0 4px 10px rgba(0,0,0,.15);
-    transform:translate(-50%,-50%); transition:.25s;
-  }
-  .node.on{ background:var(--node-on); box-shadow:0 0 0 6px color-mix(in srgb, var(--node-on) 25%, transparent), 0 8px 20px color-mix(in srgb, var(--node-on) 35%, transparent); }
-  .node label{
-    position:absolute; top:24px; left:50%; transform:translateX(-50%); font-size:12px; color:#6b7280; white-space:nowrap; user-select:none;
-  }
-  .legend{ position:absolute; left:12px; bottom:12px; background:color-mix(in srgb, var(--panel) 85%, transparent); padding:10px 12px; border:1px solid var(--border); border-radius:12px; }
-  .actions{ display:flex; gap:12px; justify-content:center; margin-top:16px }
-  .btn{
-    display:inline-block; padding:12px 18px; border-radius:999px; border:1px solid var(--border);
-    background:var(--pri); color:#fff; text-decoration:none; cursor:pointer;
-    box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 35%, transparent); transition:.2s;
-  }
-  .btn:hover{ background:var(--pri-hover); transform:translateY(-2px) }
-  .btn.danger{ background:var(--danger) }
-  .btn.danger:hover{ background:var(--danger-hover) }
-  footer{ text-align:center; padding:14px; border-top:1px solid var(--border); background:var(--panel); color:#777 }
+  .hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:42px;padding:96px 20px}
+  .h1{font-size: clamp(36px, 6vw, 64px); line-height:1.05; margin:0 0 16px; letter-spacing:-0.02em}
+  .lead{color:var(--muted); font-size:clamp(16px,2.4vw,18px); margin-bottom:22px}
+  .glass{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px;transition:.25s}
+  .card:hover{transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,.3)}
+  .section{padding:72px 0;border-top:1px solid var(--stroke)}
+  .sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
+  h2{font-size:clamp(28px,4.2vw,40px);margin:0 0 14px}
+  .row{display:flex;gap:16px;flex-wrap:wrap}
+  .stat{background:var(--glass);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;min-width:180px}
+  footer{padding:28px 0;color:#8aa0b8;text-align:center;border-top:1px solid var(--stroke)}
+  /* 简单进场动画 */
+  [data-reveal]{opacity:0; transform:translateY(12px); transition: all .6s ease;}
+  [data-reveal].show{opacity:1; transform:none;}
+  @media (max-width:900px){ .hero .wrap{grid-template-columns:1fr; padding:72px 20px} .grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
-  <header>
-    <h1>🏝 大胆专属 · 代码探险岛</h1>
-    <p>完成 20 关，点亮整条航线！</p>
-    <div class="toolbar">
-      <label for="theme">🎨 主题：</label>
-      <select id="theme">
-        <option value="">蓝色</option>
-        <option value="green">绿色</option>
-        <option value="blackgold">黑金</option>
-      </select>
-    </div>
-  </header>
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="row" style="align-items:center">
+        <strong style="font-weight:800;letter-spacing:.5px">YourBrand</strong>
+        <a href="#features">功能</a><a href="#cases">案例</a><a href="#pricing">价格</a><a href="#blog">洞见</a>
+      </div>
+      <div class="row">
+        <a class="btn ghost" href="#contact">登录</a>
+        <a class="btn" href="#contact">立即体验</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <div class="map" id="map">
-      <svg class="path" viewBox="0 0 1600 900" preserveAspectRatio="none">
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--pri)" stop-opacity="0.35"/><stop offset="1" stop-color="var(--pri)" stop-opacity="0.05"/></linearGradient></defs>
-        <path d="M100,780 C240,720 360,660 480,660 600,660 700,720 820,690 940,660 1030,580 1140,560 1260,540 1380,600 1500,560"
-              stroke="url(#g)" stroke-width="10" fill="none" stroke-linecap="round" />
-      </svg>
-      <div class="legend">
-        <div>🌟 进度：<strong id="progressText">0 / 20</strong></div>
-        <div style="font-size:12px;color:#6b7280">点击下方按钮进入游戏继续解锁</div>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="sub">为增长而设计</div>
+      <h1 class="h1">一句清晰有力的价值主张，<span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;color:transparent">直接说动</span>用户</h1>
+      <p class="lead">用更少的页面，讲清你的产品/服务，结合真实案例与数据证明，搭配顺畅的预约/咨询流程，把访客转化成客户。</p>
+      <div class="row">
+        <a class="btn" href="#contact">预约演示</a>
+        <a class="btn ghost" href="#features">了解更多</a>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <div class="stat"><div class="sub">客户转化率</div><div style="font-size:28px;font-weight:800">+37%</div></div>
+        <div class="stat"><div class="sub">月度留存</div><div style="font-size:28px;font-weight:800">82%</div></div>
+        <div class="stat"><div class="sub">NPS</div><div style="font-size:28px;font-weight:800">67</div></div>
       </div>
     </div>
-
-    <div class="actions">
-      <a class="btn" href="game/">🎮 进入小游戏</a>
-      <button class="btn danger" id="resetBtn">🔄 重新开始</button>
+    <div class="glass" data-reveal>
+      <!-- 这里可换 Swiper / 视频 / 3D Canvas -->
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="" style="width:100%;border-radius:12px;display:block">
+      <div class="row" style="margin-top:12px">
+        <div class="card" style="flex:1">
+          <strong>快速搭建</strong><div class="sub">Next.js / Astro / Tailwind</div>
+        </div>
+        <div class="card" style="flex:1">
+          <strong>动效出色</strong><div class="sub">Framer Motion / GSAP</div>
+        </div>
+      </div>
     </div>
-  </main>
+  </div>
+</section>
 
-  <footer>© 2025 大胆专属 | Powered by GitHub Pages</footer>
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="sub">核心能力</div>
+    <h2>把复杂价值拆成 3–6 个易懂卖点</h2>
+    <div class="grid" data-reveal>
+      <div class="card"><h3>模块化组件库</h3><p class="lead">卡片、时间线、Logo 墙、价格卡、FAQ、表单一键复用。</p></div>
+      <div class="card"><h3>性能与 SEO</h3><p class="lead">Lighthouse 90+，结构化数据、OG、Sitemap、i18n 全套。</p></div>
+      <div class="card"><h3>转化设计</h3><p class="lead">多处 CTA、社证、案例页、预约流程、CRM 集成。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cases">
+  <div class="wrap">
+    <div class="sub">客户与案例</div>
+    <h2>社会证明让承诺更可信</h2>
+    <div class="row" data-reveal>
+      <div class="card" style="flex:1"><strong>「提升 3 倍线索量」</strong><p class="lead">—— A 公司市场负责人</p></div>
+      <div class="card" style="flex:1"><strong>「演示当天就签」</strong><p class="lead">—— B 公司销售总监</p></div>
+      <div class="card" style="flex:1"><strong>「内容更新超顺滑」</strong><p class="lead">—— C 公司运营经理</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="sub">定价方案</div>
+    <h2>透明、可迭代，按需扩展</h2>
+    <div class="grid" data-reveal>
+      <div class="card"><h3>基础版</h3><p class="lead">适合品牌展示/个人官网</p><p style="font-weight:800;font-size:24px">¥4,999 起</p><a class="btn" href="#contact">咨询</a></div>
+      <div class="card"><h3>增长版</h3><p class="lead">带博客/多语言/表单/动效</p><p style="font-weight:800;font-size:24px">¥9,999 起</p><a class="btn" href="#contact">咨询</a></div>
+      <div class="card"><h3>高级版</h3><p class="lead">接入 CMS / CRM / 预约 / 支付</p><p style="font-weight:800;font-size:24px">定制</p><a class="btn" href="#contact">咨询</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="sub">开始合作</div>
+    <h2>给我 30 分钟，给你一个更能转化的官网</h2>
+    <div class="row" data-reveal>
+      <form class="card" style="flex:1;display:grid;gap:10px">
+        <input placeholder="你的名字" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)">
+        <input placeholder="邮箱/微信" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)">
+        <textarea placeholder="简单描述需求" rows="4" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)"></textarea>
+        <button class="btn" type="submit">预约咨询</button>
+      </form>
+      <div class="card" style="flex:1">
+        <h3>也可直接联系</h3>
+        <p class="lead">WhatsApp / 微信 / 邮件</p>
+        <div class="stat"><div class="sub">响应时间</div><div style="font-size:28px;font-weight:800">≤ 2 小时</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 你的品牌 | 设计 × 开发 × 增长</footer>
 
 <script>
-  // 主题
-  const themeSel = document.getElementById('theme');
-  const savedTheme = localStorage.getItem('siteTheme') || '';
-  document.documentElement.setAttribute('data-theme', savedTheme);
-  themeSel.value = savedTheme;
-  themeSel.onchange = () => {
-    document.documentElement.setAttribute('data-theme', themeSel.value);
-    localStorage.setItem('siteTheme', themeSel.value);
-  };
-
-  // 动态渲染 20 个节点（避免手写）
-  const map = document.getElementById('map');
-  const positions = [
-    [8,82],[14,78],[20,74],[26,72],[32,70],
-    [38,69],[44,68],[50,67],[56,66],[62,65],
-    [68,64],[74,63],[80,62],[86,60],[90,58],
-    [94,56],[96,54],[98,53],[99,52],[100,51]
-  ];
-  const frag=document.createDocumentFragment();
-  positions.forEach((p,i)=>{
-    const n=document.createElement('div');
-    n.className='node'; n.style.left=p[0]+'%'; n.style.top=p[1]+'%';
-    const lab=document.createElement('label'); lab.textContent='L'+(i+1);
-    n.appendChild(lab); frag.appendChild(n);
-  });
-  map.appendChild(frag);
-
-  function updateMap(){
-    const total=20;
-    const passed = Math.max(0, Math.min(total, Number(localStorage.getItem('passedLevels')||0)));
-    document.getElementById('progressText').textContent = `${passed} / ${total}`;
-    document.querySelectorAll('.node').forEach((n,idx)=> n.classList.toggle('on', idx < passed));
-  }
-  updateMap();
-
-  document.getElementById('resetBtn').onclick = ()=>{
-    if(confirm('确定清空通关进度吗？')){
-      localStorage.removeItem('passedLevels');
-      updateMap();
-      alert('进度已清空，重新出发！');
-    }
-  };
+// 轻量滚动进场
+const io = new IntersectionObserver((ents)=>{
+  ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target) } })
+},{threshold:.15});
+document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
