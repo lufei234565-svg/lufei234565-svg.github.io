@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>大胆专属 · 冒险起航</title>
 <style>
-  /* 主题变量 */
   :root{
     --pri:#0d6efd; --pri-hover:#0b5ed7;
     --danger:#dc3545; --danger-hover:#bb2d3b;
@@ -40,41 +39,38 @@
 
   main{ flex:1; display:grid; place-items:center; padding:16px }
   .map{
-    width:min(900px,92vw); aspect-ratio:16/9; position:relative;
+    width:min(980px,94vw); aspect-ratio:16/9; position:relative;
     border:1px solid var(--border); border-radius:16px; background:linear-gradient(180deg,#a7f3ff22,transparent 30%), radial-gradient(600px 300px at 80% 0%,#ffe9b322,transparent 60%), var(--panel);
     overflow:hidden;
   }
   .path{ position:absolute; inset:0; pointer-events:none }
   .node{
-    --s:22px;
+    --s:20px;
     position:absolute; width:var(--s); height:var(--s); border-radius:999px; background:var(--node);
     border:2px solid #ffffff55; box-shadow:0 4px 10px rgba(0,0,0,.15);
     transform:translate(-50%,-50%); transition:.25s;
   }
   .node.on{ background:var(--node-on); box-shadow:0 0 0 6px color-mix(in srgb, var(--node-on) 25%, transparent), 0 8px 20px color-mix(in srgb, var(--node-on) 35%, transparent); }
   .node label{
-    position:absolute; top:26px; left:50%; transform:translateX(-50%);
-    font-size:12px; color:#6b7280; white-space:nowrap; user-select:none;
+    position:absolute; top:24px; left:50%; transform:translateX(-50%); font-size:12px; color:#6b7280; white-space:nowrap; user-select:none;
   }
   .legend{ position:absolute; left:12px; bottom:12px; background:color-mix(in srgb, var(--panel) 85%, transparent); padding:10px 12px; border:1px solid var(--border); border-radius:12px; }
   .actions{ display:flex; gap:12px; justify-content:center; margin-top:16px }
   .btn{
     display:inline-block; padding:12px 18px; border-radius:999px; border:1px solid var(--border);
     background:var(--pri); color:#fff; text-decoration:none; cursor:pointer;
-    box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 35%, transparent);
-    transition:.2s;
+    box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 35%, transparent); transition:.2s;
   }
   .btn:hover{ background:var(--pri-hover); transform:translateY(-2px) }
   .btn.danger{ background:var(--danger) }
   .btn.danger:hover{ background:var(--danger-hover) }
   footer{ text-align:center; padding:14px; border-top:1px solid var(--border); background:var(--panel); color:#777 }
-  @media (max-width:700px){ header{padding-top:40px} .legend{font-size:12px} }
 </style>
 </head>
 <body>
   <header>
     <h1>🏝 大胆专属 · 代码探险岛</h1>
-    <p>完成关卡点亮航线，向终章前进！</p>
+    <p>完成 20 关，点亮整条航线！</p>
     <div class="toolbar">
       <label for="theme">🎨 主题：</label>
       <select id="theme">
@@ -87,33 +83,13 @@
 
   <main>
     <div class="map" id="map">
-      <!-- 航线（SVG 只做装饰） -->
       <svg class="path" viewBox="0 0 1600 900" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="var(--pri)" stop-opacity="0.35"/>
-            <stop offset="1" stop-color="var(--pri)" stop-opacity="0.05"/>
-          </linearGradient>
-        </defs>
-        <path d="M120,760 C280,700 400,620 520,620 660,620 740,680 860,640 960,606 1020,520 1120,520 1260,520 1360,600 1480,560"
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--pri)" stop-opacity="0.35"/><stop offset="1" stop-color="var(--pri)" stop-opacity="0.05"/></linearGradient></defs>
+        <path d="M100,780 C240,720 360,660 480,660 600,660 700,720 820,690 940,660 1030,580 1140,560 1260,540 1380,600 1500,560"
               stroke="url(#g)" stroke-width="10" fill="none" stroke-linecap="round" />
       </svg>
-
-      <!-- 10 个节点（根据通关数点亮） -->
-      <!-- 行列定位用百分比好适配不同屏幕 -->
-      <div class="node" style="left:10%; top:80%"><label>L1</label></div>
-      <div class="node" style="left:20%; top:74%"><label>L2</label></div>
-      <div class="node" style="left:30%; top:70%"><label>L3</label></div>
-      <div class="node" style="left:40%; top:68%"><label>L4</label></div>
-      <div class="node" style="left:50%; top:68%"><label>L5</label></div>
-      <div class="node" style="left:60%; top:66%"><label>L6</label></div>
-      <div class="node" style="left:70%; top:60%"><label>L7</label></div>
-      <div class="node" style="left:80%; top:58%"><label>L8</label></div>
-      <div class="node" style="left:88%; top:56%"><label>L9</label></div>
-      <div class="node" style="left:94%; top:52%"><label>L10</label></div>
-
       <div class="legend">
-        <div>🌟 进度：<strong id="progressText">0 / 10</strong></div>
+        <div>🌟 进度：<strong id="progressText">0 / 20</strong></div>
         <div style="font-size:12px;color:#6b7280">点击下方按钮进入游戏继续解锁</div>
       </div>
     </div>
@@ -137,16 +113,31 @@
     localStorage.setItem('siteTheme', themeSel.value);
   };
 
-  // 点亮地图节点
+  // 动态渲染 20 个节点（避免手写）
+  const map = document.getElementById('map');
+  const positions = [
+    [8,82],[14,78],[20,74],[26,72],[32,70],
+    [38,69],[44,68],[50,67],[56,66],[62,65],
+    [68,64],[74,63],[80,62],[86,60],[90,58],
+    [94,56],[96,54],[98,53],[99,52],[100,51]
+  ];
+  const frag=document.createDocumentFragment();
+  positions.forEach((p,i)=>{
+    const n=document.createElement('div');
+    n.className='node'; n.style.left=p[0]+'%'; n.style.top=p[1]+'%';
+    const lab=document.createElement('label'); lab.textContent='L'+(i+1);
+    n.appendChild(lab); frag.appendChild(n);
+  });
+  map.appendChild(frag);
+
   function updateMap(){
-    const passed = Number(localStorage.getItem('passedLevels')||0);
-    document.getElementById('progressText').textContent = `${passed} / 10`;
-    const nodes = document.querySelectorAll('.node');
-    nodes.forEach((n,i)=> n.classList.toggle('on', i < passed));
+    const total=20;
+    const passed = Math.max(0, Math.min(total, Number(localStorage.getItem('passedLevels')||0)));
+    document.getElementById('progressText').textContent = `${passed} / ${total}`;
+    document.querySelectorAll('.node').forEach((n,idx)=> n.classList.toggle('on', idx < passed));
   }
   updateMap();
 
-  // 清空进度
   document.getElementById('resetBtn').onclick = ()=>{
     if(confirm('确定清空通关进度吗？')){
       localStorage.removeItem('passedLevels');
