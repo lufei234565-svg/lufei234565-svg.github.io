@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>代码探险岛 · 全关卡 (1–10)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --pri:#0078D7; --bg:#f5f7fa; --card:#fff; --border:#e5e7eb;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: "Microsoft YaHei", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);font-family:var(--sans);color:#111;min-height:100vh;display:flex;flex-direction:column}
+    header{background:var(--pri);color:#fff;padding:16px 20px;text-align:center}
+    .wrap{flex:1;display:flex;gap:12px;padding:12px;max-width:1200px;margin:0 auto;width:100%}
+    .left{width:260px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px;height:calc(100vh - 120px);overflow:auto}
+    .lvl{padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;background:#fff;cursor:pointer}
+    .lvl:hover{background:#f0f7ff}
+    .right{flex:1;display:flex;flex-direction:column;gap:12px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    textarea{width:100%;height:240px;border:1px solid var(--border);border-radius:10px;padding:10px;font-family:var(--mono);font-size:14px;line-height:1.5}
+    pre{background:#111;color:#0f0;border-radius:10px;padding:10px;min-height:140px;overflow:auto;white-space:pre-wrap}
+    button{border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
+    button.primary{background:var(--pri);border-color:var(--pri);color:#fff}
+    #sandbox{min-height:32px}
+    .meta{color:#555}
+    .footer{padding:12px;text-align:center}
+    a.back{color:var(--pri);text-decoration:none}
+    a.back:hover{text-decoration:underline}
+    @media (max-width:900px){ .wrap{flex-direction:column} .left{width:100%;height:auto} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏝 代码探险岛 · 全关卡 (1–10)</h1>
+  </header>
+
+  <main class="wrap">
+    <!-- 关卡列表 -->
+    <aside class="left" id="list"></aside>
+
+    <!-- 关卡内容区 -->
+    <section class="right">
+      <div class="card">
+        <h2 id="title">请选择左侧关卡开始</h2>
+        <p id="desc" class="meta">提示：Ctrl/Cmd + Enter 运行；每关右侧会显示运行日志与是否通关。</p>
+      </div>
+
+      <div class="card">
+        <label for="editor" class="meta">编辑代码</label>
+        <textarea id="editor" placeholder="// 选择关卡后，这里会出现起始代码"></textarea>
+        <div class="row">
+          <button id="runBtn" class="primary">▶ 运行代码（Ctrl/Cmd + Enter）</button>
+          <button id="resetBtn">↩ 恢复模板</button>
+          <span id="status" class="meta"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row" style="align-items:center;justify-content:space-between">
+          <strong>运行日志</strong>
+          <small class="meta">沙箱区（DOM 相关关卡会在此创建元素）</small>
+        </div>
+        <pre id="log">—</pre>
+        <div id="sandbox"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">
+    <a class="back" href="../">← 返回首页</a>
+  </div>
+
+<script>
+/* ---------- 关卡数据 ---------- */
+const LEVELS = {
+  L1:{title:"L1 点亮火把 🔥",desc:"用 console.log() 输出 Hello, Island!",
+      starter:`console.log("Hello, Island!");`,
+      eval({logs}){ return logs.some(s=>s.trim()==="Hello, Island!") ? ok("火把点亮！") : fail("没检测到 Hello, Island!"); }},
+
+  L2:{title:"L2 移动小球 ⚽",desc:"让 x=10，并 submit(x)。",
+      starter:`let x=0;\nx = x + 10;\nsubmit(x);`,
+      eval({submitted}){ return submitted===10 ? ok("小球前进 10 步！") : fail("提交的不是 10"); }},
+
+  L3:{title:"L3 开门试炼 🚪",desc:"当 hasKey 为 true 时，调用 openGate()。",
+      starter:`let hasKey = true;\nif (hasKey) { openGate(); }`,
+      eval({opened}){ return opened ? ok("大门打开！") : fail("没有调用 openGate()"); }},
+
+  L4:{title:"L4 驯服小怪兽 🐲",desc:"用循环输出 3 次 calm down。",
+      starter:`for (let i=0;i<3;i++) { console.log("calm down"); }`,
+      eval({logs}){ const n=logs.filter(x=>x.trim()==="calm down").length; return n===3 ? ok("怪兽平静！") : fail("检测到 "+n+" 次"); }},
+
+  L5:{title:"L5 灯塔引航 ⛵",desc:"路线：move(5) → turn('right') → move(3)。",
+      starter:`function plan(){\n  move(5);\n  turn("right");\n  move(3);\n}\nplan();`,
+      eval({path}){ const ans=["move:5","turn:right","move:3"]; return JSON.stringify(path)===JSON.stringify(ans) ? ok("路线正确！") : fail("路线不正确"); }},
+
+  L6:{title:"L6 宝箱密码 💎",desc:"输出数组 gems 三个元素。",
+      starter:`let gems=["ruby","emerald","sapphire"];\nconsole.log(gems[0]);\nconsole.log(gems[1]);\nconsole.log(gems[2]);`,
+      eval({logs}){ return JSON.stringify(logs)==='["ruby","emerald","sapphire"]' ? ok("宝箱解锁！") : fail("输出不正确"); }},
+
+  L7:{title:"L7 怪兽图鉴 📖",desc:"创建对象 monster，并输出 name 与 level。",
+      starter:`let monster={name:"Dragon",level:10};\nconsole.log(monster.name);\nconsole.log(monster.level);`,
+      eval({logs}){ return logs.includes("Dragon") && logs.includes("10") ? ok("图鉴解锁！") : fail("没有正确输出属性"); }},
+
+  L8:{title:"L8 神秘石碑 🗿",desc:"把 id=magicBtn 的按钮文字改为“已激活”。",
+      starter:`let btn=document.createElement("button");\nbtn.id="magicBtn";\nbtn.innerText="按钮";\ndocument.getElementById("sandbox").appendChild(btn);\nbtn.innerText="已激活";`,
+      eval({btn}){ return btn && btn.innerText==="已激活" ? ok("石碑亮起！") : fail("没有修改按钮文字"); }},
+
+  L9:{title:"L9 魔法卷轴 📜",desc:"给按钮绑定点击事件，点击输出 'Spell Cast!'。",
+      starter:`let btn=document.createElement("button");\nbtn.id="magicBtn";\nbtn.innerText="按钮";\ndocument.getElementById("sandbox").appendChild(btn);\nbtn.addEventListener("click",()=>console.log("Spell Cast!"));\nbtn.click();`,
+      eval({logs}){ return logs.includes("Spell Cast!") ? ok("魔法释放！") : fail("没有输出 Spell Cast!"); }},
+
+  L10:{title:"L10 终极试炼 👑",desc:"数组 + 对象 + 循环，输出怪兽信息。",
+      starter:`let monsters=[{name:"Slime",hp:30},{name:"Orc",hp:50},{name:"Dragon",hp:100}];\nfor (let m of monsters){ console.log(m.name+" - HP: "+m.hp); }`,
+      eval({logs}){ return ["Slime","Orc","Dragon"].every(n=>logs.some(x=>x.includes(n))) ? ok("终极试炼成功！") : fail("没有正确输出怪兽"); }},
+};
+const ORDER = Object.keys(LEVELS);
+
+/* ---------- 渲染列表 ---------- */
+const list = document.getElementById("list");
+ORDER.forEach((id)=>{
+  const d=document.createElement("div");
+  d.className="lvl"; d.textContent=LEVELS[id].title;
+  d.onclick=()=>openLevel(id);
+  list.appendChild(d);
+});
+
+/* ---------- UI引用 ---------- */
+const titleEl=document.getElementById("title");
+const descEl=document.getElementById("desc");
+const editor=document.getElementById("editor");
+const runBtn=document.getElementById("runBtn");
+const resetBtn=document.getElementById("resetBtn");
+const logEl=document.getElementById("log");
+const sandbox=document.getElementById("sandbox");
+const statusEl=document.getElementById("status");
+
+let current=null;
+
+/* ---------- 打开关卡 ---------- */
+function openLevel(id){
+  current=id;
+  titleEl.textContent=LEVELS[id].title;
+  descEl.textContent=LEVELS[id].desc;
+  editor.value=LEVELS[id].starter;
+  statusEl.textContent="";
+  logEl.textContent="—";
+  sandbox.innerHTML="";
+}
+
+/* ---------- 运行沙箱 ---------- */
+function runInSandbox(code){
+  const logs=[];
+  const safeConsole={ log:(...a)=>{ logs.push(a.join(" ")); } };
+  let submitted, opened=false, path=[], btn=null;
+
+  function submit(v){ submitted=v; }
+  function openGate(){ opened=true; safeConsole.log("Gate opened"); }
+  function move(s){ path.push("move:"+s); safeConsole.log("move "+s); }
+  function turn(d){ path.push("turn:"+d); safeConsole.log("turn "+d); }
+
+  // 每次运行前清空沙箱区
+  sandbox.innerHTML="";
+
+  try{
+    // 让用户代码能访问 sandbox：document.getElementById("sandbox")
+    const fn = new Function("console","submit","openGate","move","turn", code);
+    fn(safeConsole, submit, openGate, move, turn);
+  }catch(e){
+    logs.push("【运行错误】"+e.message);
+  }
+  btn = document.getElementById("magicBtn");
+  return {logs, submitted, opened, path, btn};
+}
+function ok(msg){ return {ok:true,msg}; }
+function fail(msg){ return {ok:false,msg}; }
+
+/* ---------- 绑定事件 ---------- */
+runBtn.onclick = () => {
+  if(!current){ alert("请先在左侧选择关卡"); return; }
+  const res = runInSandbox(editor.value);
+  logEl.textContent = (res.logs.length?res.logs.join("\n"):"(无输出)");
+  const judge = LEVELS[current].eval(res);
+  statusEl.textContent = (judge.ok ? "✅ " : "❌ ") + judge.msg;
+};
+resetBtn.onclick = () => {
+  if(!current) return;
+  editor.value = LEVELS[current].starter;
+  statusEl.textContent="已恢复模板";
+  logEl.textContent="—";
+  sandbox.innerHTML="";
+};
+window.addEventListener("keydown",(e)=>{
+  if((e.ctrlKey||e.metaKey) && e.key==="Enter"){ runBtn.click(); }
+});
+</script>
+</body>
+</html>
