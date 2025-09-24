@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>代码探险岛 · 动画版 L1–L10</title>
+<title>代码探险岛 · 升级版 L1–L10</title>
 <style>
   :root{
     --pri:#0d6efd; --bg:#f5f7fb; --panel:#fff; --border:#e5e7eb; --muted:#667085;
@@ -12,16 +12,19 @@
   body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Microsoft YaHei",sans-serif;background:var(--bg);color:#111}
   header{background:var(--pri);color:#fff;padding:16px 20px;text-align:center}
   .wrap{max-width:1100px;margin:0 auto;padding:12px;display:grid;grid-template-columns:260px 1fr;gap:12px}
-  .sidebar{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px;height:calc(100vh - 140px);overflow:auto}
+  .sidebar{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px;height:calc(100vh - 160px);overflow:auto}
   .lvl{padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;background:#fff}
   .lvl:hover{background:#f1f7ff}
   .active{outline:2px solid var(--pri)}
-  .stage{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;min-height:520px;display:flex;flex-direction:column}
+  .stage{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;min-height:560px;display:flex;flex-direction:column}
   .topbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
   .btn{border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
   .btn.primary{background:var(--pri);border-color:var(--pri);color:#fff}
-  .muted{color:var(--muted)}
   .scene{flex:1;border:1px dashed var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(#cde7ff22,#fff);position:relative;overflow:hidden}
+  .tag{margin-top:8px;color:var(--muted)}
+  .result{margin-top:8px;font-weight:700}
+  .next-btn{display:none;margin-top:10px}
+  .next-btn.show{display:inline-block}
   .footer{padding:16px;text-align:center}
   .footer a{color:var(--pri);text-decoration:none}
   .footer a:hover{text-decoration:underline}
@@ -33,7 +36,7 @@
   .lit .flame{opacity:1;animation:flame .8s infinite ease-in-out alternate}
   @keyframes flame{from{transform:translateX(-50%) translateY(0) scale(1)} to{transform:translateX(-50%) translateY(-8px) scale(1.05)}}
 
-  /* -------- L2 小球移动 -------- */
+  /* -------- L2 小球 -------- */
   .track{width:80%;height:10px;background:#e3e8ef;border-radius:999px;position:relative}
   .ball{position:absolute;left:0;top:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:#0d6efd;box-shadow:0 4px 8px rgba(13,110,253,.35);transition:left .5s}
 
@@ -46,7 +49,7 @@
   .key.have{opacity:1;animation:float 1.2s infinite ease-in-out alternate}
   @keyframes float{to{transform:translateY(-6px)}}
 
-  /* -------- L4 喂小怪兽 -------- */
+  /* -------- L4 小怪兽 -------- */
   .monster-area{position:relative;width:440px;height:240px}
   .monster{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120px;height:120px;border-radius:50%;background:#22c55e;box-shadow:inset 0 -8px 0 rgba(0,0,0,.15)}
   .eye{position:absolute;top:32px;width:18px;height:18px;border-radius:50%;background:#111}
@@ -58,12 +61,11 @@
   .speech{position:absolute;left:50%;bottom:-6px;transform:translate(-50%,100%);background:#fff;border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-size:14px;opacity:0}
   .calm .speech{opacity:1}
 
-  /* -------- L5 网格移动（船） -------- */
+  /* -------- L5 网格船 -------- */
   .grid{--cells:8; --size:48px; display:grid; grid-template-columns:repeat(var(--cells),var(--size)); grid-auto-rows:var(--size); gap:6px; background:#eef2ff; padding:10px;border-radius:12px;border:1px solid #c7d2fe}
   .cell{background:#ffffff;border:1px solid #e5e7eb;border-radius:8px}
   .boat{position:absolute;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:28px solid #0ea5e9;transform:translate(-50%,-50%) rotate(0)}
   .course{position:relative}
-  .tag{margin-top:10px;color:var(--muted)}
 
   /* -------- L6 宝箱 -------- */
   .chest{position:relative;width:320px;height:200px;background:#78350f;border:6px solid #5b290b;border-radius:12px;overflow:hidden}
@@ -86,7 +88,7 @@
   .stele .b{padding:10px 18px;border-radius:10px;border:1px solid var(--border);cursor:pointer}
   .stele .b.active{background:#16a34a;color:#fff;border-color:#16a34a;box-shadow:0 6px 16px rgba(22,163,74,.35)}
 
-  /* -------- L9 卷轴点击特效 -------- */
+  /* -------- L9 卷轴特效 -------- */
   .scroll{position:relative;width:380px;padding:18px 22px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px}
   .scroll button{margin-top:12px}
   .boom{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:40px;opacity:0;pointer-events:none}
@@ -102,21 +104,21 @@
 </style>
 </head>
 <body>
-  <header><h1>🏝 代码探险岛 · 动画版 L1–L10</h1></header>
+  <header><h1>🏝 代码探险岛 · 升级版 L1–L10</h1></header>
 
   <div class="wrap">
-    <!-- 左侧关卡 -->
     <aside class="sidebar" id="menu"></aside>
 
-    <!-- 舞台 -->
     <section class="stage">
       <div class="topbar">
         <button class="btn primary" id="run">▶ 运行</button>
         <button class="btn" id="reset">↩ 重置</button>
         <span class="muted" id="hint">请选择左侧关卡</span>
       </div>
-      <div class="scene" id="scene"><!-- 动态填充 --></div>
+      <div class="scene" id="scene"></div>
       <div class="tag" id="desc"></div>
+      <div class="result" id="result"></div>
+      <button class="btn next-btn" id="nextBtn">➡ 下一关</button>
     </section>
   </div>
 
@@ -124,146 +126,26 @@
     <a href="../">← 返回首页</a>
   </div>
 
+  <!-- 背景音乐 -->
+  <audio id="bgm" loop></audio>
+
 <script>
-/* ========== 关卡定义（动画版） ========== */
-const LEVELS = {
-  /* ----- L1~L5 与上一版一致 ----- */
-  L1: {
-    title:"L1 点亮火把 🔥",
-    desc:"点击运行：火把被点亮（带火焰动画）。",
-    setup(el){ el.innerHTML = `<div class="torch" id="torch"><div class="flame">🔥</div><div class="stick">🪵</div></div>`; },
-    run(el){ el.querySelector("#torch").classList.add("lit"); },
-    reset(el){ el.querySelector("#torch").classList.remove("lit"); }
-  },
-  L2: {
-    title:"L2 移动小球 ⚽",
-    desc:"点击运行：小球向右移动 10 步（可多次运行看到连贯移动）。",
-    setup(el){ el.innerHTML = `<div class="track" id="track"><div class="ball" id="ball"></div></div>`; el.dataset.step="0"; },
-    run(el){ const steps=10, track=el.querySelector("#track"), ball=el.querySelector("#ball"); let cur=+el.dataset.step; cur+=steps; const pos=Math.min(100,(cur/100)*100); ball.style.left=`${pos}%`; el.dataset.step=cur; },
-    reset(el){ el.dataset.step="0"; el.querySelector("#ball").style.left="0%"; }
-  },
-  L3: {
-    title:"L3 开门试炼 🚪",
-    desc:"点击运行：获得钥匙并打开大门（3D 旋转）。",
-    setup(el){ el.innerHTML = `<div class="gate"><div class="door" id="door"></div><div class="key" id="key">🗝️</div></div>`; },
-    run(el){ el.querySelector("#key").classList.add("have"); setTimeout(()=> el.querySelector("#door").classList.add("open"), 400); },
-    reset(el){ el.querySelector("#key").classList.remove("have"); el.querySelector("#door").classList.remove("open"); }
-  },
-  L4: {
-    title:"L4 驯服小怪兽 🐾",
-    desc:"点击运行：喂食并让小怪兽冷静下来（出现对话气泡）。",
-    setup(el){ el.innerHTML = `<div class="monster-area" id="area"><div class="monster"><div class="eye left"></div><div class="eye right"></div><div class="mouth"></div><div class="speech">calm down…</div></div><div class="food" id="food">🍎</div></div>`; },
-    run(el){ const area=el.querySelector("#area"); area.classList.add("fed"); setTimeout(()=> area.classList.add("calm"), 900); },
-    reset(el){ const area=el.querySelector("#area"); area.classList.remove("fed","calm"); }
-  },
-  L5: {
-    title:"L5 灯塔引航 ⛵",
-    desc:"路线：前进 5 格 → 右转 → 前进 3 格（网格上看到小船移动）。",
-    setup(el){
-      const cells=8, grid=document.createElement("div"); grid.className="grid"; grid.style.setProperty("--cells",cells);
-      const course=document.createElement("div"); course.className="course";
-      for(let i=0;i<cells*cells;i++){ const c=document.createElement("div"); c.className="cell"; grid.appendChild(c); }
-      course.appendChild(grid); const boat=document.createElement("div"); boat.id="boat"; boat.className="boat"; course.appendChild(boat);
-      el.innerHTML=""; el.appendChild(course);
-      el.dataset.x="1"; el.dataset.y="1"; el.dataset.dir="right"; positionBoat(el);
-    },
-    run(el){ moveSteps(el,5, ()=>{ turnRight(el); moveSteps(el,3); }); },
-    reset(el){ el.dataset.x="1"; el.dataset.y="1"; el.dataset.dir="right"; positionBoat(el); }
-  },
+/* ========= 公共工具 ========= */
+const scene=document.getElementById("scene");
+const desc =document.getElementById("desc");
+const hint =document.getElementById("hint");
+const result=document.getElementById("result");
+const nextBtn=document.getElementById("nextBtn");
+const bgm  =document.getElementById("bgm");
+let current=null;
 
-  /* ----- L6：宝箱密码 ----- */
-  L6: {
-    title:"L6 宝箱密码 💎",
-    desc:"点击运行：输入正确密码（1234）即可开启宝箱并出现宝石。",
-    setup(el){
-      el.innerHTML = `
-        <div class="chest" id="chest">
-          <div class="lid"></div><div class="band"></div><div class="lock"></div>
-          <div class="gems"><span class="gem">💎</span><span class="gem">🔷</span><span class="gem">🔶</span></div>
-        </div>`;
-      el.dataset.pass = "1234";
-    },
-    run(el){
-      const input = prompt("请输入宝箱密码（提示：1234）：","");
-      if(input === el.dataset.pass){ el.querySelector("#chest").classList.add("open"); }
-      else alert("密码错误！");
-    },
-    reset(el){ el.querySelector("#chest").classList.remove("open"); }
-  },
+function setResult(msg, ok=false){
+  result.textContent = msg || "";
+  nextBtn.classList.toggle("show", !!ok);
+}
+function playMusic(url){ bgm.src=url; bgm.play().catch(()=>{}); }
 
-  /* ----- L7：怪兽图鉴 ----- */
-  L7: {
-    title:"L7 怪兽图鉴 📖",
-    desc:"点击运行：展示怪兽卡片，HP 条缓慢注满。",
-    setup(el){
-      el.innerHTML = `
-        <div class="dex" id="dex">
-          <div class="avatar">🐲</div>
-          <h3>Dragon</h3>
-          <div>等级 Lv.<span id="lv">10</span></div>
-          <div class="stat"><div class="bar" id="bar"></div></div>
-        </div>`;
-    },
-    run(el){ requestAnimationFrame(()=> el.querySelector("#bar").style.width="100%"); },
-    reset(el){ el.querySelector("#bar").style.width="0%"; }
-  },
-
-  /* ----- L8：神秘石碑 ----- */
-  L8: {
-    title:"L8 神秘石碑 🗿",
-    desc:"点击运行：激活石碑按钮（文字变为“已激活”，绿色高亮）。",
-    setup(el){
-      el.innerHTML = `<div class="stele"><button id="magicBtn" class="b">按钮</button><div class="muted">id=magicBtn</div></div>`;
-    },
-    run(el){ const b=el.querySelector("#magicBtn"); b.textContent="已激活"; b.classList.add("active"); },
-    reset(el){ const b=el.querySelector("#magicBtn"); b.textContent="按钮"; b.classList.remove("active"); }
-  },
-
-  /* ----- L9：魔法卷轴 ----- */
-  L9: {
-    title:"L9 魔法卷轴 📜",
-    desc:"点击运行：自动点击卷轴按钮 → 屏幕中央出现 ✨Spell Cast! 特效。",
-    setup(el){
-      el.innerHTML = `
-        <div class="scroll">
-          <div>古老的卷轴正在等待咒语…</div>
-          <button id="castBtn" class="btn">释放！</button>
-          <div class="boom" id="boom">✨ Spell Cast!</div>
-        </div>`;
-      el.querySelector("#castBtn").onclick = ()=>showBoom(el);
-    },
-    run(el){ el.querySelector("#castBtn").click(); },
-    reset(el){ const b=el.querySelector("#boom"); b.classList.remove("show"); }
-  },
-
-  /* ----- L10：终极试炼 ----- */
-  L10: {
-    title:"L10 终极试炼 👑",
-    desc:"点击运行：展示 3 只怪物卡片，HP 条逐个充满。",
-    setup(el){
-      const list = document.createElement("div"); list.className="list"; list.id="list";
-      const data = [
-        {name:"Slime", hp:30, emoji:"🟢"},
-        {name:"Orc", hp:50, emoji:"🛡️"},
-        {name:"Dragon", hp:100, emoji:"🐲"},
-      ];
-      data.forEach(d=>{
-        const c=document.createElement("div"); c.className="card";
-        c.innerHTML=`<div style="font-size:46px">${d.emoji}</div><strong>${d.name}</strong>
-                     <div class="hp"><div class="v"></div></div>`;
-        list.appendChild(c);
-      });
-      el.innerHTML=""; el.appendChild(list);
-    },
-    run(el){
-      const bars=[...el.querySelectorAll(".v")];
-      bars.forEach((b,i)=> setTimeout(()=> b.style.width="100%", i*300));
-    },
-    reset(el){ [...el.querySelectorAll(".v")].forEach(b=> b.style.width="0%"); }
-  }
-};
-
-/* ========== 工具：L5 运动 ========== */
+/* ========= L5 船移动工具 ========= */
 function positionBoat(scene){
   const boat = scene.querySelector("#boat");
   const grid = scene.querySelector(".grid");
@@ -272,7 +154,6 @@ function positionBoat(scene){
   const x = +scene.dataset.x, y = +scene.dataset.y;
   boat.style.left = (grid.offsetLeft + (x-1)*(size+gap) + size/2) + "px";
   boat.style.top  = (grid.offsetTop  + (y-1)*(size+gap) + size/2) + "px";
-
   const dir = scene.dataset.dir;
   const deg = dir==="right"?0:dir==="down"?90:dir==="left"?180:270;
   boat.style.transform = `translate(-50%,-50%) rotate(${deg}deg)`;
@@ -295,18 +176,152 @@ function moveSteps(scene, n, after){
   let i=0; (function go(){ if(i++<n){ stepForward(scene, go); } else after && after(); })();
 }
 
-/* ========== 渲染与交互 ========== */
-const menu = document.getElementById("menu");
-const scene = document.getElementById("scene");
-const desc  = document.getElementById("desc");
-const hint  = document.getElementById("hint");
-const runBtn= document.getElementById("run");
-const rstBtn= document.getElementById("reset");
+/* ========= 关卡定义 ========= */
+const LEVELS = {
+  L1: {
+    title:"L1 点亮火把 🔥",
+    desc:"点击运行：火把被点亮（带火焰动画）。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    setup(el){ el.innerHTML=`<div class="torch" id="torch"><div class="flame">🔥</div><div class="stick">🪵</div></div>`; setResult(""); },
+    run(el){ el.querySelector("#torch").classList.add("lit"); setResult("✅ 恭喜通关：火把点亮！", true); },
+    reset(el){ el.querySelector("#torch").classList.remove("lit"); setResult(""); }
+  },
 
-let current = null;
+  L2: {
+    title:"L2 移动小球 ⚽",
+    desc:"点击运行：小球向右移动 10 步；到达终点判定通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    setup(el){ el.innerHTML=`<div class="track" id="track"><div class="ball" id="ball"></div></div>`; el.dataset.step="0"; setResult(""); },
+    run(el){
+      const steps=10, track=el.querySelector("#track"), ball=el.querySelector("#ball");
+      let cur=+el.dataset.step; cur+=steps;
+      const pos = Math.min(100, (cur/100)*100);
+      ball.style.left = `${pos}%`; el.dataset.step=cur;
+      if(pos>=100) setResult("✅ 小球抵达终点，通关！", true); else setResult("继续前进中…");
+    },
+    reset(el){ el.dataset.step="0"; el.querySelector("#ball").style.left="0%"; setResult(""); }
+  },
 
-// 左侧菜单
-Object.entries(LEVELS).forEach(([id, lv])=>{
+  L3: {
+    title:"L3 开门试炼 🚪",
+    desc:"点击运行：获得钥匙并打开大门；大门打开即通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    setup(el){ el.innerHTML=`<div class="gate"><div class="door" id="door"></div><div class="key" id="key">🗝️</div></div>`; setResult(""); },
+    run(el){
+      el.querySelector("#key").classList.add("have");
+      setTimeout(()=> {
+        el.querySelector("#door").classList.add("open");
+        setResult("✅ 大门已开，通关！", true);
+      }, 400);
+    },
+    reset(el){ el.querySelector("#key").classList.remove("have"); el.querySelector("#door").classList.remove("open"); setResult(""); }
+  },
+
+  L4: {
+    title:"L4 驯服小怪兽 🐾",
+    desc:"点击运行：喂食 → 冷静；出现对话气泡判定通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    setup(el){ el.innerHTML=`<div class="monster-area" id="area"><div class="monster"><div class="eye left"></div><div class="eye right"></div><div class="mouth"></div><div class="speech">calm down…</div></div><div class="food" id="food">🍎</div></div>`; setResult(""); },
+    run(el){
+      const area=el.querySelector("#area");
+      area.classList.add("fed");
+      setTimeout(()=>{ area.classList.add("calm"); setResult("✅ 怪兽冷静下来，通关！", true); }, 900);
+    },
+    reset(el){ el.querySelector("#area").classList.remove("fed","calm"); setResult(""); }
+  },
+
+  L5: {
+    title:"L5 灯塔引航 ⛵",
+    desc:"路线：前进 5 格 → 右转 → 前进 3 格；到达终点通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    setup(el){
+      const cells=8, grid=document.createElement("div"); grid.className="grid"; grid.style.setProperty("--cells",cells);
+      const course=document.createElement("div"); course.className="course";
+      for(let i=0;i<cells*cells;i++){ const c=document.createElement("div"); c.className="cell"; grid.appendChild(c); }
+      course.appendChild(grid); const boat=document.createElement("div"); boat.id="boat"; boat.className="boat"; course.appendChild(boat);
+      el.innerHTML=""; el.appendChild(course);
+      el.dataset.x="1"; el.dataset.y="1"; el.dataset.dir="right"; positionBoat(el); setResult("");
+    },
+    run(el){ moveSteps(el,5, ()=>{ turnRight(el); moveSteps(el,3, ()=> setResult("✅ 抵达航点，通关！", true)); }); },
+    reset(el){ el.dataset.x="1"; el.dataset.y="1"; el.dataset.dir="right"; positionBoat(el); setResult(""); }
+  },
+
+  L6: {
+    title:"L6 宝箱密码 💎",
+    desc:"输入正确密码 1234 → 宝箱开启 → 通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+    setup(el){ el.innerHTML=`<div class="chest" id="chest"><div class="lid"></div><div class="band"></div><div class="lock"></div><div class="gems"><span class="gem">💎</span><span class="gem">🔷</span><span class="gem">🔶</span></div></div>`; el.dataset.pass="1234"; setResult(""); },
+    run(el){
+      const input = prompt("请输入宝箱密码（提示：1234）：","");
+      if(input === el.dataset.pass){ el.querySelector("#chest").classList.add("open"); setResult("✅ 密码正确，宝箱开启！", true); }
+      else setResult("密码错误，再试试～");
+    },
+    reset(el){ el.querySelector("#chest").classList.remove("open"); setResult(""); }
+  },
+
+  L7: {
+    title:"L7 怪兽图鉴 📖",
+    desc:"展开图鉴 → HP 条注满 → 通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+    setup(el){ el.innerHTML=`<div class="dex"><div class="avatar">🐲</div><h3>Dragon</h3><div>等级 Lv.<span id="lv">10</span></div><div class="stat"><div class="bar" id="bar"></div></div></div>`; setResult(""); },
+    run(el){ const bar=el.querySelector("#bar"); bar.style.width="0%"; requestAnimationFrame(()=>{ bar.style.width="100%"; setTimeout(()=> setResult("✅ 图鉴完成，通关！", true), 900); }); },
+    reset(el){ el.querySelector("#bar").style.width="0%"; setResult(""); }
+  },
+
+  L8: {
+    title:"L8 神秘石碑 🗿",
+    desc:"激活按钮（文字变“已激活”且高亮） → 通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+    setup(el){ el.innerHTML = `<div class="stele"><button id="magicBtn" class="b">按钮</button><div class="muted">id=magicBtn</div></div>`; setResult(""); },
+    run(el){ const b=el.querySelector("#magicBtn"); b.textContent="已激活"; b.classList.add("active"); setResult("✅ 石碑已激活！", true); },
+    reset(el){ const b=el.querySelector("#magicBtn"); b.textContent="按钮"; b.classList.remove("active"); setResult(""); }
+  },
+
+  L9: {
+    title:"L9 魔法卷轴 📜",
+    desc:"点击释放 → 中央出现 ✨ Spell Cast! 动效 → 通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+    setup(el){ el.innerHTML = `<div class="scroll"><div>古老的卷轴正在等待咒语…</div><button id="castBtn" class="btn">释放！</button><div class="boom" id="boom">✨ Spell Cast!</div></div>`; el.querySelector("#castBtn").onclick=()=>showBoom(el); setResult(""); },
+    run(el){ el.querySelector("#castBtn").click(); setTimeout(()=>setResult("✅ 魔法释放成功！", true), 400); },
+    reset(el){ const b=el.querySelector("#boom"); b.classList.remove("show"); setResult(""); }
+  },
+
+  L10: {
+    title:"L10 终极试炼 👑",
+    desc:"生成 3 只怪物卡片 → HP 条依次注满 → 通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+    setup(el){
+      const list = document.createElement("div"); list.className="list";
+      const data=[{name:"Slime",hp:30,emoji:"🟢"},{name:"Orc",hp:50,emoji:"🛡️"},{name:"Dragon",hp:100,emoji:"🐲"}];
+      data.forEach(d=>{
+        const c=document.createElement("div"); c.className="card";
+        c.innerHTML=`<div style="font-size:46px">${d.emoji}</div><strong>${d.name}</strong><div class="hp"><div class="v"></div></div>`;
+        list.appendChild(c);
+      });
+      el.innerHTML=""; el.appendChild(list); setResult("");
+    },
+    run(el){
+      const bars=[...el.querySelectorAll(".v")];
+      bars.forEach((b,i)=> setTimeout(()=> b.style.width="100%", i*350));
+      setTimeout(()=> setResult("✅ 终极试炼完成！", true), 1200);
+    },
+    reset(el){ [...el.querySelectorAll(".v")].forEach(b=>b.style.width="0%"); setResult(""); }
+  }
+};
+
+/* ========= L9 动效工具 ========= */
+function showBoom(el){
+  const b=el.querySelector("#boom");
+  b.classList.remove("show"); void b.offsetWidth; // 重新触发动画
+  b.classList.add("show");
+}
+
+/* ========= 渲染与交互 ========= */
+const menu=document.getElementById("menu");
+const runBtn=document.getElementById("run");
+const rstBtn=document.getElementById("reset");
+
+Object.entries(LEVELS).forEach(([id,lv])=>{
   const d=document.createElement("div");
   d.className="lvl"; d.textContent=lv.title; d.id="btn-"+id;
   d.onclick=()=>openLevel(id);
@@ -320,19 +335,21 @@ function openLevel(id){
   hint.textContent = LEVELS[id].title;
   desc.textContent = LEVELS[id].desc;
   LEVELS[id].setup(scene);
+  playMusic(LEVELS[id].music);
+  nextBtn.classList.remove("show");
 }
 
-runBtn.onclick = ()=>{ if(!current){hint.textContent="请先选择关卡"; return;} LEVELS[current].run(scene); };
-rstBtn.onclick = ()=>{ if(!current) return; LEVELS[current].reset(scene); };
+runBtn.onclick = ()=>{ if(current) LEVELS[current].run(scene); };
+rstBtn.onclick = ()=>{ if(current) LEVELS[current].reset(scene); };
+nextBtn.onclick = ()=>{
+  if(!current) return;
+  const ids=Object.keys(LEVELS);
+  const i=ids.indexOf(current);
+  if(i>=0 && i<ids.length-1) openLevel(ids[i+1]);
+  else setResult("🎉 全部通关！", false);
+};
 
-// L9 需要的特效函数
-function showBoom(el){
-  const b=el.querySelector("#boom");
-  b.classList.remove("show"); void b.offsetWidth; // 重新触发动画
-  b.classList.add("show");
-}
-
-// 默认打开 L1
+// 默认进入 L1
 openLevel("L1");
 </script>
 </body>
