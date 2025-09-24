@@ -3,97 +3,140 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>代码探险岛 · 升级版 L1–L10</title>
+<title>代码探险岛 · 高质感 L1–L10</title>
 <style>
-  /* 主题变量：默认（蓝） */
+  /* 主题变量 */
   :root{
     --pri:#0d6efd; --pri-hover:#0b5ed7;
     --danger:#dc3545; --danger-hover:#bb2d3b;
     --bg:#f5f7fb; --panel:#fff; --border:#e5e7eb; --text:#111;
+    --glow: color-mix(in srgb, var(--pri) 50%, transparent);
   }
-  /* 绿色 */
   html[data-theme="green"]{
-    --pri:#22c55e; --pri-hover:#16a34a;
-    --danger:#ef4444; --danger-hover:#dc2626;
-    --bg:#f0fdf4; --panel:#ffffff; --border:#d1fae5; --text:#0b0f10;
+    --pri:#22c55e; --pri-hover:#16a34a; --danger:#ef4444; --danger-hover:#dc2626;
+    --bg:#f0fdf4; --panel:#fff; --border:#d1fae5; --text:#0b0f10; --glow:#9ae6b4;
   }
-  /* 黑金（深色） */
   html[data-theme="blackgold"]{
-    --pri:#d4af37; --pri-hover:#b8860b;
-    --danger:#ff4d4f; --danger-hover:#d9363e;
-    --bg:#0f0f0f; --panel:#151515; --border:#2a2a2a; --text:#f5f5f5;
+    --pri:#d4af37; --pri-hover:#b8860b; --danger:#ff4d4f; --danger-hover:#d9363e;
+    --bg:#0f0f0f; --panel:#151515; --border:#2a2a2a; --text:#f5f5f5; --glow:#e7c76a;
   }
 
   *{box-sizing:border-box}
-  body{margin:0;font-family:"Microsoft YaHei",sans-serif;background:var(--bg); color:var(--text)}
-  header{background:var(--pri);color:#fff;padding:16px;text-align:center}
-  .top-buttons{ position:fixed; top:12px; right:16px; display:flex; gap:10px; z-index:999; }
-  .toolbar{ position:fixed; left:16px; top:12px; z-index:999; display:flex; gap:8px; align-items:center; background:color-mix(in srgb, var(--panel) 85%, transparent); padding:6px 10px; border-radius:8px; border:1px solid var(--border); }
-  select{ padding:6px 8px; border-radius:8px; border:1px solid var(--border); background:var(--panel); color:var(--text); }
+  body{margin:0;font-family:"Microsoft YaHei",system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+  header{background:var(--pri);color:#fff;padding:16px;text-align:center;box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 40%, transparent)}
 
-  .wrap{max-width:1100px;margin:0 auto;padding:12px;display:grid;grid-template-columns:260px 1fr;gap:12px}
-  .sidebar{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px;height:calc(100vh - 160px);overflow:auto}
-  .lvl{padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;background:var(--panel)}
+  .topbar-fixed{
+    position:fixed; top:12px; left:16px; right:16px; display:flex; justify-content:space-between; z-index:1000;
+    pointer-events:none;
+  }
+  .top-left, .top-right{display:flex; gap:10px; pointer-events:auto}
+  select{ padding:8px 10px; border-radius:10px; border:1px solid var(--border); background:var(--panel); color:var(--text); }
+
+  .wrap{max-width:1200px;margin:0 auto;padding:12px;display:grid;grid-template-columns:280px 1fr;gap:12px}
+  .sidebar{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px;height:calc(100vh - 170px);overflow:auto}
+  .lvl{padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--panel);cursor:pointer}
   .lvl:hover{background:color-mix(in srgb, var(--pri) 10%, var(--panel))}
   .active{outline:2px solid var(--pri)}
-  .stage{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;min-height:560px;display:flex;flex-direction:column}
-  .topbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .stage{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 14px 18px;min-height:600px;display:flex;flex-direction:column}
+
+  .controls{display:flex; gap:10px; margin-bottom:10px}
   .btn{
     border:1px solid var(--border); background:var(--pri); color:#fff;
-    border-radius:999px; padding:8px 14px; font-size:14px; text-decoration:none; cursor:pointer;
-    box-shadow:0 4px 10px color-mix(in srgb, var(--pri) 35%, transparent); transition:.2s;
+    border-radius:999px; padding:10px 16px; font-size:14px; text-decoration:none; cursor:pointer;
+    box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 35%, transparent); transition:.2s;
   }
   .btn:hover{ background:var(--pri-hover) }
   .btn.danger{ background:var(--danger) }
   .btn.danger:hover{ background:var(--danger-hover) }
-  .scene{flex:1;border:1px dashed var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb, var(--panel) 85%, var(--bg));position:relative;overflow:hidden}
-  .tag{margin-top:8px;color:#667085}
-  .result{margin-top:8px;font-weight:bold}
-  .next-btn{display:none;margin-top:10px}
-  .next-btn.show{display:inline-block}
-  .footer{text-align:center;padding:16px;font-size:.9rem;color:#666}
-  .footer a{color:var(--pri);text-decoration:none}
-  .footer a:hover{text-decoration:underline}
+
+  .scene{
+    flex:1; border:1px dashed var(--border); border-radius:14px; position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background:
+      radial-gradient(400px 180px at 70% 0%, #ffffff22, transparent 60%),
+      linear-gradient(180deg, #a7f3ff1e, transparent 30%),
+      var(--panel);
+  }
+  .desc{ margin-top:8px; color:#667085 }
+  .result{ margin-top:8px; font-weight:700 }
+
+  /* 通关闪光 */
+  .spark{ position:absolute; inset:0; pointer-events:none; opacity:0; }
+  .spark.show{ animation:shine .9s ease forwards }
+  @keyframes shine{
+    0%{ opacity:0 }
+    30%{ opacity:1 }
+    100%{ opacity:0 }
+  }
+
+  /* 场景背景预设 */
+  .bg-forest { background:linear-gradient(180deg,#dcfce7,#f0fdf4); }
+  .bg-cave   { background:linear-gradient(180deg,#c7d2fe,#eef2ff); }
+  .bg-temple { background:linear-gradient(180deg,#fde68a,#fff7ed); }
+  .bg-sea    { background:linear-gradient(180deg,#bae6fd,#e0f2fe); }
+  .bg-dark   { background:linear-gradient(180deg,#e5e7eb,#f3f4f6); }
+
+  /* 小元素 SVG 容器 */
+  .svg-wrap{ width:140px; height:140px; filter:drop-shadow(0 8px 16px rgba(0,0,0,.2)); }
+  .gate{ width:220px; height:220px; }
+  .dex{ width:360px; }
+
+  @media (max-width:960px){ .wrap{grid-template-columns:1fr} .sidebar{height:auto} }
 </style>
 </head>
 <body>
 
-  <!-- 左上：主题选择器 -->
-  <div class="toolbar">
-    <label for="theme">🎨 主题：</label>
-    <select id="theme">
-      <option value="">蓝色</option>
-      <option value="green">绿色</option>
-      <option value="blackgold">黑金</option>
-    </select>
+  <!-- 固定工具条：左=主题，右=返回/重置 -->
+  <div class="topbar-fixed">
+    <div class="top-left">
+      <label for="theme" style="align-self:center;background:color-mix(in srgb, var(--panel) 85%, transparent);padding:6px 10px;border:1px solid var(--border);border-radius:10px;">
+        🎨 主题：
+        <select id="theme">
+          <option value="">蓝色</option>
+          <option value="green">绿色</option>
+          <option value="blackgold">黑金</option>
+        </select>
+      </label>
+    </div>
+    <div class="top-right">
+      <a href="../" class="btn">🏠 返回首页</a>
+      <button id="resetProgress" class="btn danger">🔄 重新开始</button>
+    </div>
   </div>
 
-  <!-- 右上：返回 & 重新开始 -->
-  <div class="top-buttons">
-    <a href="../" class="btn">🏠 返回首页</a>
-    <button id="resetProgress" class="btn danger">🔄 重新开始</button>
-  </div>
-
-  <header><h1>🏝 代码探险岛 · 升级版 L1–L10</h1></header>
+  <header><h1>代码探险岛 · 高质感关卡</h1></header>
 
   <div class="wrap">
     <aside class="sidebar" id="menu"></aside>
 
     <section class="stage">
-      <div class="topbar">
+      <div class="controls">
         <button class="btn" id="run">▶ 运行</button>
         <button class="btn" id="reset">↩ 重置</button>
-        <span id="hint">请选择左侧关卡</span>
+        <span id="hint" style="margin-left:8px">请选择左侧关卡</span>
       </div>
-      <div class="scene" id="scene"></div>
-      <div class="tag" id="desc"></div>
+
+      <div class="scene" id="scene">
+        <!-- 动态渲染 -->
+        <svg class="spark" id="spark" viewBox="0 0 200 200">
+          <defs>
+            <radialGradient id="sg" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="white" />
+              <stop offset="1" stop-color="white" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <circle cx="100" cy="100" r="80" fill="url(#sg)" />
+        </svg>
+      </div>
+
+      <div class="desc" id="desc"></div>
       <div class="result" id="result"></div>
       <button class="btn next-btn" id="nextBtn">➡ 下一关</button>
     </section>
   </div>
 
-  <div class="footer">
-    <a href="../">← 返回首页</a>
+  <div style="text-align:center;padding:12px;color:#777">
+    © 2025 大胆专属
   </div>
 
   <audio id="bgm" loop></audio>
@@ -110,109 +153,260 @@ themeSel.onchange = () => {
 };
 
 /* ===== 公共引用 ===== */
-const scene=document.getElementById("scene");
-const desc=document.getElementById("desc");
-const hint=document.getElementById("hint");
-const result=document.getElementById("result");
-const nextBtn=document.getElementById("nextBtn");
-const bgm=document.getElementById("bgm");
+const scene = document.getElementById('scene');
+const desc  = document.getElementById('desc');
+const hint  = document.getElementById('hint');
+const result= document.getElementById('result');
+const nextBtn=document.getElementById('nextBtn');
+const bgm   = document.getElementById('bgm');
+const spark = document.getElementById('spark');
 let current=null;
 
-function setResult(msg,ok=false){
-  result.textContent=msg||"";
-  nextBtn.classList.toggle("show",!!ok);
+function setResult(msg, ok=false){
+  result.textContent = msg || '';
+  nextBtn.classList.toggle('show', !!ok);
+  if(ok){ spark.classList.remove('show'); void spark.offsetWidth; spark.classList.add('show'); }
 }
 function playMusic(url){ bgm.src=url; bgm.play().catch(()=>{}); }
 function saveProgress(levelId){
-  const levelNum=Number(levelId.replace("L",""));
-  const passed=Number(localStorage.getItem("passedLevels")||0);
-  localStorage.setItem("passedLevels",Math.max(passed,levelNum));
+  const n = Number(levelId.replace('L',''));
+  const p = Number(localStorage.getItem('passedLevels')||0);
+  localStorage.setItem('passedLevels', Math.max(p, n));
 }
 
-/* ===== 关卡（简化演示逻辑，同前一版） ===== */
-const LEVELS={
-  L1:{title:"L1 点亮火把 🔥",desc:"点亮火把即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    setup(el){el.innerHTML=`<div id="torch">🪵</div>`;setResult("");},
-    run(el){el.innerHTML=`🔥🪵`;setResult("✅ 通关",true);saveProgress("L1");},
-    reset(el){el.innerHTML=`<div id="torch">🪵</div>`;setResult("");}},
-  L2:{title:"L2 移动小球 ⚽",desc:"小球移动到终点即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    setup(el){el.innerHTML=`<div id="ball">⚽</div>`;el.dataset.pos=0;setResult("");},
-    run(el){el.dataset.pos=+el.dataset.pos+5;if(el.dataset.pos>=5){setResult("✅ 小球到终点！",true);saveProgress("L2");}else setResult("继续移动…");},
-    reset(el){el.dataset.pos=0;el.innerHTML=`<div id="ball">⚽</div>`;setResult("");}},
-  L3:{title:"L3 开门试炼 🚪",desc:"获得钥匙并打开大门。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-    setup(el){el.innerHTML=`<div id="door">🚪</div>`;setResult("");},
-    run(el){el.innerHTML=`🚪🔑 → 开门`;setResult("✅ 大门已开！",true);saveProgress("L3");},
-    reset(el){el.innerHTML=`<div id="door">🚪</div>`;setResult("");}},
-  L4:{title:"L4 驯服小怪兽 🐾",desc:"喂食怪兽，怪兽冷静下来。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-    setup(el){el.innerHTML=`👾`;setResult("");},
-    run(el){el.innerHTML=`👾🍎 → 😊`;setResult("✅ 怪兽冷静！",true);saveProgress("L4");},
-    reset(el){el.innerHTML=`👾`;setResult("");}},
-  L5:{title:"L5 灯塔引航 ⛵",desc:"走到终点即通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-    setup(el){el.innerHTML=`⛵`;setResult("");},
-    run(el){el.innerHTML=`⛵ → 终点`;setResult("✅ 到达航点！",true);saveProgress("L5");},
-    reset(el){el.innerHTML=`⛵`;setResult("");}},
-  L6:{title:"L6 宝箱密码 💎",desc:"输入正确密码（1234）。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
-    setup(el){el.innerHTML=`🧰`;setResult("");},
-    run(el){const pwd=prompt("请输入密码","");if(pwd==="1234"){el.innerHTML=`💎`;setResult("✅ 宝箱开启！",true);saveProgress("L6");}else setResult("❌ 密码错误");},
-    reset(el){el.innerHTML=`🧰`;setResult("");}},
-  L7:{title:"L7 怪兽图鉴 📖",desc:"图鉴完成即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
-    setup(el){el.innerHTML=`📖`;setResult("");},
-    run(el){el.innerHTML=`🐲 图鉴完成`;setResult("✅ 通关！",true);saveProgress("L7");},
-    reset(el){el.innerHTML=`📖`;setResult("");}},
-  L8:{title:"L8 神秘石碑 🗿",desc:"激活按钮即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-    setup(el){el.innerHTML=`🗿`;setResult("");},
-    run(el){el.innerHTML=`🗿✨`;setResult("✅ 石碑激活！",true);saveProgress("L8");},
-    reset(el){el.innerHTML=`🗿`;setResult("");}},
-  L9:{title:"L9 魔法卷轴 📜",desc:"释放咒语即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
-    setup(el){el.innerHTML=`📜`;setResult("");},
-    run(el){el.innerHTML=`📜✨`;setResult("✅ 魔法释放！",true);saveProgress("L9");},
-    reset(el){el.innerHTML=`📜`;setResult("");}},
-  L10:{title:"L10 终极试炼 👑",desc:"完成最终试炼即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
-    setup(el){el.innerHTML=`🐉 Boss`;setResult("");},
-    run(el){el.innerHTML=`🐉⚔️ → ✅`;setResult("✅ 最终试炼通过！",true);saveProgress("L10");},
-    reset(el){el.innerHTML=`🐉 Boss`;setResult("");}}
+/* ===== 内嵌 SVG 组件（更精致） ===== */
+const SVGs = {
+  torch(lit=false){
+    return `
+    <svg class="svg-wrap" viewBox="0 0 120 120">
+      <defs>
+        <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#a16207"/><stop offset="1" stop-color="#7c3f0e"/>
+        </linearGradient>
+        <radialGradient id="fire" cx="50%" cy="25%" r="40%">
+          <stop offset="0" stop-color="#fff59d"/><stop offset="1" stop-color="#ef4444"/>
+        </radialGradient>
+      </defs>
+      ${lit?`<circle cx="60" cy="28" r="18" fill="url(#fire)" opacity=".95">
+        <animate attributeName="r" values="16;20;16" dur="1s" repeatCount="indefinite"/></circle>`:''}
+      <rect x="52" y="30" width="16" height="70" rx="8" fill="url(#wood)"/>
+      <circle cx="60" cy="28" r="12" fill="#fb923c" opacity="${lit?'.9':'.08'}"/>
+    </svg>`;
+  },
+  door(open=false){
+    return `
+    <svg class="gate" viewBox="0 0 200 200">
+      <rect x="10" y="20" width="180" height="160" rx="12" fill="#c7d2fe" stroke="#94a3b8" stroke-width="3"/>
+      <g transform="${open?'rotate(-65 80 100)':'rotate(0 80 100)'}">
+        <rect x="40" y="40" width="80" height="120" rx="10" fill="#8b5e34" stroke="#6b4426" stroke-width="6"/>
+        <circle cx="108" cy="100" r="6" fill="#facc15"/>
+      </g>
+    </svg>`;
+  },
+  monster(calm=false){
+    return `
+    <svg class="svg-wrap" viewBox="0 0 120 120">
+      <defs><linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs>
+      <circle cx="60" cy="60" r="42" fill="url(#m)" />
+      <circle cx="45" cy="50" r="8" fill="#111"/>
+      <circle cx="75" cy="50" r="8" fill="#111"/>
+      <rect x="40" y="78" width="40" height="12" rx="6" fill="#111"/>
+      ${calm?`<text x="60" y="110" font-size="14" text-anchor="middle" fill="#111">calm ✓</text>`:''}
+    </svg>`;
+  },
+  chest(open=false){
+    return `
+    <svg class="svg-wrap" viewBox="0 0 140 120">
+      <rect x="20" y="40" width="100" height="60" rx="10" fill="#78350f" stroke="#5b290b" stroke-width="6"/>
+      <rect x="20" y="20" width="100" height="30" rx="10" fill="#a16207"/>
+      <rect x="65" y="20" width="10" height="80" fill="#fde047"/>
+      <rect x="60" y="62" width="20" height="26" rx="4" fill="#fde047" stroke="#fbbf24" stroke-width="4"/>
+      ${open?`<g opacity="1"><text x="70" y="38" text-anchor="middle">💎</text></g>`:`<g opacity=".05"><text x="70" y="38" text-anchor="middle">💎</text></g>`}
+    </svg>`;
+  },
+  book(fill=false){
+    return `
+    <svg class="dex" viewBox="0 0 360 200">
+      <rect x="10" y="10" width="340" height="180" rx="12" fill="#fff" stroke="#e5e7eb"/>
+      <text x="60" y="70" font-size="42">🐲</text>
+      <text x="110" y="70" font-size="22" fill="#111">Dragon · Lv10</text>
+      <rect x="110" y="110" width="210" height="12" rx="6" fill="#e5e7eb"/>
+      <rect x="110" y="110" width="${fill?210:0}" height="12" rx="6" fill="#22c55e">
+        ${fill?`<animate attributeName="width" from="0" to="210" dur=".8s" fill="freeze"/>`:''}
+      </rect>
+    </svg>`;
+  }
 };
 
-/* ===== 菜单与交互 ===== */
-const menu=document.getElementById("menu");
-Object.entries(LEVELS).forEach(([id,lv])=>{
-  const d=document.createElement("div");
-  d.className="lvl"; d.textContent=lv.title; d.id="btn-"+id;
+/* ===== 关卡（高质感场景） ===== */
+const LEVELS = {
+  L1:{
+    title:"L1 森林 · 点燃火把", bg:"bg-forest",
+    desc:"点燃火把，照亮前路。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    setup(el){ el.innerHTML = SVGs.torch(false); setResult(""); },
+    run(el){ el.innerHTML = SVGs.torch(true); setResult("✅ 火把点亮，继续前进！", true); saveProgress("L1"); }
+  },
+  L2:{
+    title:"L2 海岸 · 小球启航", bg:"bg-sea",
+    desc:"让小球抵达灯塔（点击运行即可演示动画版）。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    setup(el){
+      el.innerHTML = `<div style="width:80%;height:12px;background:#e3e8ef;border-radius:999px;position:relative">
+        <div id="ball" style="position:absolute;left:0;top:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:var(--pri);box-shadow:0 6px 14px var(--glow);transition:left .5s"></div>
+      </div>`;
+      el.dataset.pos=0; setResult("");
+    },
+    run(el){
+      const ball = el.querySelector('#ball');
+      let cur = +el.dataset.pos + 50; // 百分比位移
+      cur = Math.min(cur, 100); ball.style.left = cur + "%"; el.dataset.pos = cur;
+      if(cur>=100){ setResult("✅ 抵达灯塔！", true); saveProgress("L2"); }
+      else setResult("继续航行中…");
+    }
+  },
+  L3:{
+    title:"L3 山口 · 打开城门", bg:"bg-cave",
+    desc:"获得钥匙并打开城门。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    setup(el){ el.innerHTML = SVGs.door(false); setResult(""); },
+    run(el){ el.innerHTML = SVGs.door(true); setResult("✅ 城门敞开！", true); saveProgress("L3"); }
+  },
+  L4:{
+    title:"L4 林地 · 安抚怪兽", bg:"bg-forest",
+    desc:"喂食小怪，观察它冷静下来。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    setup(el){ el.innerHTML = SVGs.monster(false); setResult(""); },
+    run(el){ el.innerHTML = SVGs.monster(true); setResult("✅ 怪兽平静下来！", true); saveProgress("L4"); }
+  },
+  L5:{
+    title:"L5 海峡 · 灯塔引航", bg:"bg-sea",
+    desc:"演示：前进 5 → 右转 → 前进 3（简化成到达终点）。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    setup(el){ el.innerHTML = `<div style="width:90%;height:180px;border-radius:14px;border:1px dashed var(--border);position:relative;background:linear-gradient(180deg,#e0f2fe,#f0f9ff)">
+      <div id="boat" style="position:absolute;left:14%;top:70%;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:28px solid #0ea5e9;filter:drop-shadow(0 6px 12px rgba(0,0,0,.25));transition:all .35s"></div>
+    </div>`; setResult(""); },
+    run(el){
+      const boat = el.querySelector('#boat');
+      boat.style.left = '80%'; boat.style.top = '30%'; boat.style.transform = 'rotate(25deg)';
+      setTimeout(()=>{ setResult("✅ 抵达航点！", true); saveProgress("L5"); }, 450);
+    }
+  },
+  L6:{
+    title:"L6 地窟 · 宝箱密码", bg:"bg-cave",
+    desc:"输入正确密码 1234 打开宝箱。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+    setup(el){ el.innerHTML = SVGs.chest(false); el.dataset.pass="1234"; setResult(""); },
+    run(el){
+      const i = prompt("请输入宝箱密码（提示：1234）：",""); 
+      if(i===el.dataset.pass){ el.innerHTML = SVGs.chest(true); setResult("✅ 宝箱开启！", true); saveProgress("L6"); }
+      else setResult("❌ 密码错误，再试试～");
+    }
+  },
+  L7:{
+    title:"L7 神庙 · 怪兽图鉴", bg:"bg-temple",
+    desc:"展开图鉴，注满 HP 条。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+    setup(el){ el.innerHTML = SVGs.book(false); setResult(""); },
+    run(el){ el.innerHTML = SVGs.book(true); setTimeout(()=>{ setResult("✅ 图鉴完成！", true); saveProgress("L7"); }, 850); }
+  },
+  L8:{
+    title:"L8 神碑 · 激活按钮", bg:"bg-temple",
+    desc:"激活石碑（按钮高亮）。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+    setup(el){
+      el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+        <button id="b" class="btn" style="background:#e5e7eb;color:#111;border-color:#d1d5db">按钮</button>
+        <small style="color:#6b7280">id=magicBtn</small>
+      </div>`;
+      setResult("");
+    },
+    run(el){ const b=el.querySelector('#b'); b.textContent='已激活'; b.style.background='var(--pri)'; b.style.color='#fff'; setResult("✅ 石碑已激活！", true); saveProgress("L8"); }
+  },
+  L9:{
+    title:"L9 卷轴 · 施放法术", bg:"bg-forest",
+    desc:"点击释放，显示 ✨ Spell Cast! 动效。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+    setup(el){
+      el.innerHTML = `<div style="position:relative;width:360px;padding:18px 22px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.06)">
+        <div>古老的卷轴正在等待咒语…</div>
+        <button id="cast" class="btn" style="margin-top:10px">释放！</button>
+        <div id="fx" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:32px;opacity:0;pointer-events:none">✨ Spell Cast!</div>
+      </div>`;
+      el.querySelector('#cast').onclick = ()=>{
+        const fx = el.querySelector('#fx'); fx.style.transition='none'; fx.style.opacity='0'; fx.style.transform='translate(-50%,-50%) scale(.6)';
+        requestAnimationFrame(()=>{
+          fx.style.transition='.6s'; fx.style.opacity='1'; fx.style.transform='translate(-50%,-50%) scale(1.2)';
+          setTimeout(()=>{ fx.style.opacity='0'; }, 500);
+        });
+      };
+      setResult("");
+    },
+    run(el){ el.querySelector('#cast').click(); setTimeout(()=>{ setResult("✅ 魔法释放成功！", true); saveProgress("L9"); }, 450); }
+  },
+  L10:{
+    title:"L10 终章 · 王之试炼", bg:"bg-dark",
+    desc:"三名守关者现身，HP 条依次注满。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+    setup(el){
+      el.innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(680px,92%);">
+        ${['🟢 Slime','🛡️ Orc','🐲 Dragon'].map(n=>`
+          <div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
+            <div style="font-size:42px">${n.split(' ')[0]}</div>
+            <strong>${n.split(' ')[1]}</strong>
+            <div class="bar" style="height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:6px">
+              <div class="v" style="height:100%;width:0;background:#ef4444"></div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+      setResult("");
+    },
+    run(el){
+      const bars=[...el.querySelectorAll('.v')];
+      bars.forEach((b,i)=> setTimeout(()=> b.style.width='100%', i*320));
+      setTimeout(()=>{ setResult('✅ 终极试炼完成！', true); saveProgress('L10'); }, 1200);
+    }
+  }
+};
+
+/* ===== 渲染 & 交互 ===== */
+const menu = document.getElementById('menu');
+Object.entries(LEVELS).forEach(([id, lv])=>{
+  const d = document.createElement('div');
+  d.className='lvl'; d.id='btn-'+id; d.textContent=lv.title;
   d.onclick=()=>openLevel(id);
   menu.appendChild(d);
 });
 
 function openLevel(id){
   current=id;
-  [...menu.children].forEach(x=>x.classList.remove("active"));
-  document.getElementById("btn-"+id).classList.add("active");
-  hint.textContent=LEVELS[id].title;
-  desc.textContent=LEVELS[id].desc;
+  [...menu.children].forEach(x=>x.classList.remove('active'));
+  document.getElementById('btn-'+id).classList.add('active');
+  hint.textContent = LEVELS[id].title;
+  desc.textContent = LEVELS[id].desc;
+  scene.className = 'scene ' + (LEVELS[id].bg||'');
   LEVELS[id].setup(scene);
   playMusic(LEVELS[id].music);
-  nextBtn.classList.remove("show");
+  setResult('');
+  nextBtn.classList.remove('show');
 }
 
-document.getElementById("run").onclick=()=>{ if(current) LEVELS[current].run(scene); };
-document.getElementById("reset").onclick=()=>{ if(current) LEVELS[current].reset(scene); };
-nextBtn.onclick=()=>{
-  if(!current) return;
-  const ids=Object.keys(LEVELS);
-  const idx=ids.indexOf(current);
-  if(idx>=0 && idx<ids.length-1) openLevel(ids[idx+1]);
-  else setResult("🎉 全部通关！", false);
-};
-
-// 清空进度
-document.getElementById("resetProgress").onclick=()=>{
-  if(confirm("确定要清空通关进度吗？")){
-    localStorage.removeItem("passedLevels");
-    alert("进度已清空，返回首页可看到 0/10。");
+document.getElementById('run').onclick = ()=>{ if(current) LEVELS[current].run(scene); };
+document.getElementById('reset').onclick = ()=>{ if(current) LEVELS[current].setup(scene); setResult(''); };
+document.getElementById('resetProgress').onclick = ()=>{
+  if(confirm('确定要清空通关进度吗？')){
+    localStorage.removeItem('passedLevels');
+    alert('进度已清空。返回首页可看到 0/10。');
   }
 };
+nextBtn.onclick = ()=>{
+  if(!current) return;
+  const ids=Object.keys(LEVELS); const i=ids.indexOf(current);
+  if(i>=0 && i<ids.length-1) openLevel(ids[i+1]); else setResult('🎉 全部通关！', false);
+};
 
-// 默认进入 L1
-openLevel("L1");
+// 默认打开 L1
+openLevel('L1');
 </script>
 </body>
 </html>
