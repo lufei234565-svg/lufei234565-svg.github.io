@@ -1,57 +1,115 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" data-theme="">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>代码探险岛 · 升级版 L1–L10</title>
 <style>
-  body{margin:0;font-family:"Microsoft YaHei",sans-serif;background:#f5f7fb}
-  header{background:#0d6efd;color:#fff;padding:16px;text-align:center}
+  /* 主题变量：默认（蓝） */
+  :root{
+    --pri:#0d6efd; --pri-hover:#0b5ed7;
+    --danger:#dc3545; --danger-hover:#bb2d3b;
+    --bg:#f5f7fb; --panel:#fff; --border:#e5e7eb; --text:#111;
+  }
+  /* 绿色 */
+  html[data-theme="green"]{
+    --pri:#22c55e; --pri-hover:#16a34a;
+    --danger:#ef4444; --danger-hover:#dc2626;
+    --bg:#f0fdf4; --panel:#ffffff; --border:#d1fae5; --text:#0b0f10;
+  }
+  /* 黑金（深色） */
+  html[data-theme="blackgold"]{
+    --pri:#d4af37; --pri-hover:#b8860b;
+    --danger:#ff4d4f; --danger-hover:#d9363e;
+    --bg:#0f0f0f; --panel:#151515; --border:#2a2a2a; --text:#f5f5f5;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Microsoft YaHei",sans-serif;background:var(--bg); color:var(--text)}
+  header{background:var(--pri);color:#fff;padding:16px;text-align:center}
+  .top-buttons{ position:fixed; top:12px; right:16px; display:flex; gap:10px; z-index:999; }
+  .toolbar{ position:fixed; left:16px; top:12px; z-index:999; display:flex; gap:8px; align-items:center; background:color-mix(in srgb, var(--panel) 85%, transparent); padding:6px 10px; border-radius:8px; border:1px solid var(--border); }
+  select{ padding:6px 8px; border-radius:8px; border:1px solid var(--border); background:var(--panel); color:var(--text); }
+
   .wrap{max-width:1100px;margin:0 auto;padding:12px;display:grid;grid-template-columns:260px 1fr;gap:12px}
-  .sidebar{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:10px;height:calc(100vh - 160px);overflow:auto}
-  .lvl{padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:8px;cursor:pointer}
-  .lvl:hover{background:#f1f7ff}
-  .active{outline:2px solid #0d6efd}
-  .stage{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;min-height:560px;display:flex;flex-direction:column}
+  .sidebar{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px;height:calc(100vh - 160px);overflow:auto}
+  .lvl{padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;background:var(--panel)}
+  .lvl:hover{background:color-mix(in srgb, var(--pri) 10%, var(--panel))}
+  .active{outline:2px solid var(--pri)}
+  .stage{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;min-height:560px;display:flex;flex-direction:column}
   .topbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-  .btn{border:1px solid #e5e7eb;background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
-  .btn.primary{background:#0d6efd;color:#fff}
-  .scene{flex:1;border:1px dashed #e5e7eb;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#f9fafb;position:relative;overflow:hidden}
+  .btn{
+    border:1px solid var(--border); background:var(--pri); color:#fff;
+    border-radius:999px; padding:8px 14px; font-size:14px; text-decoration:none; cursor:pointer;
+    box-shadow:0 4px 10px color-mix(in srgb, var(--pri) 35%, transparent); transition:.2s;
+  }
+  .btn:hover{ background:var(--pri-hover) }
+  .btn.danger{ background:var(--danger) }
+  .btn.danger:hover{ background:var(--danger-hover) }
+  .scene{flex:1;border:1px dashed var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb, var(--panel) 85%, var(--bg));position:relative;overflow:hidden}
   .tag{margin-top:8px;color:#667085}
   .result{margin-top:8px;font-weight:bold}
   .next-btn{display:none;margin-top:10px}
   .next-btn.show{display:inline-block}
   .footer{text-align:center;padding:16px;font-size:.9rem;color:#666}
-  .footer a{color:#0d6efd;text-decoration:none}
+  .footer a{color:var(--pri);text-decoration:none}
   .footer a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<header><h1>🏝 代码探险岛 · 升级版 L1–L10</h1></header>
 
-<div class="wrap">
-  <aside class="sidebar" id="menu"></aside>
+  <!-- 左上：主题选择器 -->
+  <div class="toolbar">
+    <label for="theme">🎨 主题：</label>
+    <select id="theme">
+      <option value="">蓝色</option>
+      <option value="green">绿色</option>
+      <option value="blackgold">黑金</option>
+    </select>
+  </div>
 
-  <section class="stage">
-    <div class="topbar">
-      <button class="btn primary" id="run">▶ 运行</button>
-      <button class="btn" id="reset">↩ 重置</button>
-      <span id="hint">请选择左侧关卡</span>
-    </div>
-    <div class="scene" id="scene"></div>
-    <div class="tag" id="desc"></div>
-    <div class="result" id="result"></div>
-    <button class="btn next-btn" id="nextBtn">➡ 下一关</button>
-  </section>
-</div>
+  <!-- 右上：返回 & 重新开始 -->
+  <div class="top-buttons">
+    <a href="../" class="btn">🏠 返回首页</a>
+    <button id="resetProgress" class="btn danger">🔄 重新开始</button>
+  </div>
 
-<div class="footer">
-  <a href="../">← 返回首页</a>
-</div>
+  <header><h1>🏝 代码探险岛 · 升级版 L1–L10</h1></header>
 
-<audio id="bgm" loop></audio>
+  <div class="wrap">
+    <aside class="sidebar" id="menu"></aside>
+
+    <section class="stage">
+      <div class="topbar">
+        <button class="btn" id="run">▶ 运行</button>
+        <button class="btn" id="reset">↩ 重置</button>
+        <span id="hint">请选择左侧关卡</span>
+      </div>
+      <div class="scene" id="scene"></div>
+      <div class="tag" id="desc"></div>
+      <div class="result" id="result"></div>
+      <button class="btn next-btn" id="nextBtn">➡ 下一关</button>
+    </section>
+  </div>
+
+  <div class="footer">
+    <a href="../">← 返回首页</a>
+  </div>
+
+  <audio id="bgm" loop></audio>
 
 <script>
+/* ===== 主题同步 ===== */
+const themeSel = document.getElementById('theme');
+const savedTheme = localStorage.getItem('siteTheme') || '';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeSel.value = savedTheme;
+themeSel.onchange = () => {
+  document.documentElement.setAttribute('data-theme', themeSel.value);
+  localStorage.setItem('siteTheme', themeSel.value);
+};
+
+/* ===== 公共引用 ===== */
 const scene=document.getElementById("scene");
 const desc=document.getElementById("desc");
 const hint=document.getElementById("hint");
@@ -65,15 +123,13 @@ function setResult(msg,ok=false){
   nextBtn.classList.toggle("show",!!ok);
 }
 function playMusic(url){ bgm.src=url; bgm.play().catch(()=>{}); }
-
-// 保存通关进度
 function saveProgress(levelId){
   const levelNum=Number(levelId.replace("L",""));
   const passed=Number(localStorage.getItem("passedLevels")||0);
   localStorage.setItem("passedLevels",Math.max(passed,levelNum));
 }
 
-// 定义关卡
+/* ===== 关卡（简化演示逻辑，同前一版） ===== */
 const LEVELS={
   L1:{title:"L1 点亮火把 🔥",desc:"点亮火把即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     setup(el){el.innerHTML=`<div id="torch">🪵</div>`;setResult("");},
@@ -81,7 +137,7 @@ const LEVELS={
     reset(el){el.innerHTML=`<div id="torch">🪵</div>`;setResult("");}},
   L2:{title:"L2 移动小球 ⚽",desc:"小球移动到终点即可通关。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     setup(el){el.innerHTML=`<div id="ball">⚽</div>`;el.dataset.pos=0;setResult("");},
-    run(el){el.dataset.pos=+el.dataset.pos+5;if(el.dataset.pos>=5)setResult("✅ 小球到终点！",true),saveProgress("L2");else setResult("继续移动…");},
+    run(el){el.dataset.pos=+el.dataset.pos+5;if(el.dataset.pos>=5){setResult("✅ 小球到终点！",true);saveProgress("L2");}else setResult("继续移动…");},
     reset(el){el.dataset.pos=0;el.innerHTML=`<div id="ball">⚽</div>`;setResult("");}},
   L3:{title:"L3 开门试炼 🚪",desc:"获得钥匙并打开大门。",music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     setup(el){el.innerHTML=`<div id="door">🚪</div>`;setResult("");},
@@ -117,11 +173,11 @@ const LEVELS={
     reset(el){el.innerHTML=`🐉 Boss`;setResult("");}}
 };
 
-// 菜单渲染
+/* ===== 菜单与交互 ===== */
 const menu=document.getElementById("menu");
 Object.entries(LEVELS).forEach(([id,lv])=>{
   const d=document.createElement("div");
-  d.className="lvl";d.textContent=lv.title;d.id="btn-"+id;
+  d.className="lvl"; d.textContent=lv.title; d.id="btn-"+id;
   d.onclick=()=>openLevel(id);
   menu.appendChild(d);
 });
@@ -137,13 +193,22 @@ function openLevel(id){
   nextBtn.classList.remove("show");
 }
 
-document.getElementById("run").onclick=()=>{if(current)LEVELS[current].run(scene);};
-document.getElementById("reset").onclick=()=>{if(current)LEVELS[current].reset(scene);};
+document.getElementById("run").onclick=()=>{ if(current) LEVELS[current].run(scene); };
+document.getElementById("reset").onclick=()=>{ if(current) LEVELS[current].reset(scene); };
 nextBtn.onclick=()=>{
-  if(!current)return;
+  if(!current) return;
   const ids=Object.keys(LEVELS);
   const idx=ids.indexOf(current);
-  if(idx>=0 && idx<ids.length-1)openLevel(ids[idx+1]);else setResult("🎉 全部通关！",false);
+  if(idx>=0 && idx<ids.length-1) openLevel(ids[idx+1]);
+  else setResult("🎉 全部通关！", false);
+};
+
+// 清空进度
+document.getElementById("resetProgress").onclick=()=>{
+  if(confirm("确定要清空通关进度吗？")){
+    localStorage.removeItem("passedLevels");
+    alert("进度已清空，返回首页可看到 0/10。");
+  }
 };
 
 // 默认进入 L1
