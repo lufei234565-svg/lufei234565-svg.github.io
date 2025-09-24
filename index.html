@@ -8,10 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0f14; --text:#eaf2ff; --muted:#9fb2c7;
-    --brand:#6aa4ff; --brand2:#a78bfa; --accent:#22d3ee;
-    --glass: rgba(255,255,255,.06); --stroke: rgba(255,255,255,.12);
-  }
+  --bg:#F9FBFC;       /* 页面浅背景 */
+  --text:#243240;     /* 主文字颜色 */
+  --muted:#6B7A8C;    /* 次要文字颜色 */
+  --brand:#4DA3A9;    /* 主色（松石绿） */
+  --brand2:#7BC4B2;   /* 辅色（薄荷绿） */
+  --accent:#F5B971;   /* 点缀色（暖杏黄） */
+  --panel:#FFFFFF;    /* 白色卡片背景 */
+  --stroke:#E7EEF5;   /* 边框浅灰 */
+  --glass: rgba(255,255,255,.72); /* 半透明玻璃效果 */
+}
+
   *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);}
   .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
   header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
@@ -160,3 +167,4 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
+
