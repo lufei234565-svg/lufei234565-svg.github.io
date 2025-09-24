@@ -1,517 +1,433 @@
 <!DOCTYPE html>
-<html lang="zh" data-theme="">
+<html lang="zh">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>代码探险岛 · 教学命令版 L1–L20</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<title>代码探险岛 · 动作闯关（Phaser）</title>
+<!-- Phaser 3.60 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
 <style>
-  :root{
-    --pri:#0d6efd; --pri-hover:#0b5ed7;
-    --danger:#dc3545; --danger-hover:#bb2d3b;
-    --bg:#f5f7fb; --panel:#fff; --border:#e5e7eb; --text:#111;
-    --glow: color-mix(in srgb, var(--pri) 50%, transparent);
+  html,body{height:100%;margin:0;background:#0f0f0f;color:#eee;font-family:"Microsoft YaHei",system-ui,Segoe UI,Roboto,sans-serif;}
+  #game{width:100%;max-width:1100px;margin:0 auto;display:block;}
+  .hud{
+    position:fixed;left:50%;top:8px;transform:translateX(-50%);
+    display:flex;gap:14px;align-items:center;background:#0008;
+    border:1px solid #ffffff20;border-radius:12px;padding:8px 12px;backdrop-filter:blur(6px);z-index:10
   }
-  html[data-theme="green"]{
-    --pri:#22c55e; --pri-hover:#16a34a; --danger:#ef4444; --danger-hover:#dc2626;
-    --bg:#f0fdf4; --panel:#fff; --border:#d1fae5; --text:#0b0f10; --glow:#9ae6b4;
+  .hud b{color:#ffd166}
+  .top-right{
+    position:fixed;right:12px;top:12px;display:flex;gap:10px;z-index:10
   }
-  html[data-theme="blackgold"]{
-    --pri:#d4af37; --pri-hover:#b8860b; --danger:#ff4d4f; --danger-hover:#d9363e;
-    --bg:#0f0f0f; --panel:#151515; --border:#2a2a2a; --text:#f5f5f5; --glow:#e7c76a;
+  .btn{
+    border:1px solid #ffffff22;background:#1f2937;color:#fff;border-radius:999px;padding:10px 14px;cursor:pointer;
   }
-
-  *{box-sizing:border-box}
-  body{margin:0;font-family:"Microsoft YaHei",system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
-  header{background:var(--pri);color:#fff;padding:16px;text-align:center;box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 40%, transparent)}
-
-  .topbar-fixed{position:fixed; top:12px; left:16px; right:16px; display:flex; justify-content:space-between; z-index:1000; pointer-events:none;}
-  .top-left,.top-right{display:flex; gap:10px; pointer-events:auto}
-  select{ padding:8px 10px; border-radius:10px; border:1px solid var(--border); background:var(--panel); color:var(--text); }
-
-  .wrap{max-width:1200px;margin:0 auto;padding:12px;display:grid;grid-template-columns:300px 1fr;gap:12px}
-  .sidebar{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px;height:calc(100vh - 180px);overflow:auto}
-  .lvl{padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--panel);cursor:pointer}
-  .lvl:hover{background:color-mix(in srgb, var(--pri) 10%, var(--panel))}
-  .active{outline:2px solid var(--pri)}
-  .stage{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 14px 18px;min-height:640px;display:flex;flex-direction:column}
-
-  .controls{display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap}
-  .btn{border:1px solid var(--border); background:var(--pri); color:#fff; border-radius:999px; padding:10px 16px; font-size:14px; text-decoration:none; cursor:pointer; box-shadow:0 6px 16px color-mix(in srgb, var(--pri) 35%, transparent); transition:.2s;}
-  .btn:hover{ background:var(--pri-hover) }
-  .btn.danger{ background:var(--danger) }
-  .btn.danger:hover{ background:var(--danger-hover) }
-
-  .scene{flex:1; border:1px dashed var(--border); border-radius:14px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; background:radial-gradient(400px 180px at 70% 0%, #ffffff22, transparent 60%), linear-gradient(180deg, #a7f3ff1e, transparent 30%), var(--panel);}
-  .desc{ margin-top:8px; color:#667085 }
-  .result{ margin-top:8px; font-weight:700 }
-  .next-btn{ display:none; margin-top:10px }
-  .next-btn.show{ display:inline-block }
-
-  .spark{ position:absolute; inset:0; pointer-events:none; opacity:0; }
-  .spark.show{ animation:shine .9s ease forwards }
-  @keyframes shine{ 0%{ opacity:0 } 30%{ opacity:1 } 100%{ opacity:0 } }
-
-  .bg-forest { background:linear-gradient(180deg,#dcfce7,#f0fdf4); }
-  .bg-cave   { background:linear-gradient(180deg,#c7d2fe,#eef2ff); }
-  .bg-temple { background:linear-gradient(180deg,#fde68a,#fff7ed); }
-  .bg-sea    { background:linear-gradient(180deg,#bae6fd,#e0f2fe); }
-  .bg-dark   { background:linear-gradient(180deg,#e5e7eb,#f3f4f6); }
-
-  .svg-wrap{ width:140px; height:140px; filter:drop-shadow(0 8px 16px rgba(0,0,0,.2)); }
-  .gate{ width:220px; height:220px; }
-  .dex{ width:360px; }
-
-  .console{ margin-top:12px; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:10px; display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; }
-  .console input{ width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:var(--panel); color:var(--text);
-    font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-  .hintline{ font-size:12px; color:#6b7280; grid-column:1/-1; margin-top:-4px }
+  .btn:hover{filter:brightness(1.1)}
+  .modal{
+    position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:20
+  }
+  .card{
+    background:#111; color:#fff; border:1px solid #333; border-radius:14px; padding:20px; width:min(500px,92vw); text-align:center;
+    box-shadow:0 20px 60px #0008;
+  }
+  .card h2{margin:6px 0 10px;color:#22c55e}
+  .row{display:flex;gap:12px;justify-content:center;margin-top:10px}
+  /* 移动端虚拟按键 */
+  .pad{position:fixed;left:12px;bottom:12px;display:grid;grid-template-columns:repeat(3,56px);gap:10px;z-index:9;opacity:.85}
+  .pad .pbtn{width:56px;height:56px;border-radius:50%;background:#1f2937;border:1px solid #ffffff22;color:#fff;font-size:18px}
+  .pad .pbtn:active{filter:brightness(1.2)}
+  .padR{position:fixed;right:12px;bottom:18px;display:flex;gap:10px;z-index:9}
+  .padR .pbtn{width:72px;height:72px;border-radius:50%;background:#ef4444;border:1px solid #ffffff22;color:#fff;font-size:16px}
+  @media (min-width:900px){ .pad,.padR{display:none} }
+  footer{color:#9ca3af;text-align:center;padding:10px}
 </style>
 </head>
 <body>
 
-  <div class="topbar-fixed">
-    <div class="top-left">
-      <label for="theme" style="align-self:center;background:color-mix(in srgb, var(--panel) 85%, transparent);padding:6px 10px;border:1px solid var(--border);border-radius:10px;">
-        🎨 主题：
-        <select id="theme">
-          <option value="">蓝色</option>
-          <option value="green">绿色</option>
-          <option value="blackgold">黑金</option>
-        </select>
-      </label>
-    </div>
-    <div class="top-right">
-      <a href="../" class="btn">🏠 返回首页</a>
-      <button id="resetProgress" class="btn danger">🔄 重新开始</button>
+<div class="hud" id="hud">
+  <span>关卡：<b id="lvText">1 / 20</b></span>
+  <span>HP：<b id="hpText">100</b></span>
+  <span>金币：<b id="coinText">0</b></span>
+  <span>钥匙：<b id="keyText">无</b></span>
+</div>
+
+<div class="top-right">
+  <a class="btn" href="../">🏠 返回首页</a>
+  <button class="btn" id="resetBtn">🔄 重新开始</button>
+</div>
+
+<!-- 虚拟摇杆 -->
+<div class="pad" id="padL">
+  <button class="pbtn" data-k="up">▲</button>
+  <div></div>
+  <button class="pbtn" data-k="attack">⚔</button>
+  <button class="pbtn" data-k="left">◀</button>
+  <button class="pbtn" data-k="down">▼</button>
+  <button class="pbtn" data-k="right">▶</button>
+</div>
+<div class="padR" id="padR">
+  <button class="pbtn" data-k="attack">攻击</button>
+</div>
+
+<canvas id="game"></canvas>
+
+<!-- 通关/失败弹窗 -->
+<div class="modal" id="modal">
+  <div class="card">
+    <h2 id="modalTitle">通关！</h2>
+    <div id="modalBody">你找到了钥匙并逃出此地</div>
+    <div class="row" style="margin-top:6px">
+      <button class="btn" id="btnRetry">重来</button>
+      <button class="btn" id="btnNext">下一关</button>
     </div>
   </div>
+</div>
 
-  <header><h1>代码探险岛 · 教学命令关卡（L1–L20）</h1></header>
-
-  <div class="wrap">
-    <aside class="sidebar" id="menu"></aside>
-
-    <section class="stage">
-      <div class="controls">
-        <button class="btn" id="run">▶ 运行（演示）</button>
-        <button class="btn" id="reset">↩ 重置关卡</button>
-        <span id="hint" style="margin-left:8px">请选择左侧关卡</span>
-      </div>
-
-      <div class="scene" id="scene">
-        <svg class="spark" id="spark" viewBox="0 0 200 200">
-          <defs><radialGradient id="sg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="white" /><stop offset="1" stop-color="white" stop-opacity="0" /></radialGradient></defs>
-          <circle cx="100" cy="100" r="80" fill="url(#sg)" />
-        </svg>
-      </div>
-
-      <div class="desc" id="desc"></div>
-      <div class="result" id="result"></div>
-      <div class="console">
-        <input id="cmd" placeholder="在此输入命令，例如：torch.on()" />
-        <button class="btn" id="exec">运行命令</button>
-        <div class="hintline" id="cmdHint">命令提示会显示在这里</div>
-      </div>
-      <button class="btn next-btn" id="nextBtn">➡ 下一关</button>
-    </section>
-  </div>
-
-  <div style="text-align:center;padding:12px;color:#777">© 2025 大胆专属</div>
-
-  <audio id="bgm" loop></audio>
+<footer>© 2025 大胆专属</footer>
 
 <script>
-/* ===== 主题同步 ===== */
-const themeSel = document.getElementById('theme');
-const savedTheme = localStorage.getItem('siteTheme') || '';
-document.documentElement.setAttribute('data-theme', savedTheme);
-themeSel.value = savedTheme;
-themeSel.onchange = () => {
-  document.documentElement.setAttribute('data-theme', themeSel.value);
-  localStorage.setItem('siteTheme', themeSel.value);
+/* ------------------ 参数/工具 ------------------ */
+const TOTAL = 20;
+const urlParams = new URLSearchParams(location.search);
+const startLevel = Math.max(1, Math.min(TOTAL, +urlParams.get('level') || 1));
+
+function saveProgress(n){
+  const p = Math.max(+localStorage.getItem('passedLevels')||0, n);
+  localStorage.setItem('passedLevels', Math.min(TOTAL, p));
+}
+
+function rnd(seed){ // 简单可复现随机
+  let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return ()=> (s = s*16807 % 2147483647) / 2147483647;
+}
+
+/* ------------------ HUD/弹窗 ------------------ */
+const hpText = document.getElementById('hpText');
+const coinText = document.getElementById('coinText');
+const keyText = document.getElementById('keyText');
+const lvText = document.getElementById('lvText');
+
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody  = document.getElementById('modalBody');
+const btnRetry = document.getElementById('btnRetry');
+const btnNext  = document.getElementById('btnNext');
+
+document.getElementById('resetBtn').onclick = ()=>{
+  if(confirm('确定清空通关进度吗？')){ localStorage.removeItem('passedLevels'); alert('已清空'); }
 };
 
-/* ===== 工具：命令宽容匹配 ===== */
-// 规范化：去首尾空白、统一单/双引号为双引号、压缩多空格为单空格
-function normalize(s){
-  s = (s||"").trim();
-  // 将连续空白压成一个空格，但不动引号内（这里简单化处理问题不大）
-  s = s.replace(/\s+/g,' ');
-  // 单引号转双引号
-  s = s.replace(/'/g,'"');
-  return s;
-}
-// 去空格再比大小写：用于严格等式比较
-function canon(s){
-  return normalize(s).toLowerCase().replace(/\s+/g,'').replace(/";/g,'"');
-}
-// 是否匹配任意一个正则（忽略首尾空白，i 不区分大小写）
-function anyMatch(input, regexes){
-  input = (input||"").trim();
-  return regexes.some(r => r.test(input));
-}
+/* ------------------ Phaser 游戏 ------------------ */
+const W = 1024, H = 576;
 
-/* ===== 公共引用与存档 ===== */
-const TOTAL_LEVELS = 20;
-
-const scene = document.getElementById('scene');
-const desc  = document.getElementById('desc');
-const hint  = document.getElementById('hint');
-const result= document.getElementById('result');
-const nextBtn=document.getElementById('nextBtn');
-const spark = document.getElementById('spark');
-const bgm   = document.getElementById('bgm');
-const cmdInput = document.getElementById('cmd');
-const cmdHint  = document.getElementById('cmdHint');
-let current=null;
-
-function setResult(msg, ok=false){
-  result.textContent = msg || '';
-  nextBtn.classList.toggle('show', !!ok);
-  if(ok){ spark.classList.remove('show'); void spark.offsetWidth; spark.classList.add('show'); }
-}
-function playMusic(url){ bgm.src=url; bgm.play().catch(()=>{}); }
-function saveProgress(levelId){
-  const n = Number(levelId.replace('L',''));
-  const p = Number(localStorage.getItem('passedLevels')||0);
-  const cap = Math.max(p, n);
-  localStorage.setItem('passedLevels', Math.min(TOTAL_LEVELS, cap));
-}
-
-/* ===== 内嵌 SVG ===== */
-const SVGs = {
-  torch(lit=false){ return `
-    <svg class="svg-wrap" viewBox="0 0 120 120">
-      <defs>
-        <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a16207"/><stop offset="1" stop-color="#7c3f0e"/></linearGradient>
-        <radialGradient id="fire" cx="50%" cy="25%" r="40%"><stop offset="0" stop-color="#fff59d"/><stop offset="1" stop-color="#ef4444"/></radialGradient>
-      </defs>
-      ${lit?`<circle cx="60" cy="28" r="18" fill="url(#fire)" opacity=".95"><animate attributeName="r" values="16;20;16" dur="1s" repeatCount="indefinite"/></circle>`:''}
-      <rect x="52" y="30" width="16" height="70" rx="8" fill="url(#wood)"/>
-      <circle cx="60" cy="28" r="12" fill="#fb923c" opacity="${lit?'.9':'.08'}"/>
-    </svg>`; },
-  door(open=false){ return `
-    <svg class="gate" viewBox="0 0 200 200">
-      <rect x="10" y="20" width="180" height="160" rx="12" fill="#c7d2fe" stroke="#94a3b8" stroke-width="3"/>
-      <g transform="${open?'rotate(-65 80 100)':'rotate(0 80 100)'}">
-        <rect x="40" y="40" width="80" height="120" rx="10" fill="#8b5e34" stroke="#6b4426" stroke-width="6"/>
-        <circle cx="108" cy="100" r="6" fill="#facc15"/>
-      </g>
-    </svg>`; },
-  monster(calm=false){ return `
-    <svg class="svg-wrap" viewBox="0 0 120 120">
-      <defs><linearGradient id="m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs>
-      <circle cx="60" cy="60" r="42" fill="url(#m)" />
-      <circle cx="45" cy="50" r="8" fill="#111"/><circle cx="75" cy="50" r="8" fill="#111"/>
-      <rect x="40" y="78" width="40" height="12" rx="6" fill="#111"/>
-      ${calm?`<text x="60" y="110" font-size="14" text-anchor="middle" fill="#111">calm ✓</text>`:''}
-    </svg>`; },
-  chest(open=false){ return `
-    <svg class="svg-wrap" viewBox="0 0 140 120">
-      <rect x="20" y="40" width="100" height="60" rx="10" fill="#78350f" stroke="#5b290b" stroke-width="6"/>
-      <rect x="20" y="20" width="100" height="30" rx="10" fill="#a16207"/>
-      <rect x="65" y="20" width="10" height="80" fill="#fde047"/>
-      <rect x="60" y="62" width="20" height="26" rx="4" fill="#fde047" stroke="#fbbf24" stroke-width="4"/>
-      ${open?`<g opacity="1"><text x="70" y="38" text-anchor="middle">💎</text></g>`:`<g opacity=".05"><text x="70" y="38" text-anchor="middle">💎</text></g>`}
-    </svg>`; },
-  book(fill=false){ return `
-    <svg class="dex" viewBox="0 0 360 200">
-      <rect x="10" y="10" width="340" height="180" rx="12" fill="#fff" stroke="#e5e7eb"/>
-      <text x="60" y="70" font-size="42">🐲</text>
-      <text x="110" y="70" font-size="22" fill="#111">Dragon · Lv10</text>
-      <rect x="110" y="110" width="210" height="12" rx="6" fill="#e5e7eb"/>
-      <rect x="110" y="110" width="${fill?210:0}" height="12" rx="6" fill="#22c55e">${fill?`<animate attributeName="width" from="0" to="210" dur=".8s" fill="freeze"/>`:''}</rect>
-    </svg>`; }
+const config = {
+  type: Phaser.CANVAS,
+  canvas: document.getElementById('game'),
+  backgroundColor: '#0b1015',
+  scale: { width: W, height: H, mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
+  physics: { default: 'arcade', arcade: { gravity: {y:0}, debug:false } },
+  scene: { preload, create, update }
 };
 
-/* ===== 关卡：L1–L10（命令宽容） ===== */
-const LEVELS = {
-  L1:{ title:"L1 森林 · 点燃火把", bg:"bg-forest",
-    desc:"目标：点燃火把。指令：torch.on()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    setup(el){ el.innerHTML = SVGs.torch(false); setResult(""); cmdHint.textContent='试试：torch.on()'; },
-    runDemo(el){ el.innerHTML = SVGs.torch(true); setResult("✅ 火把点亮！", true); saveProgress("L1"); },
-    cmds:[/^\s*torch\.on\s*\(\s*\)\s*$/i]
-  },
-  L2:{ title:"L2 海岸 · 小球启航", bg:"bg-sea",
-    desc:"目标：让小球移动到 100%。指令：ball.move(100)",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    setup(el){
-      el.innerHTML = `<div style="width:80%;height:12px;background:#e3e8ef;border-radius:999px;position:relative">
-        <div id="ball" style="position:absolute;left:0;top:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:var(--pri);box-shadow:0 6px 14px var(--glow);transition:left .5s"></div>
-      </div>`; setResult(""); cmdHint.textContent='示例：ball.move(100)';
-    },
-    runDemo(el){ const ball=el.querySelector('#ball'); ball.style.left='100%'; setTimeout(()=>{ setResult("✅ 抵达灯塔！", true); saveProgress("L2"); }, 520); },
-    cmds:[/^\s*ball\.move\s*\(\s*100\s*\)\s*$/i]
-  },
-  L3:{ title:"L3 山口 · 打开城门", bg:"bg-cave",
-    desc:"目标：打开城门。指令：door.open()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-    setup(el){ el.innerHTML = SVGs.door(false); setResult(""); cmdHint.textContent='输入：door.open()'; },
-    runDemo(el){ el.innerHTML = SVGs.door(true); setResult("✅ 城门敞开！", true); saveProgress("L3"); },
-    cmds:[/^\s*door\.open\s*\(\s*\)\s*$/i]
-  },
-  L4:{ title:"L4 林地 · 安抚怪兽", bg:"bg-forest",
-    desc:"目标：喂食怪兽。指令：feed()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-    setup(el){ el.innerHTML = SVGs.monster(false); setResult(""); cmdHint.textContent='输入：feed()'; },
-    runDemo(el){ el.innerHTML = SVGs.monster(true); setResult("✅ 怪兽冷静！", true); saveProgress("L4"); },
-    cmds:[/^\s*feed\s*\(\s*\)\s*$/i]
-  },
-  L5:{ title:"L5 海峡 · 灯塔引航", bg:"bg-sea",
-    desc:"目标：按路线到达航点。指令：route(\"F5 R F3\")",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-    setup(el){
-      el.innerHTML = `<div style="width:90%;height:180px;border-radius:14px;border:1px dashed var(--border);position:relative;background:linear-gradient(180deg,#e0f2fe,#f0f9ff)">
-        <div id="boat" style="position:absolute;left:14%;top:70%;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:28px solid #0ea5e9;filter:drop-shadow(0 6px 12px rgba(0,0,0,.25));transition:all .35s"></div>
-      </div>`; setResult(""); cmdHint.textContent='输入：route("F5 R F3")';
-    },
-    runDemo(el){ const boat=el.querySelector('#boat'); boat.style.left='80%'; boat.style.top='30%'; boat.style.transform='rotate(25deg)'; setTimeout(()=>{ setResult("✅ 抵达航点！", true); saveProgress("L5"); }, 450); },
-    // 允许单双引号/大小写/多空格
-    cmds:[/^\s*route\s*\(\s*"(f\s*5)\s*r\s*(f\s*3)"\s*\)\s*$/i, /^\s*route\s*\(\s*'(f\s*5)\s*r\s*(f\s*3)'\s*\)\s*$/i]
-  },
-  L6:{ title:"L6 地窟 · 宝箱密码", bg:"bg-cave",
-    desc:"目标：解锁宝箱。指令：unlock(\"1234\")",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
-    setup(el){ el.innerHTML = SVGs.chest(false); setResult(""); cmdHint.textContent='输入：unlock("1234")'; },
-    runDemo(el){ el.innerHTML = SVGs.chest(true); setResult("✅ 宝箱开启！", true); saveProgress("L6"); },
-    cmds:[/^\s*unlock\s*\(\s*"(?:1234)"\s*\)\s*$/i, /^\s*unlock\s*\(\s*'(?:1234)'\s*\)\s*$/i]
-  },
-  L7:{ title:"L7 神庙 · 怪兽图鉴", bg:"bg-temple",
-    desc:"目标：注满 HP 条。指令：dex.fill()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
-    setup(el){ el.innerHTML = SVGs.book(false); setResult(""); cmdHint.textContent='输入：dex.fill()'; },
-    runDemo(el){ el.innerHTML = SVGs.book(true); setTimeout(()=>{ setResult("✅ 图鉴完成！", true); saveProgress("L7"); }, 820); },
-    cmds:[/^\s*dex\.fill\s*\(\s*\)\s*$/i]
-  },
-  L8:{ title:"L8 神碑 · 激活按钮", bg:"bg-temple",
-    desc:"目标：激活。指令：activate()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-    setup(el){
-      el.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-        <button id="b" class="btn" style="background:#e5e7eb;color:#111;border-color:#d1d5db">按钮</button>
-        <small style="color:#6b7280">id=magicBtn</small>
-      </div>`; setResult(""); cmdHint.textContent='输入：activate()';
-    },
-    runDemo(el){ const b=el.querySelector('#b'); b.textContent='已激活'; b.style.background='var(--pri)'; b.style.color='#fff'; setResult("✅ 石碑已激活！", true); saveProgress("L8"); },
-    cmds:[/^\s*activate\s*\(\s*\)\s*$/i]
-  },
-  L9:{ title:"L9 卷轴 · 施放法术", bg:"bg-forest",
-    desc:"目标：释放法术。指令：cast()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
-    setup(el){
-      el.innerHTML = `<div style="position:relative;width:360px;padding:18px 22px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.06)">
-        <div>古老的卷轴正在等待咒语…</div>
-        <div id="fx" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.6);font-size:32px;opacity:0;pointer-events:none">✨ Spell Cast!</div>
-      </div>`; setResult(""); cmdHint.textContent='输入：cast()';
-    },
-    runDemo(el){
-      const fx = el.querySelector('#fx'); fx.style.transition='none'; fx.style.opacity='0'; fx.style.transform='translate(-50%,-50%) scale(.6)';
-      requestAnimationFrame(()=>{ fx.style.transition='.6s'; fx.style.opacity='1'; fx.style.transform='translate(-50%,-50%) scale(1.2)'; setTimeout(()=>{ fx.style.opacity='0'; setResult("✅ 魔法释放成功！", true); saveProgress("L9"); }, 500); });
-    },
-    cmds:[/^\s*cast\s*\(\s*\)\s*$/i]
-  },
-  L10:{ title:"L10 终章 · 王之试炼", bg:"bg-dark",
-    desc:"目标：完成最终试炼。指令：boss()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
-    setup(el){
-      el.innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(680px,92%);">
-        ${['🟢 Slime','🛡️ Orc','🐲 Dragon'].map(n=>`
-          <div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center">
-            <div style="font-size:42px">${n.split(' ')[0]}</div>
-            <strong>${n.split(' ')[1]}</strong>
-            <div class="bar" style="height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:6px">
-              <div class="v" style="height:100%;width:0;background:#ef4444"></div>
-            </div>
-          </div>`).join('')}
-      </div>`; setResult(""); cmdHint.textContent='输入：boss()';
-    },
-    runDemo(el){ const bars=[...el.querySelectorAll('.v')]; bars.forEach((b,i)=> setTimeout(()=> b.style.width='100%', i*320)); setTimeout(()=>{ setResult('✅ 终极试炼完成！', true); saveProgress('L10'); }, 1200); },
-    cmds:[/^\s*boss\s*\(\s*\)\s*$/i]
-  },
+const game = new Phaser.Game(config);
 
-/* ===== L11–L20（变量/循环/条件 扩展版，带宽容命令） ===== */
-  L11:{ title:"L11 变量 · 点亮次数", bg:"bg-forest",
-    desc:"设定 count=3，然后执行 torch.on(count)",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    setup(el){ el.innerHTML = SVGs.torch(false) + `<div id="counter" style="position:absolute;right:18px;top:18px;background:#fff7;border:1px solid var(--border);padding:6px 10px;border-radius:8px">count = <b id="cv">0</b></div>`; el.dataset.count=0; setResult(""); cmdHint.textContent='set("count",3) → torch.on(count)'; },
-    runDemo(el){ el.dataset.count=3; el.querySelector('#cv').textContent='3'; el.innerHTML = SVGs.torch(true) + el.querySelector('#counter').outerHTML; setResult("✅ 点亮完成！",true); saveProgress("L11"); },
-    accept(code,el){
-      const c = canon(code);
-      if(c==='set("count",3)'||c==="set('count',3)"){ el.dataset.count=3; el.querySelector('#cv').textContent='3'; setResult("已设置 count=3"); return true; }
-      if((c==='torch.on(count)') && +el.dataset.count===3){ this.runDemo(el); return true; }
-      if(c==='torch.on(count)' && +el.dataset.count!==3){ setResult('❌ 先 set("count",3)'); return true; }
-      return false;
+let cursors, wasd, attackKey;
+let player, enemies, coins, keyItem, door;
+let hp=100, hasKey=false, coinCount=0, level=startLevel;
+let attackHitbox;
+let lastAttack=0;
+
+function preload(){
+  // 生成基础纹理（圆、矩形、星星）
+  this.textures.generate('p', { data: createCircleData(24, '#00d1ff', '#89f1ff'), pixelWidth:1, pixelHeight:1 });
+  this.textures.generate('e', { data: createCircleData(24, '#ff5252', '#ffc0c0'), pixelWidth:1 });
+  this.textures.generate('coin', { data: createStarData(16, '#ffd166', '#fff0b3'), pixelWidth:1 });
+  this.textures.generate('key', { data: createKeyData(), pixelWidth:1 });
+  this.textures.generate('door', { data: createDoorData(), pixelWidth:1 });
+  this.textures.generate('box', { data: createBoxData(), pixelWidth:1 });
+  this.textures.generate('heal', { data: createCircleData(12, '#22c55e', '#bbf7d0'), pixelWidth:1 });
+}
+
+function create(){
+  // 背景（渐变+雾）
+  const g = this.add.graphics();
+  g.fillGradientStyle(0x0a2530, 0x0a2530, 0x05141a, 0x05141a, 1);
+  g.fillRect(0,0,W,H);
+  g.fillStyle(0xffffff, 0.03); for(let i=0;i<60;i++){ g.fillCircle(Phaser.Math.Between(0,W), Phaser.Math.Between(0,H), Phaser.Math.Between(10,50)); }
+  g.setDepth(-1);
+
+  // 关卡文字
+  this.title = this.add.text(W/2, 26, '', {fontSize:18, color:'#fff'}).setOrigin(.5,0);
+
+  // 创建物理组
+  this.walls = this.physics.add.staticGroup();
+  enemies = this.physics.add.group();
+  coins = this.physics.add.group();
+
+  // 玩家
+  player = this.physics.add.sprite(100, H-100, 'p').setCircle(24).setBounce(0.1).setDrag(400).setMaxVelocity(240);
+  player.setDepth(5);
+
+  // 攻击判定
+  attackHitbox = this.add.rectangle(0,0,70,50,0xffffff,0).setDepth(6);
+  this.physics.add.existing(attackHitbox);
+  attackHitbox.body.enable = false;
+
+  // 键盘
+  cursors = this.input.keyboard.createCursorKeys();
+  wasd = this.input.keyboard.addKeys({ up:'W', left:'A', down:'S', right:'D' });
+  attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+  // 碰撞
+  this.physics.add.collider(player, this.walls);
+  this.physics.add.collider(enemies, this.walls);
+  this.physics.add.collider(enemies, enemies);
+
+  this.physics.add.overlap(player, coins, (pl, c)=>{ c.destroy(); coinCount++; updateHUD(); }, null, this);
+  this.physics.add.overlap(player, keyItem, ()=>{}, null, this);
+
+  // 进入关卡
+  buildLevel.call(this, level);
+
+  // 与怪物接触掉血
+  this.physics.add.overlap(player, enemies, (pl, en)=>{
+    if(this.time.now - lastAttack < 200) return; // 攻击中免伤
+    addHP(-8);
+  });
+
+  // 拾取钥匙
+  this.physics.add.overlap(player, keyItem, ()=>{
+    if(!hasKey){ hasKey=true; keyItem.destroy(); keyItem=null; flashText(this, '获得钥匙 🔑'); updateHUD(); }
+  });
+
+  // 触门过关
+  this.physics.add.overlap(player, door, ()=>{
+    if(hasKey){
+      // 过关
+      saveProgress(level);
+      showModal(`第 ${level} 关通过！`, `金币 ${coinCount}，HP ${hp}。继续挑战下一关？`);
     }
-  },
-  L12:{ title:"L12 变量运算 · 拾取金币", bg:"bg-temple",
-    desc:"每次 add(\"coins\",10) +10，累积到 30 通关",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    setup(el){ el.innerHTML = `<div style="text-align:center"><div class="svg-wrap">🪙</div><h3>金币：<span id="coins">0</span></h3></div>`; el.dataset.coins=0; setResult(""); cmdHint.textContent='输入 3 次：add("coins",10)'; },
-    runDemo(el){ el.dataset.coins=30; el.querySelector('#coins').textContent='30'; setResult("✅ 金币达到 30！",true); saveProgress("L12"); },
-    accept(code,el){
-      if(anyMatch(code,[/^\s*add\s*\(\s*["']coins["']\s*,\s*10\s*\)\s*$/i])){
-        const c=+el.dataset.coins+10; el.dataset.coins=c; el.querySelector('#coins').textContent=c;
-        if(c>=30){ setResult("✅ 金币达到 30！",true); saveProgress("L12"); } else setResult(`已增加，当前 ${c}/30`);
-        return true;
-      }
-      return false;
-    }
-  },
-  L13:{ title:"L13 条件 · 拉杆开门", bg:"bg-cave",
-    desc:"toggle(\"lever\") → openIf(\"lever\")",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-    setup(el){ el.innerHTML = SVGs.door(false)+`<div style="position:absolute;left:18px;top:18px;background:#fff7;border:1px solid var(--border);padding:6px 10px;border-radius:8px">lever: <b id="lv">false</b></div>`; el.dataset.lever="false"; setResult(""); cmdHint.textContent='toggle("lever") → openIf("lever")'; },
-    runDemo(el){ el.dataset.lever="true"; el.querySelector('#lv').textContent='true'; el.innerHTML = SVGs.door(true) + el.querySelector('div').outerHTML; setResult("✅ 条件满足，门已开！",true); saveProgress("L13"); },
-    accept(code,el){
-      if(anyMatch(code,[/^\s*toggle\s*\(\s*["']lever["']\s*\)\s*$/i])){
-        el.dataset.lever = (el.dataset.lever==="true"?"false":"true"); el.querySelector('#lv').textContent=el.dataset.lever; setResult(`lever = ${el.dataset.lever}`); return true;
-      }
-      if(anyMatch(code,[/^\s*openIf\s*\(\s*["']lever["']\s*\)\s*$/i])){
-        if(el.dataset.lever==="true"){ this.runDemo(el); } else setResult("❌ lever 还没拉下");
-        return true;
-      }
-      return false;
-    }
-  },
-  L14:{ title:"L14 条件判断 · 大于比较", bg:"bg-temple",
-    desc:'set("x",4) → if(x>3) activate()',
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-    setup(el){ el.innerHTML = `<div style="text-align:center"><button id="b" class="btn" style="background:#e5e7eb;color:#111;border-color:#d1d5db">按钮</button><div style="margin-top:8px">x = <b id="xv">0</b></div></div>`; el.dataset.x=0; setResult(""); cmdHint.textContent='set("x",4) → if(x>3) activate()'; },
-    runDemo(el){ const b=el.querySelector('#b'); b.textContent='已激活'; b.style.background='var(--pri)'; b.style.color='#fff'; setResult("✅ 条件为真，已激活！",true); saveProgress("L14"); },
-    accept(code,el){
-      if(anyMatch(code,[/^\s*set\s*\(\s*["']x["']\s*,\s*4\s*\)\s*$/i])){ el.dataset.x=4; el.querySelector('#xv').textContent='4'; setResult("x 已设为 4"); return true; }
-      if(anyMatch(code,[/^\s*if\s*\(\s*x\s*>\s*3\s*\)\s*activate\s*\(\s*\)\s*$/i])){
-        if(+el.dataset.x>3){ this.runDemo(el); } else setResult("❌ x 不大于 3");
-        return true;
-      }
-      return false;
-    }
-  },
-  L15:{ title:"L15 循环 · 重复移动", bg:"bg-sea",
-    desc:"repeat(3){ move() }",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-    setup(el){
-      el.innerHTML = `<div style="width:92%;height:160px;border-radius:14px;border:1px dashed var(--border);position:relative;background:linear-gradient(180deg,#e0f2fe,#f0f9ff)"><div id="boat" style="position:absolute;left:10%;top:60%;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:28px solid #0ea5e9;filter:drop-shadow(0 6px 12px rgba(0,0,0,.25));transition:all .3s"></div></div>`;
-      setResult(""); cmdHint.textContent='repeat(3){ move() }';
-    },
-    runDemo(el){ const boat=el.querySelector('#boat'); let i=0; (function go(){ i++; boat.style.left=(10+i*20)+'%'; if(i<3) setTimeout(go,300); else setTimeout(()=>{ setResult("✅ 到达！",true); saveProgress("L15"); },320); })(); },
-    cmds:[/^\s*repeat\s*\(\s*3\s*\)\s*\{\s*move\s*\(\s*\)\s*\}\s*$/i]
-  },
-  L16:{ title:"L16 变量 + 循环", bg:"bg-forest",
-    desc:'set("n",4) → repeat(n){ step() }',
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
-    setup(el){ el.innerHTML = `<div style="text-align:center"><div style="height:12px;width:80%;background:#e5e7eb;border-radius:999px;margin:0 auto;overflow:hidden"><div id="bar" style="height:100%;width:0;background:var(--pri);transition:width .25s"></div></div><div style="margin-top:8px">n = <b id="nv">0</b></div></div>`; el.dataset.n=0; setResult(""); cmdHint.textContent='set("n",4) → repeat(n){ step() }'; },
-    runDemo(el){ const bar=el.querySelector('#bar'); let i=0; const n=4; (function go(){ i++; bar.style.width=(i/n*100)+'%'; if(i<n) setTimeout(go,240); else setTimeout(()=>{ setResult("✅ 步数达标！",true); saveProgress("L16"); },260); })(); },
-    accept(code,el){
-      if(anyMatch(code,[/^\s*set\s*\(\s*["']n["']\s*,\s*4\s*\)\s*$/i])){ el.dataset.n=4; el.querySelector('#nv').textContent='4'; setResult("n=4"); return true; }
-      if(anyMatch(code,[/^\s*repeat\s*\(\s*n\s*\)\s*\{\s*step\s*\(\s*\)\s*\}\s*$/i])){
-        if(+el.dataset.n===4){ this.runDemo(el); } else setResult("❌ 先把 n 设为 4");
-        return true;
-      }
-      return false;
-    }
-  },
-  L17:{ title:"L17 数组 · 收集宝石", bg:"bg-temple",
-    desc:'collect(["🔴","🔵","🟢"])',
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
-    setup(el){ el.innerHTML = `<div style="text-align:center"><div id="bag" style="font-size:32px;letter-spacing:6px;min-height:40px"></div><div style="color:#6b7280">目标：🔴 🔵 🟢</div></div>`; setResult(""); cmdHint.textContent='collect(["🔴","🔵","🟢"])'; },
-    runDemo(el){ el.querySelector('#bag').textContent='🔴 🔵 🟢'; setResult("✅ 收集完成！",true); saveProgress("L17"); },
-    // 允许单双引号、元素间多空格
-    cmds:[/^\s*collect\s*\(\s*\[\s*["']🔴["']\s*,\s*["']🔵["']\s*,\s*["']🟢["']\s*\]\s*\)\s*$/i]
-  },
-  L18:{ title:"L18 排序 · 古老密码", bg:"bg-cave",
-    desc:"sort([3,1,2]) → 显示 1,2,3",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-    setup(el){ el.innerHTML = `<div style="text-align:center"><div>原始：<b>3,1,2</b></div><div id="sorted" style="margin-top:8px;font-size:20px"></div></div>`; setResult(""); cmdHint.textContent='sort([3,1,2])'; },
-    runDemo(el){ el.querySelector('#sorted').textContent='排序结果：1,2,3'; setResult("✅ 排序正确！",true); saveProgress("L18"); },
-    cmds:[/^\s*sort\s*\(\s*\[\s*3\s*,\s*1\s*,\s*2\s*\]\s*\)\s*$/i]
-  },
-  L19:{ title:"L19 条件分支 · 找钥匙或开门", bg:"bg-forest",
-    desc:"findKey() → open()",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
-    setup(el){ el.innerHTML = SVGs.door(false)+`<div style="position:absolute;right:18px;top:18px;background:#fff7;border:1px solid var(--border);padding:6px 10px;border-radius:8px">key: <b id="kv">false</b></div>`; el.dataset.key="false"; setResult(""); cmdHint.textContent='findKey() → open()'; },
-    runDemo(el){ el.dataset.key="true"; el.querySelector('#kv').textContent='true'; el.innerHTML = SVGs.door(true) + el.querySelector('div').outerHTML; setResult("✅ 开门成功！",true); saveProgress("L19"); },
-    accept(code,el){
-      if(anyMatch(code,[/^\s*findkey\s*\(\s*\)\s*$/i])){ el.dataset.key="true"; el.querySelector('#kv').textContent='true'; setResult("🔑 找到钥匙"); return true; }
-      if(anyMatch(code,[/^\s*open\s*\(\s*\)\s*$/i])){ if(el.dataset.key==="true"){ this.runDemo(el); } else setResult("❌ 还没有钥匙，先 findKey()"); return true; }
-      return false;
-    }
-  },
-  L20:{ title:"L20 终极 · 循环攻击 Boss", bg:"bg-dark",
-    desc:"repeat(5){ attack() }",
-    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
-    setup(el){
-      el.innerHTML = `<div style="text-align:center">
-        <div style="font-size:48px">🐉 Boss</div>
-        <div style="height:12px;width:80%;background:#e5e7eb;border-radius:999px;margin:8px auto;overflow:hidden">
-          <div id="hp" style="height:100%;width:100%;background:#ef4444;transition:width .2s"></div>
-        </div>
-        <div>HP：<b id="hpv">100</b></div>
-      </div>`; setResult(""); cmdHint.textContent='repeat(5){ attack() }';
-    },
-    runDemo(el){ const hp=el.querySelector('#hp'); const hpv=el.querySelector('#hpv'); let i=0; (function go(){ i++; const left=Math.max(0,100-i*20); hp.style.width=left+'%'; hpv.textContent=left; if(i<5) setTimeout(go,220); else setTimeout(()=>{ setResult('✅ Boss 倒下！',true); saveProgress('L20'); },260); })(); },
-    cmds:[/^\s*repeat\s*\(\s*5\s*\)\s*\{\s*attack\s*\(\s*\)\s*\}\s*$/i]
+  });
+
+  // 虚拟按键
+  setupTouchControls(this);
+}
+
+function update(time, delta){
+  if(!player.active) return;
+  const speed = 220;
+  let vx=0, vy=0;
+  if(cursors.left.isDown || wasd.left.isDown || touch.left) vx -= speed;
+  if(cursors.right.isDown|| wasd.right.isDown|| touch.right) vx += speed;
+  if(cursors.up.isDown   || wasd.up.isDown   || touch.up) vy -= speed;
+  if(cursors.down.isDown || wasd.down.isDown || touch.down) vy += speed;
+  player.setVelocity(vx, vy);
+  if(vx||vy){ player.rotation = Math.atan2(vy, vx); }
+
+  // 攻击
+  if(Phaser.Input.Keyboard.JustDown(attackKey) || touch.attack){
+    doAttack(this);
   }
-};
 
-/* ===== 菜单与交互 ===== */
-const menu = document.getElementById('menu');
-Object.entries(LEVELS).forEach(([id, lv])=>{
-  const d = document.createElement('div');
-  d.className='lvl'; d.id='btn-'+id; d.textContent=lv.title;
-  d.onclick=()=>openLevel(id);
-  menu.appendChild(d);
-});
-
-function openLevel(id){
-  current=id;
-  [...menu.children].forEach(x=>x.classList.remove('active'));
-  document.getElementById('btn-'+id).classList.add('active');
-  hint.textContent = LEVELS[id].title;
-  desc.textContent = LEVELS[id].desc;
-  scene.className = 'scene ' + (LEVELS[id].bg||'');
-  LEVELS[id].setup(scene);
-  playMusic(LEVELS[id].music);
-  setResult('');
-  nextBtn.classList.remove('show');
-  cmdInput.value='';
+  // 敌人简单 AI 追踪
+  enemies.children.iterate(e=>{
+    if(!e) return;
+    const ang = Phaser.Math.Angle.Between(e.x, e.y, player.x, player.y);
+    const spd = Math.min(120, 60 + level*3);
+    e.setVelocity(Math.cos(ang)*spd, Math.sin(ang)*spd);
+  });
 }
 
-document.getElementById('run').onclick = ()=>{ if(current){ const lv=LEVELS[current]; lv.runDemo && lv.runDemo(scene); } };
-document.getElementById('reset').onclick = ()=>{ if(current) LEVELS[current].setup(scene); setResult(''); cmdInput.value=''; };
-document.getElementById('resetProgress').onclick = ()=>{
-  if(confirm('确定要清空通关进度吗？')){
-    localStorage.removeItem('passedLevels');
-    alert('进度已清空。返回首页可看到 0/20。');
+/* ------------------ 关卡生成 ------------------ */
+function buildLevel(n){
+  const seedRnd = rnd(1000+n*13);
+  this.title.setText(`关卡 ${n} / ${TOTAL}  —  目标：拿钥匙开门，躲避/击败怪物`);
+  lvText.textContent = `${n} / ${TOTAL}`;
+
+  // 清场
+  this.walls.clear(true,true); enemies.clear(true,true); coins.clear(true,true);
+  if(keyItem) keyItem.destroy();
+  if(door) door.destroy();
+  hp = 100; hasKey=false; coinCount=0; updateHUD();
+
+  // 边界墙
+  const margin=20;
+  const wallRects = [
+    [W/2, margin/2, W, margin], [W/2, H-margin/2, W, margin],
+    [margin/2, H/2, margin, H], [W-margin/2, H/2, margin, H]
+  ];
+  // 障碍
+  const blocks = 6 + Math.floor(n*0.6);
+  for(let i=0;i<blocks;i++){
+    const w = 140 + seedRnd()*120, h = 30 + seedRnd()*100;
+    const x = 80 + seedRnd()*(W-160), y = 80 + seedRnd()*(H-160);
+    wallRects.push([x,y,w,h]);
   }
+  wallRects.forEach(([x,y,w,h])=>{
+    const b = this.add.rectangle(x,y,w,h,0x1f2937,1);
+    this.walls.add(b, true);
+  });
+
+  // 放置门 & 钥匙 & 玩家出生
+  door = this.physics.add.staticSprite(W-70, 60, 'door').setDepth(2);
+  keyItem = this.physics.add.staticSprite(80, 80, 'key').setDepth(2);
+  player.setPosition(60, H-60);
+
+  // 金币
+  const golds = 5 + Math.floor(n*0.5);
+  for(let i=0;i<golds;i++){
+    const cx = 50 + seedRnd()*(W-100), cy = 50 + seedRnd()*(H-100);
+    if(Phaser.Geom.Intersects.RectangleToRectangle(new Phaser.Geom.Rectangle(cx-8,cy-8,16,16), door.getBounds())) continue;
+    coins.add(this.physics.add.sprite(cx, cy, 'coin').setCircle(8));
+  }
+
+  // 敌人
+  const enemyNum = 2 + Math.floor(n*0.8);
+  for(let i=0;i<enemyNum;i++){
+    const ex = 140 + seedRnd()*(W-280), ey = 120 + seedRnd()*(H-240);
+    const e = enemies.create(ex, ey, 'e').setCircle(24).setBounce(0.8);
+    e.setMaxVelocity(160);
+  }
+}
+
+function addHP(d){
+  hp = Math.max(0, Math.min(100, hp + d));
+  updateHUD();
+  blink(player, d<0 ? 0xff5252 : 0x22c55e);
+  if(hp<=0){ showModal('失败了 💀', '再试一次吧！', true); }
+}
+
+function updateHUD(){
+  hpText.textContent = hp;
+  coinText.textContent = coinCount;
+  keyText.textContent = hasKey ? '已获得' : '无';
+}
+
+/* ------------------ 战斗 ------------------ */
+function doAttack(scene){
+  if(scene.time.now - lastAttack < 260) return;
+  lastAttack = scene.time.now;
+
+  const dir = new Phaser.Math.Vector2(Math.cos(player.rotation), Math.sin(player.rotation));
+  attackHitbox.body.enable = true;
+  attackHitbox.x = player.x + dir.x*38;
+  attackHitbox.y = player.y + dir.y*38;
+  scene.tweens.add({ targets: attackHitbox, alpha: .2, duration: 80, yoyo:true, onComplete: ()=>{ attackHitbox.body.enable=false; attackHitbox.alpha=0; } });
+
+  // 命中检测
+  enemies.children.iterate(e=>{
+    if(!e) return;
+    if(Phaser.Geom.Intersects.RectangleToRectangle(attackHitbox.getBounds(), e.getBounds())){
+      // 打死
+      scene.add.tween({targets:e, scaleX:.6, scaleY:.6, duration:120, yoyo:false, onComplete:()=>e.destroy()});
+      // 掉金币
+      const c = coins.create(e.x, e.y, 'coin').setCircle(8);
+      c.setVelocity(Phaser.Math.Between(-70,70), Phaser.Math.Between(-70,70));
+    }
+  });
+}
+
+/* ------------------ UI / 触控 ------------------ */
+function flashText(scene, text){
+  const t = scene.add.text(W/2, H-40, text, {fontSize:20, color:'#fff'}).setOrigin(.5);
+  scene.tweens.add({targets:t, y:H-80, alpha:0, duration:900, onComplete:()=>t.destroy()});
+}
+function blink(s, color){
+  s.setTint(color); s.scene.time.delayedCall(120, ()=>s.clearTint());
+}
+
+function showModal(title, body, fail=false){
+  modalTitle.textContent = title;
+  modalTitle.style.color = fail ? '#ef4444' : '#22c55e';
+  modalBody.textContent  = body;
+  btnNext.style.display = fail ? 'none' : 'inline-block';
+  modal.style.display = 'flex';
+}
+
+btnRetry.onclick = ()=>{
+  modal.style.display = 'none';
+  game.scene.scenes[0].scene.restart({}); // 重新加载当前关
 };
-nextBtn.onclick = ()=>{
-  if(!current) return;
-  const ids=Object.keys(LEVELS); const i=ids.indexOf(current);
-  if(i>=0 && i<ids.length-1) openLevel(ids[i+1]); else setResult('🎉 全部通关！', false);
+btnNext.onclick = ()=>{
+  modal.style.display = 'none';
+  level = Math.min(TOTAL, level+1);
+  saveProgress(level);
+  game.scene.scenes[0].scene.restart({});
 };
 
-// 命令执行：优先走 accept()；否则走宽容正则 cmds[]
-document.getElementById('exec').onclick = ()=>{
-  if(!current) return alert('请先选择关卡');
-  const lv = LEVELS[current];
-  const codeRaw = cmdInput.value || "";
-  // 优先特殊逻辑
-  if(typeof lv.accept === 'function' && lv.accept(codeRaw, scene)) return;
-  // 宽容正则列表
-  if(lv.cmds && anyMatch(codeRaw, lv.cmds)){ lv.runDemo && lv.runDemo(scene); return; }
-  // 最后尝试 canonical 对比（兼容之前对象式 commands）
-  if(lv.commands){
-    const codeC = canon(codeRaw);
-    const hitKey = Object.keys(lv.commands).find(k=>canon(k)===codeC);
-    if(hitKey){ lv.commands[hitKey].call(lv, scene); return; }
+/* ------------------ 纹理生成（像素数据） ------------------ */
+function createCircleData(r, color='#fff', glow='#fff'){
+  const d = 2*r+2, data=[];
+  for(let y=0;y<d;y++){
+    let row = '';
+    for(let x=0;x<d;x++){
+      const dx=x-r-1, dy=y-r-1, dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<=r) row += color;
+      else if(dist<=r+1) row += glow+'44';
+      else row += '00';
+      if(x<d-1) row+= ' ';
+    }
+    data.push(row);
   }
-  setResult('❌ 命令不正确，看看提示再试试~');
-};
+  return data;
+}
+function createStarData(r, color='#ffd166', glow='#fff0b3'){
+  const d = 2*r+2, data=[];
+  for(let y=0;y<d;y++){
+    let row=''; for(let x=0;x<d;x++){
+      const cx=r+1, cy=r+1;
+      const ang=Math.atan2(y-cy,x-cx); const rad = r*(0.6+0.4*Math.sin(5*ang));
+      const dist=Math.hypot(x-cx,y-cy);
+      row += (dist<rad? color : (dist<rad+1?glow+'44':'00')) + (x<d-1?' ':'');
+    } data.push(row);
+  }
+  return data;
+}
+function createKeyData(){
+  const w=40,h=18, data=[];
+  for(let y=0;y<h;y++){
+    let row='';
+    for(let x=0;x<w;x++){
+      const on = (x<22 && y>4 && y<14) || // 柄
+                 (x>=22 && x<36 && y>2 && y<16) || // 头
+                 (x>=36 && y===8);
+      row += on? '#ffd166' : '00';
+      if(x<w-1) row+=' ';
+    } data.push(row);
+  } return data;
+}
+function createDoorData(){
+  const w=40,h=60,data=[];
+  for(let y=0;y<h;y++){
+    let row=''; for(let x=0;x<w;x++){
+      const on = x===0||x===w-1||y===0||y===h-1|| (x>3&&x<w-4&&y>3&&y<h-4);
+      row += on? (y<6? '#facc15' : '#8b5e34') : '00';
+      if(x<w-1) row+=' ';
+    } data.push(row);
+  } return data;
+}
+function createBoxData(){
+  const w=80,h=20,data=[];
+  for(let y=0;y<h;y++){
+    let row=''; for(let x=0;x<w;x++){
+      const edge = x===0||y===0||x===w-1||y===h-1; row += edge? '#4b5563' : '#1f2937';
+      if(x<w-1) row+=' ';
+    } data.push(row);
+  } return data;
+}
 
-// 默认打开 L1
-openLevel('L1');
+/* ------------------ 触屏控制 ------------------ */
+const touch = {up:false,down:false,left:false,right:false,attack:false};
+function setupTouchControls(scene){
+  const set=(k,v)=>{ touch[k]=v; if(v && (k==='attack')) doAttack(scene); };
+  document.querySelectorAll('.pbtn').forEach(btn=>{
+    const k = btn.dataset.k;
+    btn.addEventListener('touchstart', e=>{ e.preventDefault(); set(k,true); });
+    btn.addEventListener('touchend',   e=>{ e.preventDefault(); set(k,false); });
+    btn.addEventListener('mousedown',  e=>{ set(k,true); });
+    btn.addEventListener('mouseup',    e=>{ set(k,false); });
+    btn.addEventListener('mouseleave', e=>{ set(k,false); });
+  });
+}
 </script>
 </body>
 </html>
