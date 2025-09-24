@@ -1,18 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>欢迎来到我的网站</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>我的网站首页</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f9f9f9; text-align:center; }
-    h1 { color: #007acc; }
-    p { font-size: 18px; color: #333; }
-    a { color: #e63946; }
+    :root {
+      --pri:#0d6efd;
+      --bg1:#f9f9f9;
+      --bg2:#eef2ff;
+    }
+    body {
+      margin:0;
+      font-family:"Microsoft YaHei",Segoe UI,Roboto,sans-serif;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      background:linear-gradient(160deg,var(--bg1),var(--bg2));
+      color:#111;
+    }
+    header {
+      text-align:center;
+      padding:60px 20px 30px;
+    }
+    header h1 {
+      font-size:2.5rem;
+      margin:0 0 16px;
+      color:var(--pri);
+    }
+    header p {
+      font-size:1.2rem;
+      color:#555;
+      margin:0;
+    }
+    main {
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .btn {
+      display:inline-block;
+      padding:16px 28px;
+      font-size:1.2rem;
+      font-weight:600;
+      border-radius:999px;
+      background:var(--pri);
+      color:#fff;
+      text-decoration:none;
+      box-shadow:0 6px 16px rgba(13,110,253,.3);
+      transition:.25s;
+    }
+    .btn:hover {
+      transform:translateY(-3px);
+      box-shadow:0 10px 22px rgba(13,110,253,.4);
+    }
+    footer {
+      text-align:center;
+      padding:20px;
+      font-size:.9rem;
+      color:#666;
+      background:#fff;
+      border-top:1px solid #eee;
+    }
   </style>
 </head>
 <body>
-  <h1>👋 你好，这是我的第一个网页！</h1>
-  <p>这里以后可以放上我的游戏、文章、图片、作品集……</p>
-  <p><a href="game/index.html">进入我的小游戏 🎮</a></p>
+  <header>
+    <h1>👋 欢迎来到我的网站</h1>
+    <p>这是我的第一个编程学习网站，里面有我做的小游戏</p>
+  </header>
+
+  <main>
+    <a href="game/" class="btn">🎮 进入我的小游戏</a>
+  </main>
+
+  <footer>
+    © 2025 我的个人网站 | Powered by GitHub Pages
+  </footer>
 </body>
 </html>
