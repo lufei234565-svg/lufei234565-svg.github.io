@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>我的网站首页</title>
+  <title>大胆专属 · 首页</title>
   <style>
     :root {
       --pri:#0d6efd;
@@ -36,8 +36,10 @@
     main {
       flex:1;
       display:flex;
+      flex-direction:column;
       justify-content:center;
       align-items:center;
+      gap:30px;
     }
     .btn {
       display:inline-block;
@@ -55,6 +57,24 @@
       transform:translateY(-3px);
       box-shadow:0 10px 22px rgba(13,110,253,.4);
     }
+    .progress-box {
+      width:80%;
+      max-width:500px;
+      text-align:center;
+    }
+    .progress-bar {
+      height:20px;
+      border-radius:10px;
+      background:#ddd;
+      overflow:hidden;
+      margin:10px 0;
+    }
+    .progress-bar .fill {
+      height:100%;
+      width:0;
+      background:var(--pri);
+      transition:.5s;
+    }
     footer {
       text-align:center;
       padding:20px;
@@ -67,16 +87,34 @@
 </head>
 <body>
   <header>
-    <h1>👋 欢迎来到我的网站</h1>
+    <h1>👋 欢迎来到大胆专属</h1>
     <p>这是我的第一个编程学习网站，里面有我做的小游戏</p>
   </header>
 
   <main>
+    <!-- 通关进度条 -->
+    <div class="progress-box">
+      <h3>🎯 通关进度</h3>
+      <div class="progress-bar"><div class="fill" id="fill"></div></div>
+      <div id="progress-text">尚未开始</div>
+    </div>
+
+    <!-- 按钮 -->
     <a href="game/" class="btn">🎮 进入我的小游戏</a>
   </main>
 
   <footer>
-    © 2025 我的个人网站 | Powered by GitHub Pages
+    © 2025 大胆专属 | Powered by GitHub Pages
   </footer>
+
+  <script>
+    // 从 localStorage 读取进度
+    const total = 10; // 总关卡数
+    const passed = Number(localStorage.getItem("passedLevels")||0);
+    const percent = Math.min(100, Math.round((passed/total)*100));
+    document.getElementById("fill").style.width = percent + "%";
+    document.getElementById("progress-text").textContent = 
+      passed>0 ? `已完成 ${passed} / ${total} 关` : "尚未开始";
+  </script>
 </body>
 </html>
