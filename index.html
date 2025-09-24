@@ -3,115 +3,91 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>你的品牌｜把价值说清楚</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>AFE AI 3.0 ｜ 智能投资 · 稳健增值</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-  --bg:#F9FBFC;       /* 页面浅背景 */
-  --text:#243240;     /* 主文字颜色 */
-  --muted:#6B7A8C;    /* 次要文字颜色 */
-  --brand:#4DA3A9;    /* 主色（松石绿） */
-  --brand2:#7BC4B2;   /* 辅色（薄荷绿） */
-  --accent:#F5B971;   /* 点缀色（暖杏黄） */
-  --panel:#FFFFFF;    /* 白色卡片背景 */
-  --stroke:#E7EEF5;   /* 边框浅灰 */
-  --glass: rgba(255,255,255,.72); /* 半透明玻璃效果 */
+:root{
+  --bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;
+  --brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--hover:#FFAA33;
+  --panel:#FFFFFF;--stroke:#E7EEF5;--glass: rgba(255,255,255,.72);
 }
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.row{display:flex;gap:16px;flex-wrap:wrap}
 
-  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-  header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
-  nav{display:flex;align-items:center;justify-content:space-between;height:70px}
-  nav a{color:var(--muted);text-decoration:none;margin:0 10px}
-  .btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25)}
-  .ghost{background:var(--glass);color:#fff}
-  .hero{
-    position:relative; overflow:hidden;
-    background:
-      radial-gradient(800px 400px at 10% -10%, #6aa4ff22, transparent 60%),
-      radial-gradient(600px 300px at 90% 0%, #a78bfa22, transparent 60%),
-      linear-gradient(180deg,#0c1117 0, #0b0f14 60%);
-    border-bottom:1px solid var(--stroke);
-  }
-  .hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:42px;padding:96px 20px}
-  .h1{font-size: clamp(36px, 6vw, 64px); line-height:1.05; margin:0 0 16px; letter-spacing:-0.02em}
-  .lead{color:var(--muted); font-size:clamp(16px,2.4vw,18px); margin-bottom:22px}
-  .glass{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px;transition:.25s}
-  .card:hover{transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,.3)}
-  .section{padding:72px 0;border-top:1px solid var(--stroke)}
-  .sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
-  h2{font-size:clamp(28px,4.2vw,40px);margin:0 0 14px}
-  .row{display:flex;gap:16px;flex-wrap:wrap}
-  .stat{background:var(--glass);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;min-width:180px}
-  footer{padding:28px 0;color:#8aa0b8;text-align:center;border-top:1px solid var(--stroke)}
-  /* 简单进场动画 */
-  [data-reveal]{opacity:0; transform:translateY(12px); transition: all .6s ease;}
-  [data-reveal].show{opacity:1; transform:none;}
-  @media (max-width:900px){ .hero .wrap{grid-template-columns:1fr; padding:72px 20px} .grid{grid-template-columns:1fr} }
-  /* Blog cards 样式 */
-.post-card {
-  display:flex;
-  flex-direction:column;
-  padding:0;
-  overflow:hidden;
-}
-.post-card:hover {
-  transform:translateY(-4px);
-}
-.post-thumb {
-  height:180px;
-  overflow:hidden;
-  border-bottom:1px solid var(--stroke);
-}
-.post-thumb img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:transform .5s ease;
-}
-.post-card:hover .post-thumb img {
-  transform:scale(1.04);
-}
-.post-body {
-  padding:16px;
-}
-.post-title {
-  margin:4px 0 6px;
-  font-size:clamp(18px,2.6vw,20px);
-}
-.tag {
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#fff;
-  border:1px solid var(--stroke);
-  color:var(--muted);
-  font-size:12px;
-}
-.meta {
-  color:var(--muted);
-  font-size:12px;
-  margin-top:6px;
-}
+/* Header */
+header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px)}
+nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+nav a{color:var(--muted);text-decoration:none;margin:0 10px;transition:.3s}
+nav a:hover{color:var(--brand)}
 
+/* Buttons */
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);transition:all .3s ease}
+.btn:hover{transform:translateY(-2px) scale(1.03);background:linear-gradient(135deg,var(--brand2),var(--hover));box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.ghost{background:var(--glass);color:#fff}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:radial-gradient(800px 400px at 10% -10%, #6aa4ff22, transparent 60%),radial-gradient(600px 300px at 90% 0%, #a78bfa22, transparent 60%),linear-gradient(180deg,#0c1117 0, #0b0f14 60%);border-bottom:1px solid var(--stroke)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:42px;padding:96px 20px}
+.h1{font-size:clamp(36px,6vw,64px);line-height:1.05;margin:0 0 16px;letter-spacing:-0.02em;color:#fff}
+.lead{color:#d1d5db;font-size:clamp(16px,2.4vw,18px);margin-bottom:22px}
+.hero img{border-radius:16px;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* Card */
+.card{background:rgba(255,255,255,0.85);border:1px solid var(--stroke);border-radius:16px;padding:18px;backdrop-filter:blur(10px);transition:.25s}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* Sections */
+.section{padding:72px 0;border-top:1px solid var(--stroke)}
+.sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
+h2{font-size:clamp(28px,4.2vw,40px);margin:0 0 14px}
+.stat{background:var(--glass);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;min-width:180px}
+
+/* Blog */
+.post-card{display:flex;flex-direction:column;padding:0;overflow:hidden;transition:.3s}
+.post-card:hover{transform:translateY(-4px)}
+.post-thumb{position:relative;height:180px;overflow:hidden;border-bottom:1px solid var(--stroke)}
+.post-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.post-thumb::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;background:linear-gradient(to top, rgba(0,0,0,0.4), transparent)}
+.post-card:hover .post-thumb img{transform:scale(1.04)}
+.post-body{padding:16px}
+.post-title{margin:4px 0 6px;font-size:clamp(18px,2.6vw,20px);transition:color .3s}
+.post-card:hover .post-title{color:var(--accent)}
+.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--stroke);color:var(--muted);font-size:12px}
+.meta{color:var(--muted);font-size:12px;margin-top:6px}
+
+/* Footer */
+footer{background:#0b0f14;color:#ccc;padding:28px 0;text-align:center;border-top:1px solid #222}
+footer a{color:var(--brand2);text-decoration:none}
+footer a:hover{color:var(--accent)}
+
+/* 动画 */
+[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
+[data-reveal].show{opacity:1;transform:none}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;padding:72px 20px}
+  .grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
     <nav>
-   <div class="row" style="align-items:center">
-  <strong style="font-weight:800;letter-spacing:.5px">AFE AI 3.0</strong>
-  <a href="#features">功能</a>
-  <a href="#cases">案例</a>
-  <a href="#pricing">价格</a>
-  <a href="#blog">洞见</a> <!-- 新增：直接跳到 Blog 区块 -->
-</div>
-    <div class="row">
+      <div class="row" style="align-items:center">
+        <strong style="font-weight:800;letter-spacing:.5px">AFE AI 3.0</strong>
+        <a href="#features">功能</a>
+        <a href="#cases">案例</a>
+        <a href="#pricing">价格</a>
+        <a href="#blog">洞见</a>
+      </div>
+      <div class="row">
         <a class="btn ghost" href="#contact">登录</a>
         <a class="btn" href="#contact">立即体验</a>
       </div>
@@ -119,83 +95,73 @@
   </div>
 </header>
 
+<!-- Hero -->
 <section class="hero">
   <div class="wrap">
     <div>
-      <div class="sub">为增长而设计</div>
-      <h1 class="h1">一句清晰有力的价值主张，<span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;color:transparent">直接说动</span>用户</h1>
-      <p class="lead">用更少的页面，讲清你的产品/服务，结合真实案例与数据证明，搭配顺畅的预约/咨询流程，把访客转化成客户。</p>
+      <div class="sub" style="color:#9ca3af">智能投资 · 风险托底</div>
+      <h1 class="h1">AFE AI 3.0 —— <span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;color:transparent">让财富增长更确定</span></h1>
+      <p class="lead">全球 10,000+ 用户实测，平均回报率 328.7%。亏损 1:1 补偿，盈利 3:7 分成。AI 驱动投资，让每个普通人都能安全入门。</p>
       <div class="row">
-        <a class="btn" href="#contact">预约演示</a>
+        <a class="btn" href="#contact">立即加入</a>
         <a class="btn ghost" href="#features">了解更多</a>
       </div>
       <div class="row" style="margin-top:16px">
-        <div class="stat"><div class="sub">客户转化率</div><div style="font-size:28px;font-weight:800">+37%</div></div>
-        <div class="stat"><div class="sub">月度留存</div><div style="font-size:28px;font-weight:800">82%</div></div>
-        <div class="stat"><div class="sub">NPS</div><div style="font-size:28px;font-weight:800">67</div></div>
+        <div class="stat"><div class="sub">全球用户</div><div style="font-size:28px;font-weight:800">10,000+</div></div>
+        <div class="stat"><div class="sub">平均回报率</div><div style="font-size:28px;font-weight:800">328.7%</div></div>
+        <div class="stat"><div class="sub">风险补偿</div><div style="font-size:28px;font-weight:800">1:1 托底</div></div>
       </div>
     </div>
     <div class="glass" data-reveal>
-      <!-- 这里可换 Swiper / 视频 / 3D Canvas -->
-      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="" style="width:100%;border-radius:12px;display:block">
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="AFE AI 3.0 投资示意图">
       <div class="row" style="margin-top:12px">
-        <div class="card" style="flex:1">
-          <strong>快速搭建</strong><div class="sub">Next.js / Astro / Tailwind</div>
-        </div>
-        <div class="card" style="flex:1">
-          <strong>动效出色</strong><div class="sub">Framer Motion / GSAP</div>
-        </div>
+        <div class="card" style="flex:1"><strong>AI 驱动</strong><div class="sub">GAN + 强化学习</div></div>
+        <div class="card" style="flex:1"><strong>风控保障</strong><div class="sub">1:1 亏损补偿</div></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Features -->
 <section class="section" id="features">
   <div class="wrap">
     <div class="sub">核心能力</div>
-    <h2>把复杂价值拆成 3–6 个易懂卖点</h2>
+    <h2>AFE AI 3.0 如何帮你投资更安心</h2>
     <div class="grid" data-reveal>
-      <div class="card"><h3>模块化组件库</h3><p class="lead">卡片、时间线、Logo 墙、价格卡、FAQ、表单一键复用。</p></div>
-      <div class="card"><h3>性能与 SEO</h3><p class="lead">Lighthouse 90+，结构化数据、OG、Sitemap、i18n 全套。</p></div>
-      <div class="card"><h3>转化设计</h3><p class="lead">多处 CTA、社证、案例页、预约流程、CRM 集成。</p></div>
+      <div class="card"><h3>智能选股</h3><p class="lead">大数据与算法驱动，精准捕捉潜力股票。</p></div>
+      <div class="card"><h3>亏损托底</h3><p class="lead">1:1 风险补偿机制，资金更安全。</p></div>
+      <div class="card"><h3>全球验证</h3><p class="lead">万人测试，328.7% 平均回报率。</p></div>
     </div>
   </div>
 </section>
 
-<section class="section" id="cases">
+<!-- Blog -->
+<section class="section" id="blog">
   <div class="wrap">
-    <div class="sub">客户与案例</div>
-    <h2>社会证明让承诺更可信</h2>
-    <div class="row" data-reveal>
-      <div class="card" style="flex:1"><strong>「提升 3 倍线索量」</strong><p class="lead">—— A 公司市场负责人</p></div>
-      <div class="card" style="flex:1"><strong>「演示当天就签」</strong><p class="lead">—— B 公司销售总监</p></div>
-      <div class="card" style="flex:1"><strong>「内容更新超顺滑」</strong><p class="lead">—— C 公司运营经理</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="pricing">
-  <div class="wrap">
-    <div class="sub">定价方案</div>
-    <h2>透明、可迭代，按需扩展</h2>
+    <div class="sub">洞见 Insight</div>
+    <h2>和 AFE AI 3.0 一起，把经验沉淀成可复用的方法</h2>
     <div class="grid" data-reveal>
-      <div class="card"><h3>基础版</h3><p class="lead">适合品牌展示/个人官网</p><p style="font-weight:800;font-size:24px">¥4,999 起</p><a class="btn" href="#contact">咨询</a></div>
-      <div class="card"><h3>增长版</h3><p class="lead">带博客/多语言/表单/动效</p><p style="font-weight:800;font-size:24px">¥9,999 起</p><a class="btn" href="#contact">咨询</a></div>
-      <div class="card"><h3>高级版</h3><p class="lead">接入 CMS / CRM / 预约 / 支付</p><p style="font-weight:800;font-size:24px">定制</p><a class="btn" href="#contact">咨询</a></div>
+      <a class="card post-card" href="blog/post-1.html"><div class="post-thumb"><img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop"></div><div class="post-body"><h3 class="post-title">AFE AI 3.0 如何通过大数据与算法挑选股票？</h3></div></a>
+      <a class="card post-card" href="blog/post-2.html"><div class="post-thumb"><img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0f2?q=80&w=1200&auto=format&fit=crop"></div><div class="post-body"><h3 class="post-title">亏损 1:1 赔付机制，如何保障投资者资金安全？</h3></div></a>
+      <a class="card post-card" href="blog/post-3.html"><div class="post-thumb"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"></div><div class="post-body"><h3 class="post-title">AFE AI 3.0 全球万人试验：平均回报率 328.7%</h3></div></a>
+      <a class="card post-card" href="blog/post-4.html"><div class="post-thumb"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop"></div><div class="post-body"><h3 class="post-title">从教师到投资者：Sofía 如何用 30 美元开启财富之路</h3></div></a>
+      <a class="card post-card" href="blog/post-5.html"><div class="post-thumb"><img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?q=80&w=1200&auto=format&fit=crop"></div><div class="post-body"><h3 class="post-title">AFE VIP 等级与奖励：如何激励用户长期参与？</h3></div></a>
+      <a class="card post-card" href="blog/post-6.html"><div class="post-thumb"><img src="https://images.unsplash.com/photo-1581090700227-4c4c1d6a19c8?q=80&w=1200&auto=format&fit=crop"></div><div class="post-body"><h3 class="post-title">AFE US 的合规证明与未来战略</h3></div></a>
     </div>
   </div>
 </section>
 
+<!-- Contact -->
 <section class="section" id="contact">
   <div class="wrap">
     <div class="sub">开始合作</div>
-    <h2>给我 30 分钟，给你一个更能转化的官网</h2>
+    <h2>加入 AFE AI 3.0，开启智能投资新旅程</h2>
     <div class="row" data-reveal>
       <form class="card" style="flex:1;display:grid;gap:10px">
-        <input placeholder="你的名字" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)">
-        <input placeholder="邮箱/微信" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)">
-        <textarea placeholder="简单描述需求" rows="4" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)"></textarea>
-        <button class="btn" type="submit">预约咨询</button>
+        <input placeholder="你的名字">
+        <input placeholder="邮箱/微信">
+        <textarea placeholder="简单描述需求" rows="4"></textarea>
+        <button class="btn" type="submit">立即咨询</button>
       </form>
       <div class="card" style="flex:1">
         <h3>也可直接联系</h3>
@@ -206,128 +172,11 @@
   </div>
 </section>
 
-<!-- ！！！从这里开始是新增的 Blog / 洞见模块 ！！！ -->
-<section class="section" id="blog">
-  <div class="wrap">
-    <div class="sub">洞见 Insight</div>
-    <h2>AFE AI 3.0 · 方法论与案例解读</h2>
-
-    <div class="grid" data-reveal>
-      <!-- 文章 1 -->
-      <a class="card post-card" href="https://afe-foundation.com/enter-fmai/" target="_blank" rel="noopener">
-        <div class="post-thumb">
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="AI 智能选股">
-        </div>
-        <div class="post-body">
-          <div class="row" style="gap:8px;margin-bottom:8px">
-            <span class="tag">技术原理</span><span class="tag">AI 选股</span>
-          </div>
-          <h3 class="post-title">AFE AI 3.0 如何通过大数据与算法挑选股票？</h3>
-          <p class="lead">揭秘 GAN 模型与量化逻辑，为什么能跑赢市场平均收益。</p>
-          <div class="meta">2025-03-12 · 6 min</div>
-        </div>
-      </a>
-
-      <!-- 文章 2 -->
-      <a class="card post-card" href="https://finance.yahoo.com/news/afe-ai-3-0-announces-031100628.html" target="_blank" rel="noopener">
-        <div class="post-thumb">
-          <img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0f2?q=80&w=1200&auto=format&fit=crop" alt="风险补偿机制">
-        </div>
-        <div class="post-body">
-          <div class="row" style="gap:8px;margin-bottom:8px">
-            <span class="tag">风险管理</span><span class="tag">1:1 托底</span>
-          </div>
-          <h3 class="post-title">亏损 1:1 赔付机制，如何保障投资者资金安全？</h3>
-          <p class="lead">AFE US 如何通过风控与补偿机制，让普通投资者敢于尝试。</p>
-          <div class="meta">2025-03-01 · 5 min</div>
-        </div>
-      </a>
-
-      <!-- 文章 3 -->
-      <a class="card post-card" href="https://gaceta.mx/2025/07/afe-ai-3-0-establece-record-con-un-rendimiento-del-328-en-su-prueba-piloto-en-europa-y-america-atrayendo-la-atencion-de-los-principales-fondos-de-capital-de-riesgo/" target="_blank" rel="noopener">
-        <div class="post-thumb">
-          <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop" alt="全球测试">
-        </div>
-        <div class="post-body">
-          <div class="row" style="gap:8px;margin-bottom:8px">
-            <span class="tag">全球测试</span><span class="tag">数据表现</span>
-          </div>
-          <h3 class="post-title">AFE AI 3.0 全球万人试验：平均回报率 328.7%</h3>
-          <p class="lead">覆盖 12 个国家，吸引 KPCB 与红杉资本等风投关注。</p>
-          <div class="meta">2025-02-20 · 8 min</div>
-        </div>
-      </a>
-
-      <!-- 文章 4 -->
-      <a class="card post-card" href="https://afe-foundation.com/enter-fmai/" target="_blank" rel="noopener">
-        <div class="post-thumb">
-          <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop" alt="客户案例">
-        </div>
-        <div class="post-body">
-          <div class="row" style="gap:8px;margin-bottom:8px">
-            <span class="tag">客户故事</span><span class="tag">墨西哥</span>
-          </div>
-          <h3 class="post-title">从教师到投资者：Sofía 如何用 30 美元开启财富之路</h3>
-          <p class="lead">真实案例：AFE AI 3.0 在墨西哥的用户故事与转变。</p>
-          <div class="meta">2025-02-05 · 4 min</div>
-        </div>
-      </a>
-
-      <!-- 文章 5 -->
-      <a class="card post-card" href="https://afe-foundation.com/enter-fmai/" target="_blank" rel="noopener">
-        <div class="post-thumb">
-          <img src="https://images.unsplash.com/photo-1487528278747-ba99ed528ebc?q=80&w=1200&auto=format&fit=crop" alt="VIP 等级制度">
-        </div>
-        <div class="post-body">
-          <div class="row" style="gap:8px;margin-bottom:8px">
-            <span class="tag">成长体系</span><span class="tag">VIP 制度</span>
-          </div>
-          <h3 class="post-title">AFE VIP 等级与奖励：如何激励用户长期参与？</h3>
-          <p class="lead">从 1 星到 3 星 VIP，BMW X3 奖励与黄金奖牌制度解读。</p>
-          <div class="meta">2025-01-20 · 7 min</div>
-        </div>
-      </a>
-
-      <!-- 文章 6 -->
-      <a class="card post-card" href="https://afe-foundation.com/enter-fmai/" target="_blank" rel="noopener">
-        <div class="post-thumb">
-          <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop" alt="合规与未来">
-        </div>
-        <div class="post-body">
-          <div class="row" style="gap:8px;margin-bottom:8px">
-            <span class="tag">合规</span><span class="tag">未来展望</span>
-          </div>
-          <h3 class="post-title">AFE US 的合规证明与未来战略</h3>
-          <p class="lead">MSB 牌照、科罗拉多注册，以及 AI 投资的长期愿景。</p>
-          <div class="meta">2025-01-05 · 6 min</div>
-        </div>
-      </a>
-    </div>
-
-    <!-- 更多文章 CTA -->
-    <div class="row" style="margin-top:18px" data-reveal>
-      <a class="btn" href="https://afe-foundation.com/enter-fmai/" target="_blank" rel="noopener">浏览更多洞见</a>
-      <a class="btn ghost" href="#contact">订阅月报</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- 页脚 -->
-<footer>© 2025 你的品牌 | 设计 × 开发 × 增长</footer>
+<footer>© 2025 AFE AI 3.0 ｜ 智能投资 · 稳健增值</footer>
 
 <script>
-// 轻量滚动进场
-const io = new IntersectionObserver((ents)=>{
-  ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target) } })
-},{threshold:.15});
+const io=new IntersectionObserver((ents)=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.15});
 document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
-
-
-
-
-
-
