@@ -360,6 +360,144 @@ const LEVELS = {
           </div>`).join('')}
       </div>`;
       setResult("");
+        L11:{
+    title:"L11 变量 · 点亮次数", bg:"bg-forest",
+    desc:"把变量 count 设为 3，然后点亮火把 3 次。命令顺序：set(\"count\",3) → torch.on(count)",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    setup(el){ el.innerHTML = SVGs.torch(false) + `<div id="counter" style="position:absolute;right:18px;top:18px;background:#fff7;border:1px solid var(--border);padding:6px 10px;border-radius:8px">count = <b id="cv">0</b></div>`; el.dataset.count=0; setResult(""); cmdHint.textContent='set("count",3) 然后 torch.on(count)'; },
+    runDemo(el){ el.dataset.count=3; el.querySelector('#cv').textContent='3'; el.innerHTML = SVGs.torch(true) + el.querySelector('#counter').outerHTML; setResult("✅ 点亮完成！",true); saveProgress("L11"); },
+    commands:{
+      'set("count",3)'(el){ el.dataset.count=3; el.querySelector('#cv').textContent='3'; setResult("已设置 count=3"); },
+      "set('count',3)"(el){ el.dataset.count=3; el.querySelector('#cv').textContent='3'; setResult("已设置 count=3"); },
+      'torch.on(count)'(el){ 
+        if(+el.dataset.count===3){ this.runDemo(el); } 
+        else setResult("❌ 先执行 set(\"count\",3) 再 torch.on(count)");
+      }
+    }
+  },
+
+  L12:{
+    title:"L12 变量运算 · 拾取金币", bg:"bg-temple",
+    desc:"每次 add(\"coins\",10) 增加 10 金币，累积到 30 通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    setup(el){ el.innerHTML = `<div style="text-align:center"><div class="svg-wrap">🪙</div><h3>金币：<span id="coins">0</span></h3></div>`; el.dataset.coins=0; setResult(""); cmdHint.textContent='输入 3 次：add("coins",10)'; },
+    runDemo(el){ el.dataset.coins=30; el.querySelector('#coins').textContent='30'; setResult("✅ 金币达到 30！",true); saveProgress("L12"); },
+    commands:{
+      'add("coins",10)'(el){ const c=+el.dataset.coins+10; el.dataset.coins=c; el.querySelector('#coins').textContent=c; if(c>=30){ setResult("✅ 金币达到 30！",true); saveProgress("L12"); } else setResult(`已增加，当前 ${c}/30`); },
+      "add('coins',10)"(el){ const c=+el.dataset.coins+10; el.dataset.coins=c; el.querySelector('#coins').textContent=c; if(c>=30){ setResult("✅ 金币达到 30！",true); saveProgress("L12"); } else setResult(`已增加，当前 ${c}/30`); }
+    }
+  },
+
+  L13:{
+    title:"L13 条件 · 拉杆开门", bg:"bg-cave",
+    desc:"先拉下拉杆 toggle(\"lever\")，再执行 openIf(\"lever\") 打开大门。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    setup(el){ el.innerHTML = SVGs.door(false)+`<div style="position:absolute;left:18px;top:18px;background:#fff7;border:1px solid var(--border);padding:6px 10px;border-radius:8px">lever: <b id="lv">false</b></div>`; el.dataset.lever="false"; setResult(""); cmdHint.textContent='toggle("lever") → openIf("lever")'; },
+    runDemo(el){ el.dataset.lever="true"; el.querySelector('#lv').textContent='true'; el.innerHTML = SVGs.door(true) + el.querySelector('div').outerHTML; setResult("✅ 条件满足，门已开！",true); saveProgress("L13"); },
+    commands:{
+      'toggle("lever")'(el){ el.dataset.lever = (el.dataset.lever==="true"?"false":"true"); el.querySelector('#lv').textContent=el.dataset.lever; setResult(`lever = ${el.dataset.lever}`); },
+      "toggle('lever')" (el){ el.dataset.lever = (el.dataset.lever==="true"?"false":"true"); el.querySelector('#lv').textContent=el.dataset.lever; setResult(`lever = ${el.dataset.lever}`); },
+      'openIf("lever")'(el){ if(el.dataset.lever==="true"){ this.runDemo(el); } else setResult("❌ lever 还没拉下"); },
+      "openIf('lever')" (el){ if(el.dataset.lever==="true"){ this.runDemo(el); } else setResult("❌ lever 还没拉下"); }
+    }
+  },
+
+  L14:{
+    title:"L14 条件判断 · 大于比较", bg:"bg-temple",
+    desc:"若 x>3 则激活石碑。命令：set(\"x\",4) → if(x>3) activate()",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    setup(el){ el.innerHTML = `<div style="text-align:center"><button id="b" class="btn" style="background:#e5e7eb;color:#111;border-color:#d1d5db">按钮</button><div style="margin-top:8px">x = <b id="xv">0</b></div></div>`; el.dataset.x=0; setResult(""); cmdHint.textContent='set("x",4) → if(x>3) activate()'; },
+    runDemo(el){ const b=el.querySelector('#b'); b.textContent='已激活'; b.style.background='var(--pri)'; b.style.color='#fff'; setResult("✅ 条件为真，已激活！",true); saveProgress("L14"); },
+    commands:{
+      'set("x",4)'(el){ el.dataset.x=4; el.querySelector('#xv').textContent='4'; setResult("x 已设为 4"); },
+      "set('x',4)"(el){ el.dataset.x=4; el.querySelector('#xv').textContent='4'; setResult("x 已设为 4"); },
+      'if(x>3) activate()'(el){ if(+el.dataset.x>3){ this.runDemo(el); } else setResult("❌ x 不大于 3"); }
+    }
+  },
+
+  L15:{
+    title:"L15 循环 · 重复移动", bg:"bg-sea",
+    desc:"使用 repeat(3){ move() } 让船移动 3 次到达终点。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    setup(el){ 
+      el.innerHTML = `<div style="width:92%;height:160px;border-radius:14px;border:1px dashed var(--border);position:relative;background:linear-gradient(180deg,#e0f2fe,#f0f9ff)"><div id="boat" style="position:absolute;left:10%;top:60%;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:28px solid #0ea5e9;filter:drop-shadow(0 6px 12px rgba(0,0,0,.25));transition:all .3s"></div></div>`;
+      el.dataset.step=0; setResult(""); cmdHint.textContent='repeat(3){ move() }';
+    },
+    runDemo(el){ const boat=el.querySelector('#boat'); boat.style.left='80%'; boat.style.top='40%'; setTimeout(()=>{ setResult("✅ 到达！",true); saveProgress("L15"); }, 380); },
+    commands:{
+      'repeat(3){ move() }'(el){ 
+        const boat=el.querySelector('#boat'); 
+        let i=0; (function go(){ i++; boat.style.left=(10+i*20)+'%'; if(i<3) setTimeout(go,300); else setTimeout(()=>{ setResult("✅ 到达！",true); saveProgress("L15"); },320); })();
+      }
+    }
+  },
+
+  L16:{
+    title:"L16 变量 + 循环", bg:"bg-forest",
+    desc:"先设 n=4，再执行 repeat(n){ step() }，步数达标通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+    setup(el){ el.innerHTML = `<div style="text-align:center"><div style="height:12px;width:80%;background:#e5e7eb;border-radius:999px;margin:0 auto;overflow:hidden"><div id="bar" style="height:100%;width:0;background:var(--pri);transition:width .25s"></div></div><div style="margin-top:8px">n = <b id="nv">0</b></div></div>`; el.dataset.n=0; el.dataset.k=0; setResult(""); cmdHint.textContent='set("n",4) → repeat(n){ step() }'; },
+    runDemo(el){ el.querySelector('#bar').style.width='100%'; setTimeout(()=>{ setResult("✅ 步数达标！",true); saveProgress("L16"); },320); },
+    commands:{
+      'set("n",4)'(el){ el.dataset.n=4; el.querySelector('#nv').textContent='4'; setResult("n=4"); },
+      "set('n',4)"(el){ el.dataset.n=4; el.querySelector('#nv').textContent='4'; setResult("n=4"); },
+      'repeat(n){ step() }'(el){ const n=+el.dataset.n; if(n!==4) return setResult("❌ 先把 n 设为 4"); const bar=el.querySelector('#bar'); let i=0; (function go(){ i++; bar.style.width=(i/n*100)+'%'; if(i<n) setTimeout(go,240); else setTimeout(()=>{ setResult("✅ 步数达标！",true); saveProgress("L16"); },260); })(); }
+    }
+  },
+
+  L17:{
+    title:"L17 数组 · 收集宝石", bg:"bg-temple",
+    desc:"使用 collect([\"🔴\",\"🔵\",\"🟢\"]) 一次性收集 3 颗宝石。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+    setup(el){ el.innerHTML = `<div style="text-align:center"><div id="bag" style="font-size:32px;letter-spacing:6px;min-height:40px"></div><div style="color:#6b7280">目标：🔴 🔵 🟢</div></div>`; setResult(""); cmdHint.textContent='collect(["🔴","🔵","🟢"])'; },
+    runDemo(el){ el.querySelector('#bag').textContent='🔴 🔵 🟢'; setResult("✅ 收集完成！",true); saveProgress("L17"); },
+    commands:{
+      'collect(["🔴","🔵","🟢"])'(el){ this.runDemo(el); },
+      "collect(['🔴','🔵','🟢'])"(el){ this.runDemo(el); }
+    }
+  },
+
+  L18:{
+    title:"L18 排序 · 古老密码", bg:"bg-cave",
+    desc:"把数组排序：sort([3,1,2])，显示 1,2,3 通关。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+    setup(el){ el.innerHTML = `<div style="text-align:center"><div>原始：<b>3,1,2</b></div><div id="sorted" style="margin-top:8px;font-size:20px"></div></div>`; setResult(""); cmdHint.textContent='sort([3,1,2])'; },
+    runDemo(el){ el.querySelector('#sorted').textContent='排序结果：1,2,3'; setResult("✅ 排序正确！",true); saveProgress("L18"); },
+    commands:{ 'sort([3,1,2])'(el){ this.runDemo(el); } }
+  },
+
+  L19:{
+    title:"L19 条件分支 · 找钥匙或开门", bg:"bg-forest",
+    desc:"两步：findKey() → open()。若没钥匙则不能开门。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+    setup(el){ el.innerHTML = SVGs.door(false)+`<div style="position:absolute;right:18px;top:18px;background:#fff7;border:1px solid var(--border);padding:6px 10px;border-radius:8px">key: <b id="kv">false</b></div>`; el.dataset.key="false"; setResult(""); cmdHint.textContent='findKey() → open()'; },
+    runDemo(el){ el.dataset.key="true"; el.querySelector('#kv').textContent='true'; el.innerHTML = SVGs.door(true) + el.querySelector('div').outerHTML; setResult("✅ 开门成功！",true); saveProgress("L19"); },
+    commands:{
+      'findKey()'(el){ el.dataset.key="true"; el.querySelector('#kv').textContent='true'; setResult("🔑 找到钥匙"); },
+      'open()'(el){ if(el.dataset.key==="true"){ this.runDemo(el); } else setResult("❌ 还没有钥匙，先 findKey()"); }
+    }
+  },
+
+  L20:{
+    title:"L20 终极 · 循环攻击 Boss", bg:"bg-dark",
+    desc:"使用 repeat(5){ attack() } 连击 5 次击败 Boss。",
+    music:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+    setup(el){
+      el.innerHTML = `<div style="text-align:center">
+        <div style="font-size:48px">🐉 Boss</div>
+        <div style="height:12px;width:80%;background:#e5e7eb;border-radius:999px;margin:8px auto;overflow:hidden">
+          <div id="hp" style="height:100%;width:100%;background:#ef4444;transition:width .2s"></div>
+        </div>
+        <div>HP：<b id="hpv">100</b></div>
+      </div>`;
+      el.dataset.hit=0; setResult(""); cmdHint.textContent='repeat(5){ attack() }';
+    },
+    runDemo(el){ const hp=el.querySelector('#hp'); const hpv=el.querySelector('#hpv'); let i=0; (function go(){ i++; const left=Math.max(0,100-i*20); hp.style.width=left+'%'; hpv.textContent=left; if(i<5) setTimeout(go,220); else setTimeout(()=>{ setResult('✅ Boss 倒下！',true); saveProgress('L20'); },260); })(); },
+    commands:{
+      'repeat(5){ attack() }'(el){ this.runDemo(el); }
+    }
+  },
+
     },
     run(el){
       const bars=[...el.querySelectorAll('.v')];
@@ -410,3 +548,4 @@ openLevel('L1');
 </script>
 </body>
 </html>
+
