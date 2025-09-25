@@ -1,261 +1,397 @@
 <!doctype html>
 <html lang="zh">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AFE AI 3.0｜智能投资·安全增长</title>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>关于我们｜AFE AI 3.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#F9FBFC; --text:#243240; --muted:#6B7A8C;
-  --brand:#4DA3A9; --brand2:#7BC4B2; --accent:#F5B971;
-  --panel:#FFFFFF; --stroke:#E7EEF5; --glass:rgba(255,255,255,.72);
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+:root{--bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;--brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--panel:#fff;--stroke:#E7EEF5;--glass:rgba(255,255,255,.72)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px);z-index:10}
 nav{display:flex;align-items:center;justify-content:space-between;height:70px}
-nav a{color:var(--muted);text-decoration:none;margin:0 10px}
-.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);text-decoration:none}
+nav a{color:#bcd0ea;text-decoration:none;margin:0 10px}
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);display:inline-flex;gap:6px;align-items:center}
 .ghost{background:var(--glass);color:#fff}
-.section{padding:72px 0;border-top:1px solid var(--stroke)}
-.sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
-h2{font-size:clamp(28px,4.2vw,40px);margin:0 0 14px}
-.row{display:flex;gap:16px;flex-wrap:wrap}
+.section{padding:72px 0;border-top:1px solid var(--stroke);background:#fff}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}
+h2{font-size:clamp(24px,4vw,36px);margin:0 0 12px}
+.lead{color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px;transition:.25s}
-.card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.3)}
-.stat{background:var(--glass);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;min-width:180px}
-footer{padding:28px 0;color:#8aa0b8;text-align:center;border-top:1px solid var(--stroke)}
+.card-raise{transition:transform .28s cubic-bezier(.2,.6,.2,1), box-shadow .28s}
+.card-raise:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,.25)}
+.sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
+footer{padding:28px 0;color:#8aa0b8;text-align:center;border-top:1px solid var(--stroke);background:#fff}
 [data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
 [data-reveal].show{opacity:1;transform:none}
-@media (max-width:900px){ .grid{grid-template-columns:1fr} }
-
-/* Hero */
-.hero{
-  position:relative;overflow:hidden;
-  background:
-    radial-gradient(800px 400px at 10% -10%, #6aa4ff22, transparent 60%),
-    radial-gradient(600px 300px at 90% 0%, #a78bfa22, transparent 60%),
-    linear-gradient(180deg,#0c1117 0, #0b0f14 60%);
-  border-bottom:1px solid var(--stroke); color:#fff;
-}
-.hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:42px;padding:96px 20px}
-.h1{font-size:clamp(36px,6vw,64px);line-height:1.05;margin:0 0 16px;letter-spacing:-.02em}
-.lead{color:#c9d2dd;font-size:clamp(16px,2.4vw,18px);margin-bottom:22px}
-.glass{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
-
-/* Blog cards */
-.post-card{display:flex;flex-direction:column;padding:0;overflow:hidden}
-.post-card:hover{transform:translateY(-4px)}
-.post-thumb{height:180px;overflow:hidden;border-bottom:1px solid var(--stroke)}
-.post-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
-.post-card:hover .post-thumb img{transform:scale(1.04)}
-.post-body{padding:16px}
-.post-title{margin:4px 0 6px;font-size:clamp(18px,2.6vw,20px)}
-.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--stroke);color:var(--muted);font-size:12px}
-.meta{color:var(--muted);font-size:12px;margin-top:6px}
-
-/* WhatsApp 弹窗 */
-.wa-backdrop{position:fixed;inset:0;display:none;background:rgba(0,0,0,.55);z-index:120}
-.wa-backdrop.show{display:block;animation:fadeIn .2s ease}
-.wa-modal{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:121}
-.wa-modal .panel{width:min(92vw,420px);pointer-events:auto;background:var(--panel);border:1px solid var(--stroke);border-radius:16px;padding:22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);transform:translateY(8px);opacity:0;transition:all .2s ease}
-.wa-modal.show .panel{transform:none;opacity:1}
-.wa-close{position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:22px;cursor:pointer;color:#6b7a8c}
-.qr{width:220px;height:220px;margin:10px auto 14px;border-radius:12px;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid var(--stroke)}
-.wa-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-@keyframes fadeIn{from{opacity:0}to{opacity:1)}
-.wa-fab{position:fixed;bottom:22px;right:22px;z-index:99;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 10px 25px rgba(0,0,0,.25);color:#fff;font-size:24px;text-decoration:none}
+.headline-underline{position:relative;display:inline-block;padding-bottom:6px}
+.headline-underline::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.headline-underline.show-underline::after{transform:scaleX(1)}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="wrap">
     <nav>
-      <div class="row" style="align-items:center">
-        <strong style="font-weight:800;letter-spacing:.5px">AFE AI 3.0</strong>
-        <a href="#features">功能</a><a href="#cases">案例</a><a href="#pricing">价格</a><a href="#blog">洞见</a>
-      </div>
-      <div class="row">
-        <a class="btn ghost" href="#contact">登录</a>
-        <a class="btn" href="#contact">立即体验</a>
+      <div><a href="index.html" style="color:#fff;font-weight:800">AFE AI 3.0</a></div>
+      <div>
+        <a href="about.html">关于</a><a href="features.html">功能</a><a href="cases.html">案例</a>
+        <a href="pricing.html">价格</a><a href="blog.html">洞见</a><a href="contact.html">联系</a>
+        <a class="btn ghost" href="game/index.html">🎮 进入游戏</a>
       </div>
     </nav>
   </div>
 </header>
 
-<section class="hero">
+<section class="section">
   <div class="wrap">
-    <div>
-      <div class="sub">为增长而设计</div>
-      <h1 class="h1">一句清晰有力的价值主张，<span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;color:transparent">直接说动</span>用户</h1>
-      <p class="lead">用更少的页面讲清你的产品/服务，结合真实案例与数据证明，搭配顺畅的预约/咨询流程，把访客转化成客户。</p>
-      <div class="row">
-        <a class="btn" href="#contact">预约演示</a>
-        <a class="btn ghost" href="#features">了解更多</a>
-      </div>
-      <div class="row" style="margin-top:16px">
-        <div class="stat"><div class="sub">客户转化率</div><div style="font-size:28px;font-weight:800">+37%</div></div>
-        <div class="stat"><div class="sub">月度留存</div><div style="font-size:28px;font-weight:800">82%</div></div>
-        <div class="stat"><div class="sub">NPS</div><div style="font-size:28px;font-weight:800">67</div></div>
-      </div>
-    </div>
-    <div class="glass" data-reveal>
-      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="" style="width:100%;border-radius:12px;display:block">
-      <div class="row" style="margin-top:12px">
-        <div class="card" style="flex:1"><strong>快速搭建</strong><div class="sub">Next.js / Astro / Tailwind</div></div>
-        <div class="card" style="flex:1"><strong>动效出色</strong><div class="sub">Framer Motion / GSAP</div></div>
-      </div>
+    <div class="sub">About</div>
+    <h1 class="headline-underline" data-reveal>我们是谁</h1>
+    <p class="lead" data-reveal="fade">AFE AI 3.0 专注“智能投资 · 安全增长”，用 AI 把经验方法结构化、可复制，助力品牌持续获客与提升转化。</p>
+    <div class="grid" style="margin-top:18px" data-reveal="up">
+      <div class="card card-raise"><h3>愿景</h3><p class="lead">让每一家企业，都能用得起会落地的 AI。</p></div>
+      <div class="card card-raise"><h3>方法</h3><p class="lead">小步快跑：从一个高价值场景开始，逐步扩展。</p></div>
+      <div class="card card-raise"><h3>结果</h3><p class="lead">更快响应、更低成本、更高签约率。</p></div>
     </div>
   </div>
 </section>
 
-<section class="section" id="features">
+<section class="section">
   <div class="wrap">
-    <div class="sub">核心能力</div>
-    <h2>把复杂价值拆成 3–6 个易懂卖点</h2>
-    <div class="grid" data-reveal>
-      <div class="card"><h3>模块化组件库</h3><p class="lead">卡片、时间线、Logo 墙、价格卡、FAQ、表单一键复用。</p></div>
-      <div class="card"><h3>性能与 SEO</h3><p class="lead">Lighthouse 90+，结构化数据、OG、Sitemap、i18n 全套。</p></div>
-      <div class="card"><h3>转化设计</h3><p class="lead">多处 CTA、社证、案例页、预约流程、CRM 集成。</p></div>
+    <div class="sub">Why us</div>
+    <h2 class="headline-underline" data-reveal>我们的独特优势</h2>
+    <div class="grid" data-reveal="up">
+      <div class="card card-raise"><h3>行业落地经验</h3><p class="lead">服务不止是模型接入，而是端到端的增长闭环。</p></div>
+      <div class="card card-raise"><h3>可复用组件</h3><p class="lead">知识库、对话流程、转化漏斗、A/B 套件。</p></div>
+      <div class="card card-raise"><h3>数据与安全</h3><p class="lead">最小化采集、可控权限、日志可追溯。</p></div>
     </div>
   </div>
 </section>
 
-<section class="section" id="cases">
-  <div class="wrap">
-    <div class="sub">客户与案例</div>
-    <h2>社会证明让承诺更可信</h2>
-    <div class="row" data-reveal>
-      <div class="card" style="flex:1"><strong>「提升 3 倍线索量」</strong><p class="lead">—— A 公司市场负责人</p></div>
-      <div class="card" style="flex:1"><strong>「演示当天就签」</strong><p class="lead">—— B 公司销售总监</p></div>
-      <div class="card" style="flex:1"><strong>「内容更新超顺滑」</strong><p class="lead">—— C 公司运营经理</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="pricing">
-  <div class="wrap">
-    <div class="sub">定价方案</div>
-    <h2>透明、可迭代，按需扩展</h2>
-    <div class="grid" data-reveal>
-      <div class="card"><h3>基础版</h3><p class="lead">品牌展示/个人官网</p><p style="font-weight:800;font-size:24px">¥4,999 起</p><a class="btn" href="#contact">咨询</a></div>
-      <div class="card"><h3>增长版</h3><p class="lead">博客/多语言/表单/动效</p><p style="font-weight:800;font-size:24px">¥9,999 起</p><a class="btn" href="#contact">咨询</a></div>
-      <div class="card"><h3>高级版</h3><p class="lead">接入 CMS / CRM / 预约 / 支付</p><p style="font-weight:800;font-size:24px">定制</p><a class="btn" href="#contact">咨询</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="blog">
-  <div class="wrap">
-    <div class="sub">洞见 Insight</div>
-    <h2>把经验沉淀成可复用的方法</h2>
-    <div class="grid" data-reveal>
-      <a class="card post-card" href="#" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" alt=""></div>
-        <div class="post-body"><h3 class="post-title">AI 驱动的客服自动化</h3><p class="lead">响应更快也更温暖的 3 个场景实践。</p><div class="meta">2025-03-01 · 6 min</div></div>
-      </a>
-      <a class="card post-card" href="#" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0f2?q=80&w=1200&auto=format&fit=crop" alt=""></div>
-        <div class="post-body"><h3 class="post-title">从 FAQ 到知识中台</h3><p class="lead">一周搭好会“自我进化”的知识库。</p><div class="meta">2025-02-20 · 7 min</div></div>
-      </a>
-      <a class="card post-card" href="#" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop" alt=""></div>
-        <div class="post-body"><h3 class="post-title">对话式转化的 9 个细节</h3><p class="lead">按钮、表单、话术和时机的组合拳。</p><div class="meta">2025-01-28 · 5 min</div></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="contact">
-  <div class="wrap">
-    <div class="sub">开始合作</div>
-    <h2>给我 30 分钟，给你一个更能转化的官网</h2>
-
-    <!-- WhatsApp 二维码卡片（显示于表单上方） -->
-    <div class="card" style="text-align:center;margin-bottom:24px;padding:20px">
-      <h3>扫码添加 WhatsApp</h3>
-      <p class="lead">用手机扫描下方二维码，或点击按钮直接打开对话</p>
-      <!-- 使用你的二维码图片 -->
-      <img src="images/photo_2025-09-24_18-15-53.jpg" alt="WhatsApp 二维码" style="width:220px;border-radius:12px;margin:12px auto;display:block;border:1px solid var(--stroke);background:#fff;padding:6px">
-      <!-- 备用直达按钮 -->
-      <a class="btn" href="https://wa.me/5218135680896" target="_blank" rel="noopener">📲 直接打开 WhatsApp</a>
-    </div>
-
-    <div class="row" data-reveal>
-      <form class="card" style="flex:1;display:grid;gap:10px">
-        <input placeholder="你的名字" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)">
-        <input placeholder="邮箱/微信" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)">
-        <textarea placeholder="简单描述需求" rows="4" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)"></textarea>
-        <button class="btn" type="submit">预约咨询</button>
-      </form>
-      <div class="card" style="flex:1">
-        <h3>也可直接联系</h3>
-        <p class="lead">WhatsApp / 微信 / 邮件</p>
-        <!-- 打开弹窗（桌面端） -->
-        <button class="btn" type="button" data-wa-open>💬 扫码添加 WhatsApp</button>
-        <!-- 直达（手机端更顺手） -->
-        <a class="btn ghost" href="https://wa.me/5218135680896" target="_blank" rel="noopener">📱 直接打开 WhatsApp</a>
-        <div class="stat" style="margin-top:12px"><div class="sub">响应时间</div><div style="font-size:28px;font-weight:800">≤ 2 小时</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>© 2025 AFE AI 3.0 ｜ 智能投资 · 安全增长</footer>
-
-<!-- 右下角悬浮圆形按钮 -->
-<a class="wa-fab" href="#" aria-label="WhatsApp" data-wa-open>💬</a>
-
-<!-- WhatsApp 弹窗 -->
-<div class="wa-backdrop" id="waBackdrop" aria-hidden="true"></div>
-<div class="wa-modal" id="waModal" aria-hidden="true" role="dialog" aria-labelledby="waTitle">
-  <div class="panel">
-    <button class="wa-close" type="button" aria-label="关闭" id="waClose">×</button>
-    <h3 id="waTitle">扫码添加 WhatsApp</h3>
-    <p class="lead">手机扫描二维码，或直接打开对话</p>
-    <div class="qr">
-      <!-- 弹窗中的二维码同样使用你的图片 -->
-      <img src="images/photo_2025-09-24_18-15-53.jpg" alt="WhatsApp 联系二维码" style="width:100%;height:100%;object-fit:contain">
-    </div>
-    <div class="wa-actions">
-      <a class="btn" href="https://wa.me/5218135680896" target="_blank" rel="noopener">📲 打开 WhatsApp</a>
-    </div>
-  </div>
-</div>
+<footer>© 2025 大胆专属 | 设计 × 开发 × 增长 · <a href="https://wa.me/5218135680896" class="btn" target="_blank" style="margin-left:8px;text-decoration:none">📲 WhatsApp</a></footer>
 
 <script>
-// 滚动进场
-const io=new IntersectionObserver((ents)=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.15});
-document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
-
-// WhatsApp 弹窗逻辑
-const waModal=document.getElementById('waModal');
-const waBackdrop=document.getElementById('waBackdrop');
-const waClose=document.getElementById('waClose');
-const openBtns=document.querySelectorAll('[data-wa-open]');
-
-// 你的 WhatsApp 直达链接（已用你的号码 5218135680896）
-const waLink='https://wa.me/5218135680896';
-const isMobile=/iPhone|Android|iPad|iPod|Mobile/i.test(navigator.userAgent);
-
-function openModal(){
-  if(isMobile){ window.open(waLink,'_blank','noopener'); return; }
-  waBackdrop.classList.add('show');waModal.classList.add('show');
-  waModal.setAttribute('aria-hidden','false');waBackdrop.setAttribute('aria-hidden','false');
-}
-function closeModal(){
-  waBackdrop.classList.remove('show');waModal.classList.remove('show');
-  waModal.setAttribute('aria-hidden','true');waBackdrop.setAttribute('aria-hidden','true');
-}
-openBtns.forEach(btn=>btn.addEventListener('click',(e)=>{e.preventDefault();openModal()}));
-waClose.addEventListener('click',closeModal);
-waBackdrop.addEventListener('click',closeModal);
-document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeModal()});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');if(e.target.classList.contains('headline-underline'))e.target.classList.add('show-underline');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('[data-reveal],.headline-underline').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
+<!doctype html><html lang="zh"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>功能｜AFE AI 3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;--brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--panel:#fff;--stroke:#E7EEF5;--glass:rgba(255,255,255,.72)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
+nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+nav a{color:#bcd0ea;text-decoration:none;margin:0 10px}
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);display:inline-flex;gap:6px;align-items:center}
+.ghost{background:var(--glass);color:#fff}
+.section{padding:72px 0;border-top:1px solid var(--stroke);background:#fff}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}.lead{color:var(--muted)}h2{font-size:clamp(24px,4vw,36px);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+.card-raise{transition:transform .28s cubic-bezier(.2,.6,.2,1), box-shadow .28s}
+.card-raise:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,.25)}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
+[data-reveal].show{opacity:1;transform:none}
+.headline-underline{position:relative;display:inline-block;padding-bottom:6px}
+.headline-underline::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.headline-underline.show-underline::after{transform:scaleX(1)}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><nav>
+  <div><a href="index.html" style="color:#fff;font-weight:800">AFE AI 3.0</a></div>
+  <div>
+    <a href="about.html">关于</a><a href="features.html">功能</a><a href="cases.html">案例</a>
+    <a href="pricing.html">价格</a><a href="blog.html">洞见</a><a href="contact.html">联系</a>
+    <a class="btn ghost" href="game/index.html">🎮 进入游戏</a>
+  </div>
+</nav></div></header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sub">Features</div>
+    <h1 class="headline-underline" data-reveal>核心功能模块</h1>
+    <p class="lead" data-reveal="fade">从“线索获取 → 对话引导 → 预约成交 → 留存复购”，提供全链路可复用能力。</p>
+    <div class="grid" data-reveal="up">
+      <div class="card card-raise"><h3>对话机器人</h3><p class="lead">官网、WhatsApp、公众号、私域一体化接入。</p></div>
+      <div class="card card-raise"><h3>知识库</h3><p class="lead">结构化你的 FAQ / 文档 / SOP，持续学习进化。</p></div>
+      <div class="card card-raise"><h3>转化组件</h3><p class="lead">CTA 话术、表单、预约流程、线索打分。</p></div>
+      <div class="card card-raise"><h3>运营面板</h3><p class="lead">实时监控、A/B 实验、归因分析与报表。</p></div>
+      <div class="card card-raise"><h3>权限与合规</h3><p class="lead">最小权限、日志审计、数据脱敏与合规守则。</p></div>
+      <div class="card card-raise"><h3>生态集成</h3><p class="lead">CRM/工单/支付/短信邮件，常见工具全支持。</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 大胆专属 · <a href="https://wa.me/5218135680896" class="btn" target="_blank" style="margin-left:8px;text-decoration:none">📲 WhatsApp</a></footer>
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');if(e.target.classList.contains('headline-underline'))e.target.classList.add('show-underline');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('[data-reveal],.headline-underline').forEach(el=>io.observe(el));
+</script>
+</body></html>
+<!doctype html><html lang="zh"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>客户案例｜AFE AI 3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;--brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--panel:#fff;--stroke:#E7EEF5;--glass:rgba(255,255,255,.72)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
+nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+nav a{color:#bcd0ea;text-decoration:none;margin:0 10px}
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);display:inline-flex;gap:6px;align-items:center}
+.ghost{background:var(--glass);color:#fff}
+.section{padding:72px 0;border-top:1px solid var(--stroke);background:#fff}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}.lead{color:var(--muted)}h2{font-size:clamp(24px,4vw,36px);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+.card-raise{transition:transform .28s cubic-bezier(.2,.6,.2,1), box-shadow .28s}
+.card-raise:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,.25)}
+.badge{display:inline-block;padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:#fff;color:var(--muted);font-size:12px}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
+[data-reveal].show{opacity:1;transform:none}
+.headline-underline{position:relative;display:inline-block;padding-bottom:6px}
+.headline-underline::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.headline-underline.show-underline::after{transform:scaleX(1)}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><nav>
+  <div><a href="index.html" style="color:#fff;font-weight:800">AFE AI 3.0</a></div>
+  <div>
+    <a href="about.html">关于</a><a href="features.html">功能</a><a href="cases.html">案例</a>
+    <a href="pricing.html">价格</a><a href="blog.html">洞见</a><a href="contact.html">联系</a>
+    <a class="btn ghost" href="game/index.html">🎮 进入游戏</a>
+  </div>
+</nav></div></header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sub">Cases</div>
+    <h1 class="headline-underline" data-reveal>客户成功故事</h1>
+    <p class="lead" data-reveal="fade">真实的业务指标提升，是我们最看重的交付结果。</p>
+
+    <div class="grid" data-reveal="up">
+      <div class="card card-raise">
+        <div class="badge">教育</div>
+        <h3>线索转化率 +48%</h3>
+        <p class="lead">AI 顾问替代 70% 重复咨询，首响缩短至 12 秒。</p>
+      </div>
+      <div class="card card-raise">
+        <div class="badge">电商</div>
+        <h3>客服效率 +2.3x</h3>
+        <p class="lead">知识库驱动的自动回复 + 智能推荐，提升客单价。</p>
+      </div>
+      <div class="card card-raise">
+        <div class="badge">B2B 服务</div>
+        <h3>预约率 +35%</h3>
+        <p class="lead">对话式表单与日历集成，低成本获取高质量线索。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 大胆专属 · <a href="https://wa.me/5218135680896" class="btn" target="_blank" style="margin-left:8px;text-decoration:none">📲 WhatsApp</a></footer>
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');if(e.target.classList.contains('headline-underline'))e.target.classList.add('show-underline');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('[data-reveal],.headline-underline').forEach(el=>io.observe(el));
+</script>
+</body></html>
+<!doctype html><html lang="zh"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>定价方案｜AFE AI 3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;--brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--panel:#fff;--stroke:#E7EEF5;--glass:rgba(255,255,255,.72)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
+nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+nav a{color:#bcd0ea;text-decoration:none;margin:0 10px}
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);display:inline-flex;gap:6px;align-items:center}
+.section{padding:72px 0;border-top:1px solid var(--stroke);background:#fff}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}.lead{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+.card-raise{transition:transform .28s cubic-bezier(.2,.6,.2,1), box-shadow .28s}
+.card-raise:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,.25)}
+.price{font-size:28px;font-weight:800}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
+[data-reveal].show{opacity:1;transform:none}
+.headline-underline{position:relative;display:inline-block;padding-bottom:6px}
+.headline-underline::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.headline-underline.show-underline::after{transform:scaleX(1)}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><nav>
+  <div><a href="index.html" style="color:#fff;font-weight:800">AFE AI 3.0</a></div>
+  <div>
+    <a href="about.html">关于</a><a href="features.html">功能</a><a href="cases.html">案例</a>
+    <a href="pricing.html">价格</a><a href="blog.html">洞见</a><a href="contact.html">联系</a>
+    <a class="btn ghost" href="game/index.html">🎮 进入游戏</a>
+  </div>
+</nav></div></header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sub">Pricing</div>
+    <h1 class="headline-underline" data-reveal>透明、可迭代的方案</h1>
+    <p class="lead" data-reveal="fade">按你的阶段与目标升级，用结果说话。</p>
+
+    <div class="grid" data-reveal="up">
+      <div class="card card-raise"><h3>基础版</h3><p class="lead">品牌展示/个人官网</p><div class="price">¥4,999 起</div><a class="btn" href="contact.html">咨询</a></div>
+      <div class="card card-raise"><h3>增长版</h3><p class="lead">博客/多语言/表单/动效</p><div class="price">¥9,999 起</div><a class="btn" href="contact.html">咨询</a></div>
+      <div class="card card-raise"><h3>高级版</h3><p class="lead">接入 CMS / CRM / 预约 / 支付</p><div class="price">定制</div><a class="btn" href="contact.html">咨询</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 大胆专属 · <a href="https://wa.me/5218135680896" class="btn" target="_blank" style="margin-left:8px;text-decoration:none">📲 WhatsApp</a></footer>
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');if(e.target.classList.contains('headline-underline'))e.target.classList.add('show-underline');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('[data-reveal],.headline-underline').forEach(el=>io.observe(el));
+</script>
+</body></html>
+<!doctype html><html lang="zh"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>洞见｜AFE AI 3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;--brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--panel:#fff;--stroke:#E7EEF5;--glass:rgba(255,255,255,.72)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
+nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+nav a{color:#bcd0ea;text-decoration:none;margin:0 10px}
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);display:inline-flex;gap:6px;align-items:center}
+.section{padding:72px 0;border-top:1px solid var(--stroke);background:#fff}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}.lead{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--stroke);border-radius:16px;padding:0;overflow:hidden}
+.card-raise{transition:transform .28s cubic-bezier(.2,.6,.2,1), box-shadow .28s}
+.card-raise:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,.25)}
+.post-thumb{height:180px;overflow:hidden;border-bottom:1px solid var(--stroke)}
+.post-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .post-thumb img{transform:scale(1.04)}
+.post-body{padding:16px}.post-title{margin:6px 0 8px}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
+[data-reveal].show{opacity:1;transform:none}
+.headline-underline{position:relative;display:inline-block;padding-bottom:6px}
+.headline-underline::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.headline-underline.show-underline::after{transform:scaleX(1)}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><nav>
+  <div><a href="index.html" style="color:#fff;font-weight:800">AFE AI 3.0</a></div>
+  <div>
+    <a href="about.html">关于</a><a href="features.html">功能</a><a href="cases.html">案例</a>
+    <a href="pricing.html">价格</a><a href="blog.html">洞见</a><a href="contact.html">联系</a>
+    <a class="btn ghost" href="game/index.html">🎮 进入游戏</a>
+  </div>
+</nav></div></header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sub">Blog</div>
+    <h1 class="headline-underline" data-reveal>洞见 / 文章</h1>
+    <p class="lead" data-reveal="fade">把经验沉淀为可复用的方法论与清单。</p>
+    <div class="grid" data-reveal="up">
+      <a class="card card-raise" href="#" target="_blank">
+        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="post-body"><h3 class="post-title">客服自动化的三把钥匙</h3><p class="lead">速度、温度、准确性如何兼得。</p></div>
+      </a>
+      <a class="card card-raise" href="#" target="_blank">
+        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0f2?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="post-body"><h3 class="post-title">知识库的结构化实践</h3><p class="lead">教你搭出会自进化的知识中台。</p></div>
+      </a>
+      <a class="card card-raise" href="#" target="_blank">
+        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="post-body"><h3 class="post-title">对话式转化的 9 个细节</h3><p class="lead">按钮、表单、时机与话术的组合拳。</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 大胆专属 · <a href="https://wa.me/5218135680896" class="btn" target="_blank" style="margin-left:8px;text-decoration:none">📲 WhatsApp</a></footer>
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');if(e.target.classList.contains('headline-underline'))e.target.classList.add('show-underline');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('[data-reveal],.headline-underline').forEach(el=>io.observe(el));
+</script>
+</body></html>
+<!doctype html><html lang="zh"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>联系｜AFE AI 3.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;--brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--panel:#fff;--stroke:#E7EEF5;--glass:rgba(255,255,255,.72)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
+nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+nav a{color:#bcd0ea;text-decoration:none;margin:0 10px}
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);display:inline-flex;gap:6px;align-items:center}
+.section{padding:72px 0;border-top:1px solid var(--stroke);background:#fff}
+h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}.lead{color:var(--muted)}
+.card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.float-wrap{position:relative;display:inline-block}.gradient-ring{position:relative;border-radius:16px;padding:8px;background:linear-gradient(135deg,#25D366,#128C7E,#7BC4B2)}.gradient-ring>.inner{border-radius:12px;background:#fff;overflow:hidden}
+.qr-img{display:block;width:220px;max-width:70vw;height:220px;object-fit:contain;margin:0 auto}
+.card-raise{transition:transform .28s cubic-bezier(.2,.6,.2,1), box-shadow .28s}
+.card-raise:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,.25)}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
+[data-reveal].show{opacity:1;transform:none}
+.headline-underline{position:relative;display:inline-block;padding-bottom:6px}
+.headline-underline::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.headline-underline.show-underline::after{transform:scaleX(1)}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><nav>
+  <div><a href="index.html" style="color:#fff;font-weight:800">AFE AI 3.0</a></div>
+  <div>
+    <a href="about.html">关于</a><a href="features.html">功能</a><a href="cases.html">案例</a>
+    <a href="pricing.html">价格</a><a href="blog.html">洞见</a><a href="contact.html">联系</a>
+    <a class="btn ghost" href="game/index.html">🎮 进入游戏</a>
+  </div>
+</nav></div></header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sub">Contact</div>
+    <h1 class="headline-underline" data-reveal>与我们取得联系</h1>
+    <p class="lead" data-reveal="fade">留下你的需求，我们 2 小时内响应。</p>
+
+    <div class="grid">
+      <form class="card card-raise" style="display:grid;gap:10px" data-reveal="up">
+        <input placeholder="你的名字" style="padding:12px;border-radius:10px;border:1px solid var(--stroke)">
+        <input placeholder="邮箱/微信" style="padding:12px;border-radius:10px;border:1px solid var(--stroke)">
+        <textarea placeholder="简单描述需求" rows="4" style="padding:12px;border-radius:10px;border:1px solid var(--stroke)"></textarea>
+        <button class="btn" type="submit">提交</button>
+      </form>
+
+      <div class="card card-raise" data-reveal="scale" style="text-align:center">
+        <h3>扫码添加 WhatsApp</h3>
+        <div class="float-wrap" style="margin:10px auto 14px">
+          <div class="gradient-ring"><div class="inner">
+            <img class="qr-img" src="images/photo_2025-09-24_18-15-53.jpg" alt="WhatsApp 二维码">
+          </div></div>
+        </div>
+        <p class="lead" style="margin:8px 0 12px">号码：+52 1 81 3568 0896</p>
+        <a class="btn" href="https://wa.me/5218135680896" target="_blank">📲 直接打开 WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 大胆专属 · <a href="https://wa.me/5218135680896" class="btn" target="_blank" style="margin-left:8px;text-decoration:none">📲 WhatsApp</a></footer>
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');if(e.target.classList.contains('headline-underline'))e.target.classList.add('show-underline');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('[data-reveal],.headline-underline').forEach(el=>io.observe(el));
+</script>
+</body></html>
