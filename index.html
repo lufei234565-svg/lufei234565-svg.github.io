@@ -3,74 +3,82 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AFE AI 3.0｜让投资更智能</title>
+<title>AFE AI 3.0｜智能投资·安全增长</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-  --bg:#F9FBFC;
-  --text:#243240;
-  --muted:#6B7A8C;
-  --brand:#4DA3A9;
-  --brand2:#7BC4B2;
-  --accent:#F5B971;
-  --panel:#FFFFFF;
-  --stroke:#E7EEF5;
-  --glass: rgba(255,255,255,.72);
+:root{
+  --bg:#F9FBFC; --text:#243240; --muted:#6B7A8C;
+  --brand:#4DA3A9; --brand2:#7BC4B2; --accent:#F5B971;
+  --panel:#FFFFFF; --stroke:#E7EEF5; --glass:rgba(255,255,255,.72);
 }
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px);z-index:10}
+nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+nav a{color:var(--muted);text-decoration:none;margin:0 10px}
+.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);text-decoration:none}
+.ghost{background:var(--glass);color:#fff}
+.section{padding:72px 0;border-top:1px solid var(--stroke)}
+.sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
+h2{font-size:clamp(28px,4.2vw,40px);margin:0 0 14px}
+.row{display:flex;gap:16px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px;transition:.25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.stat{background:var(--glass);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;min-width:180px}
+footer{padding:28px 0;color:#8aa0b8;text-align:center;border-top:1px solid var(--stroke)}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
+[data-reveal].show{opacity:1;transform:none}
+@media (max-width:900px){ .grid{grid-template-columns:1fr} }
 
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg);}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-  header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px); z-index:10}
-  nav{display:flex;align-items:center;justify-content:space-between;height:70px}
-  nav a{color:var(--muted);text-decoration:none;margin:0 10px}
-  .btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);text-decoration:none}
-  .ghost{background:var(--glass);color:#fff}
-  .hero{
-    position:relative;overflow:hidden;
-    background:
-      radial-gradient(800px 400px at 10% -10%, #6aa4ff22, transparent 60%),
-      radial-gradient(600px 300px at 90% 0%, #a78bfa22, transparent 60%),
-      linear-gradient(180deg,#0c1117 0, #0b0f14 60%);
-    border-bottom:1px solid var(--stroke);
-    color:#fff;
-  }
-  .hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:42px;padding:96px 20px}
-  .h1{font-size: clamp(36px, 6vw, 64px); line-height:1.05; margin:0 0 16px; letter-spacing:-0.02em}
-  .lead{color:var(--muted); font-size:clamp(16px,2.4vw,18px); margin-bottom:22px}
-  .glass{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px;transition:.25s;text-decoration:none;color:inherit}
-  .card:hover{transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,.3)}
-  .section{padding:72px 0;border-top:1px solid var(--stroke)}
-  .sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
-  h2{font-size:clamp(28px,4.2vw,40px);margin:0 0 14px}
-  .row{display:flex;gap:16px;flex-wrap:wrap}
-  .stat{background:var(--glass);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;min-width:180px}
-  footer{padding:28px 0;color:#8aa0b8;text-align:center;border-top:1px solid var(--stroke)}
-  [data-reveal]{opacity:0; transform:translateY(12px); transition: all .6s ease;}
-  [data-reveal].show{opacity:1; transform:none;}
-  @media (max-width:900px){ .hero .wrap{grid-template-columns:1fr; padding:72px 20px} .grid{grid-template-columns:1fr} }
+/* Hero */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(800px 400px at 10% -10%, #6aa4ff22, transparent 60%),
+    radial-gradient(600px 300px at 90% 0%, #a78bfa22, transparent 60%),
+    linear-gradient(180deg,#0c1117 0, #0b0f14 60%);
+  border-bottom:1px solid var(--stroke); color:#fff;
+}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 0.9fr;gap:42px;padding:96px 20px}
+.h1{font-size:clamp(36px,6vw,64px);line-height:1.05;margin:0 0 16px;letter-spacing:-.02em}
+.lead{color:#c9d2dd;font-size:clamp(16px,2.4vw,18px);margin-bottom:22px}
+.glass{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px}
 
-  /* Blog cards 样式 */
-  .post-card{display:flex;flex-direction:column;padding:0;overflow:hidden}
-  .post-thumb{height:180px;overflow:hidden;border-bottom:1px solid var(--stroke)}
-  .post-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
-  .post-card:hover .post-thumb img{transform:scale(1.04)}
-  .post-body{padding:16px}
-  .post-title{margin:4px 0 6px;font-size:clamp(18px,2.6vw,20px)}
-  .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--stroke);color:var(--muted);font-size:12px}
-  .meta{color:var(--muted);font-size:12px;margin-top:6px}
+/* Blog cards */
+.post-card{display:flex;flex-direction:column;padding:0;overflow:hidden}
+.post-card:hover{transform:translateY(-4px)}
+.post-thumb{height:180px;overflow:hidden;border-bottom:1px solid var(--stroke)}
+.post-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.post-card:hover .post-thumb img{transform:scale(1.04)}
+.post-body{padding:16px}
+.post-title{margin:4px 0 6px;font-size:clamp(18px,2.6vw,20px)}
+.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--stroke);color:var(--muted);font-size:12px}
+.meta{color:var(--muted);font-size:12px;margin-top:6px}
+
+/* WhatsApp 弹窗 */
+.wa-backdrop{position:fixed;inset:0;display:none;background:rgba(0,0,0,.55);z-index:120}
+.wa-backdrop.show{display:block;animation:fadeIn .2s ease}
+.wa-modal{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;z-index:121}
+.wa-modal .panel{width:min(92vw,420px);pointer-events:auto;background:var(--panel);border:1px solid var(--stroke);border-radius:16px;padding:22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);transform:translateY(8px);opacity:0;transition:all .2s ease}
+.wa-modal.show .panel{transform:none;opacity:1}
+.wa-close{position:absolute;top:10px;right:12px;border:none;background:transparent;font-size:22px;cursor:pointer;color:#6b7a8c}
+.qr{width:220px;height:220px;margin:10px auto 14px;border-radius:12px;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid var(--stroke)}
+.wa-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+@keyframes fadeIn{from{opacity:0}to{opacity:1)}
+.wa-fab{position:fixed;bottom:22px;right:22px;z-index:99;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 10px 25px rgba(0,0,0,.25);color:#fff;font-size:24px;text-decoration:none}
 </style>
 </head>
 <body>
+
 <header>
   <div class="wrap">
     <nav>
       <div class="row" style="align-items:center">
         <strong style="font-weight:800;letter-spacing:.5px">AFE AI 3.0</strong>
-        <a href="#features">功能</a><a href="#cases">案例</a><a href="#pricing">方案</a><a href="#blog">洞见</a>
+        <a href="#features">功能</a><a href="#cases">案例</a><a href="#pricing">价格</a><a href="#blog">洞见</a>
       </div>
       <div class="row">
         <a class="btn ghost" href="#contact">登录</a>
@@ -80,128 +88,104 @@
   </div>
 </header>
 
-<!-- Hero -->
 <section class="hero">
   <div class="wrap">
     <div>
-      <div class="sub">智能投资 · 风险守护</div>
-      <h1 class="h1">AFE AI 3.0，<span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;color:transparent">让投资更轻松</span></h1>
-      <p class="lead">用人工智能精选股票，结合风险对冲机制，帮助普通投资者稳健获利。</p>
+      <div class="sub">为增长而设计</div>
+      <h1 class="h1">一句清晰有力的价值主张，<span style="background:linear-gradient(90deg,var(--brand),var(--accent));-webkit-background-clip:text;color:transparent">直接说动</span>用户</h1>
+      <p class="lead">用更少的页面讲清你的产品/服务，结合真实案例与数据证明，搭配顺畅的预约/咨询流程，把访客转化成客户。</p>
       <div class="row">
         <a class="btn" href="#contact">预约演示</a>
         <a class="btn ghost" href="#features">了解更多</a>
       </div>
       <div class="row" style="margin-top:16px">
-        <div class="stat"><div class="sub">试用用户收益率</div><div style="font-size:28px;font-weight:800">+328%</div></div>
+        <div class="stat"><div class="sub">客户转化率</div><div style="font-size:28px;font-weight:800">+37%</div></div>
         <div class="stat"><div class="sub">月度留存</div><div style="font-size:28px;font-weight:800">82%</div></div>
-        <div class="stat"><div class="sub">用户满意度</div><div style="font-size:28px;font-weight:800">96%</div></div>
+        <div class="stat"><div class="sub">NPS</div><div style="font-size:28px;font-weight:800">67</div></div>
       </div>
     </div>
     <div class="glass" data-reveal>
-      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="AFE AI Dashboard" style="width:100%;border-radius:12px;display:block">
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop" alt="" style="width:100%;border-radius:12px;display:block">
       <div class="row" style="margin-top:12px">
-        <div class="card" style="flex:1">
-          <strong>一键上手</strong><div class="sub">简单注册 即可体验</div>
-        </div>
-        <div class="card" style="flex:1">
-          <strong>风险托底</strong><div class="sub">1:1 亏损补偿</div>
-        </div>
+        <div class="card" style="flex:1"><strong>快速搭建</strong><div class="sub">Next.js / Astro / Tailwind</div></div>
+        <div class="card" style="flex:1"><strong>动效出色</strong><div class="sub">Framer Motion / GSAP</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Features -->
 <section class="section" id="features">
   <div class="wrap">
-    <div class="sub">核心功能</div>
-    <h2>为什么选择 AFE AI 3.0</h2>
+    <div class="sub">核心能力</div>
+    <h2>把复杂价值拆成 3–6 个易懂卖点</h2>
     <div class="grid" data-reveal>
-      <div class="card"><h3>AI 智能选股</h3><p class="lead">基于大数据与机器学习，提前发现高潜力股票。</p></div>
-      <div class="card"><h3>风控补损</h3><p class="lead">亏损自动托底，投资更安心。</p></div>
-      <div class="card"><h3>智能社区</h3><p class="lead">和数千投资者一起交流，共享学习。</p></div>
+      <div class="card"><h3>模块化组件库</h3><p class="lead">卡片、时间线、Logo 墙、价格卡、FAQ、表单一键复用。</p></div>
+      <div class="card"><h3>性能与 SEO</h3><p class="lead">Lighthouse 90+，结构化数据、OG、Sitemap、i18n 全套。</p></div>
+      <div class="card"><h3>转化设计</h3><p class="lead">多处 CTA、社证、案例页、预约流程、CRM 集成。</p></div>
     </div>
   </div>
 </section>
 
-<!-- Cases -->
 <section class="section" id="cases">
   <div class="wrap">
-    <div class="sub">用户案例</div>
-    <h2>真实用户的反馈</h2>
+    <div class="sub">客户与案例</div>
+    <h2>社会证明让承诺更可信</h2>
     <div class="row" data-reveal>
-      <div class="card" style="flex:1"><strong>「一个月翻倍」</strong><p class="lead">—— Sofía，墨西哥教师</p></div>
-      <div class="card" style="flex:1"><strong>「操作简单」</strong><p class="lead">—— Carlos，咖啡店经理</p></div>
-      <div class="card" style="flex:1"><strong>「补损很安心」</strong><p class="lead">—— María，自由职业者</p></div>
+      <div class="card" style="flex:1"><strong>「提升 3 倍线索量」</strong><p class="lead">—— A 公司市场负责人</p></div>
+      <div class="card" style="flex:1"><strong>「演示当天就签」</strong><p class="lead">—— B 公司销售总监</p></div>
+      <div class="card" style="flex:1"><strong>「内容更新超顺滑」</strong><p class="lead">—— C 公司运营经理</p></div>
     </div>
   </div>
 </section>
 
-<!-- Pricing -->
 <section class="section" id="pricing">
   <div class="wrap">
-    <div class="sub">体验方案</div>
-    <h2>最低 30 美元起，按需升级</h2>
+    <div class="sub">定价方案</div>
+    <h2>透明、可迭代，按需扩展</h2>
     <div class="grid" data-reveal>
-      <div class="card"><h3>体验版</h3><p class="lead">30 美元起步，适合新手</p><p style="font-weight:800;font-size:24px">$30</p><a class="btn" href="#contact">立即体验</a></div>
-      <div class="card"><h3>进阶版</h3><p class="lead">更多策略、更高额度</p><p style="font-weight:800;font-size:24px">$300+</p><a class="btn" href="#contact">立即升级</a></div>
-      <div class="card"><h3>VIP 专属</h3><p class="lead">高端客户定制服务</p><p style="font-weight:800;font-size:24px">专属定制</p><a class="btn" href="#contact">联系我们</a></div>
+      <div class="card"><h3>基础版</h3><p class="lead">品牌展示/个人官网</p><p style="font-weight:800;font-size:24px">¥4,999 起</p><a class="btn" href="#contact">咨询</a></div>
+      <div class="card"><h3>增长版</h3><p class="lead">博客/多语言/表单/动效</p><p style="font-weight:800;font-size:24px">¥9,999 起</p><a class="btn" href="#contact">咨询</a></div>
+      <div class="card"><h3>高级版</h3><p class="lead">接入 CMS / CRM / 预约 / 支付</p><p style="font-weight:800;font-size:24px">定制</p><a class="btn" href="#contact">咨询</a></div>
     </div>
   </div>
 </section>
 
-<!-- Blog -->
 <section class="section" id="blog">
   <div class="wrap">
     <div class="sub">洞见 Insight</div>
-    <h2>AFE AI 3.0 的思考与方法</h2>
-
+    <h2>把经验沉淀成可复用的方法</h2>
     <div class="grid" data-reveal>
-      <!-- 六篇文章，和上次提供的一样 -->
-      <!-- 文章 1 -->
-      <a class="card post-card" href="https://example.com/post-1" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop"></div>
-        <div class="post-body"><h3 class="post-title">用 AI 提升客服体验</h3><p class="lead">3 个可复制场景，做到快又暖。</p></div>
+      <a class="card post-card" href="#" target="_blank" rel="noopener">
+        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="post-body"><h3 class="post-title">AI 驱动的客服自动化</h3><p class="lead">响应更快也更温暖的 3 个场景实践。</p><div class="meta">2025-03-01 · 6 min</div></div>
       </a>
-      <!-- 文章 2 -->
-      <a class="card post-card" href="https://example.com/post-2" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0f2?q=80&w=1200&auto=format&fit=crop"></div>
-        <div class="post-body"><h3 class="post-title">从 FAQ 到知识中台</h3><p class="lead">搭建会“自我进化”的知识库。</p></div>
+      <a class="card post-card" href="#" target="_blank" rel="noopener">
+        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0f2?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="post-body"><h3 class="post-title">从 FAQ 到知识中台</h3><p class="lead">一周搭好会“自我进化”的知识库。</p><div class="meta">2025-02-20 · 7 min</div></div>
       </a>
-      <!-- 文章 3 -->
-      <a class="card post-card" href="https://example.com/post-3" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop"></div>
-        <div class="post-body"><h3 class="post-title">对话式转化的 9 个细节</h3><p class="lead">按钮、表单、话术与时机。</p></div>
+      <a class="card post-card" href="#" target="_blank" rel="noopener">
+        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="post-body"><h3 class="post-title">对话式转化的 9 个细节</h3><p class="lead">按钮、表单、话术和时机的组合拳。</p><div class="meta">2025-01-28 · 5 min</div></div>
       </a>
-      <!-- 文章 4 -->
-      <a class="card post-card" href="https://example.com/post-4" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop"></div>
-        <div class="post-body"><h3 class="post-title">数据驱动的投资逻辑</h3><p class="lead">AFE AI 如何筛选股票。</p></div>
-      </a>
-      <!-- 文章 5 -->
-      <a class="card post-card" href="https://example.com/post-5" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop"></div>
-        <div class="post-body"><h3 class="post-title">赢在心态</h3><p class="lead">避免短期波动干扰长期收益。</p></div>
-      </a>
-      <!-- 文章 6 -->
-      <a class="card post-card" href="https://example.com/post-6" target="_blank" rel="noopener">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop"></div>
-        <div class="post-body"><h3 class="post-title">投资不孤单</h3><p class="lead">社区共学如何提升胜率。</p></div>
-      </a>
-    </div>
-
-    <div class="row" style="margin-top:18px" data-reveal>
-      <a class="btn" href="https://example.com/blog" target="_blank" rel="noopener">浏览更多洞见</a>
-      <a class="btn ghost" href="#contact">订阅月报</a>
     </div>
   </div>
 </section>
 
-<!-- Contact -->
 <section class="section" id="contact">
   <div class="wrap">
     <div class="sub">开始合作</div>
-    <h2>给我们 30 分钟，给你一个更能转化的官网</h2>
+    <h2>给我 30 分钟，给你一个更能转化的官网</h2>
+
+    <!-- WhatsApp 二维码卡片（显示于表单上方） -->
+    <div class="card" style="text-align:center;margin-bottom:24px;padding:20px">
+      <h3>扫码添加 WhatsApp</h3>
+      <p class="lead">用手机扫描下方二维码，或点击按钮直接打开对话</p>
+      <!-- 使用你的二维码图片 -->
+      <img src="images/photo_2025-09-24_18-15-53.jpg" alt="WhatsApp 二维码" style="width:220px;border-radius:12px;margin:12px auto;display:block;border:1px solid var(--stroke);background:#fff;padding:6px">
+      <!-- 备用直达按钮 -->
+      <a class="btn" href="https://wa.me/5218135680896" target="_blank" rel="noopener">📲 直接打开 WhatsApp</a>
+    </div>
+
     <div class="row" data-reveal>
       <form class="card" style="flex:1;display:grid;gap:10px">
         <input placeholder="你的名字" style="padding:12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--text)">
@@ -212,20 +196,66 @@
       <div class="card" style="flex:1">
         <h3>也可直接联系</h3>
         <p class="lead">WhatsApp / 微信 / 邮件</p>
-        <div class="stat"><div class="sub">响应时间</div><div style="font-size:28px;font-weight:800">≤ 2 小时</div></div>
+        <!-- 打开弹窗（桌面端） -->
+        <button class="btn" type="button" data-wa-open>💬 扫码添加 WhatsApp</button>
+        <!-- 直达（手机端更顺手） -->
+        <a class="btn ghost" href="https://wa.me/5218135680896" target="_blank" rel="noopener">📱 直接打开 WhatsApp</a>
+        <div class="stat" style="margin-top:12px"><div class="sub">响应时间</div><div style="font-size:28px;font-weight:800">≤ 2 小时</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
-<footer>© 2025 大胆专属 | 设计 × 开发 × 增长</footer>
+<footer>© 2025 AFE AI 3.0 ｜ 智能投资 · 安全增长</footer>
+
+<!-- 右下角悬浮圆形按钮 -->
+<a class="wa-fab" href="#" aria-label="WhatsApp" data-wa-open>💬</a>
+
+<!-- WhatsApp 弹窗 -->
+<div class="wa-backdrop" id="waBackdrop" aria-hidden="true"></div>
+<div class="wa-modal" id="waModal" aria-hidden="true" role="dialog" aria-labelledby="waTitle">
+  <div class="panel">
+    <button class="wa-close" type="button" aria-label="关闭" id="waClose">×</button>
+    <h3 id="waTitle">扫码添加 WhatsApp</h3>
+    <p class="lead">手机扫描二维码，或直接打开对话</p>
+    <div class="qr">
+      <!-- 弹窗中的二维码同样使用你的图片 -->
+      <img src="images/photo_2025-09-24_18-15-53.jpg" alt="WhatsApp 联系二维码" style="width:100%;height:100%;object-fit:contain">
+    </div>
+    <div class="wa-actions">
+      <a class="btn" href="https://wa.me/5218135680896" target="_blank" rel="noopener">📲 打开 WhatsApp</a>
+    </div>
+  </div>
+</div>
 
 <script>
-const io = new IntersectionObserver((ents)=>{
-  ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target) } })
-},{threshold:.15});
+// 滚动进场
+const io=new IntersectionObserver((ents)=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.15});
 document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+
+// WhatsApp 弹窗逻辑
+const waModal=document.getElementById('waModal');
+const waBackdrop=document.getElementById('waBackdrop');
+const waClose=document.getElementById('waClose');
+const openBtns=document.querySelectorAll('[data-wa-open]');
+
+// 你的 WhatsApp 直达链接（已用你的号码 5218135680896）
+const waLink='https://wa.me/5218135680896';
+const isMobile=/iPhone|Android|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+function openModal(){
+  if(isMobile){ window.open(waLink,'_blank','noopener'); return; }
+  waBackdrop.classList.add('show');waModal.classList.add('show');
+  waModal.setAttribute('aria-hidden','false');waBackdrop.setAttribute('aria-hidden','false');
+}
+function closeModal(){
+  waBackdrop.classList.remove('show');waModal.classList.remove('show');
+  waModal.setAttribute('aria-hidden','true');waBackdrop.setAttribute('aria-hidden','true');
+}
+openBtns.forEach(btn=>btn.addEventListener('click',(e)=>{e.preventDefault();openModal()}));
+waClose.addEventListener('click',closeModal);
+waBackdrop.addEventListener('click',closeModal);
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeModal()});
 </script>
 </body>
 </html>
