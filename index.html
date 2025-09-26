@@ -1,186 +1,87 @@
-<!doctype html>
-<html lang="zh">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>关于我们｜AFE AI 3.0</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#F9FBFC;--text:#243240;--muted:#6B7A8C;--brand:#4DA3A9;--brand2:#7BC4B2;--accent:#F5B971;--panel:#fff;--stroke:#E7EEF5;--glass:rgba(255,255,255,.72)}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,"Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:0;background:linear-gradient(180deg,#0b0f14f2,#0b0f1400);backdrop-filter:blur(6px);z-index:10}
-nav{display:flex;align-items:center;justify-content:space-between;height:70px}
-nav a{color:#bcd0ea;text-decoration:none;margin:0 10px}
-.btn{padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:1px solid var(--stroke);box-shadow:0 8px 24px rgba(82,155,255,.25);display:inline-flex;gap:6px;align-items:center}
-.ghost{background:var(--glass);color:#fff}
-.section{padding:72px 0;border-top:1px solid var(--stroke);background:#fff}
-h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}
-h2{font-size:clamp(24px,4vw,36px);margin:0 0 12px}
-.lead{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.card{background:var(--glass);border:1px solid var(--stroke);border-radius:16px;padding:18px;transition:.25s}
-.card-raise{transition:transform .28s cubic-bezier(.2,.6,.2,1), box-shadow .28s}
-.card-raise:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(0,0,0,.25)}
-.sub{color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.12em;font-size:12px;margin-bottom:8px}
-footer{padding:28px 0;color:#8aa0b8;text-align:center;border-top:1px solid var(--stroke);background:#fff}
-[data-reveal]{opacity:0;transform:translateY(12px);transition:all .6s ease}
-[data-reveal].show{opacity:1;transform:none}
-.headline-underline{position:relative;display:inline-block;padding-bottom:6px}
-.headline-underline::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .6s}
-.headline-underline.show-underline::after{transform:scaleX(1)}
-@media (max-width:900px){.grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ 页面标题 -->
+  <title>AFE AI 3.0 - 官方介绍与智能投资体验 | 我的个人网站</title>
+
+  <!-- ✅ Meta 描述 -->
+  <meta name="description" content="AFE AI 3.0 是由 AFE US 打造的智能投资平台，结合人工智能和风控体系，提供安全、稳定、可复制的股票投资解决方案。">
+
+  <!-- ✅ Meta 关键词 -->
+  <meta name="keywords" content="AFE AI 3.0, AI智能投资, 股票投资, AFE US, 稳定收益, 安全投资, 金融AI">
+
+  <!-- ✅ Sitemap + Robots 链接 -->
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://lufei234565-svg.github.io/my-website/sitemap.xml">
+  <meta name="robots" content="index, follow">
+
+  <!-- ✅ Open Graph -->
+  <meta property="og:title" content="AFE AI 3.0 - 官方介绍与智能投资体验">
+  <meta property="og:description" content="AFE AI 3.0 全球智能投资平台介绍，安全、稳健、智能，让财富增长更确定。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lufei234565-svg.github.io/my-website/">
+  <meta property="og:image" content="https://lufei234565-svg.github.io/my-website/afe-logo.png">
+
+  <!-- ✅ 结构化数据 Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AFE AI 3.0",
+    "url": "https://lufei234565-svg.github.io/my-website/",
+    "description": "AFE AI 3.0 全球智能投资平台介绍，安全、稳健、智能，让财富增长更确定。",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AFE US"
+    }
+  }
+  </script>
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; }
+    header { background: #0a3d62; color: #fff; padding: 20px; text-align: center; }
+    h1, h2 { color: #0a3d62; }
+    main { padding: 20px; max-width: 900px; margin: auto; }
+    footer { background: #eee; text-align: center; padding: 10px; font-size: 14px; }
+  </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <nav>
-      <div><a href="index.html" style="color:#fff;font-weight:800">AFE AI 3.0</a></div>
-      <div>
-        <a href="about.html">关于</a><a href="features.html">功能</a><a href="cases.html">案例</a>
-        <a href="pricing.html">价格</a><a href="blog.html">洞见</a><a href="contact.html">联系</a>
-        <a class="btn ghost" href="game/index.html">🎮 进入游戏</a>
-      </div>
-    </nav>
-  </div>
-</header>
+  <header>
+    <h1>AFE AI 3.0 官方介绍</h1>
+    <p>智能投资 · 稳定收益 · 安全托底</p>
+  </header>
 
-<section class="section">
-  <div class="wrap">
-    <div class="sub">About</div>
-    <h1 class="headline-underline" data-reveal>我们是谁</h1>
-    <p class="lead" data-reveal="fade">AFE AI 3.0 专注“智能投资 · 安全增长”，用 AI 把经验方法结构化、可复制，助力品牌持续获客与提升转化。</p>
-    <div class="grid" style="margin-top:18px" data-reveal="up">
-      <div class="card card-raise"><h3>愿景</h3><p class="lead">让每一家企业，都能用得起会落地的 AI。</p></div>
-      <div class="card card-raise"><h3>方法</h3><p class="lead">小步快跑：从一个高价值场景开始，逐步扩展。</p></div>
-      <div class="card card-raise"><h3>结果</h3><p class="lead">更快响应、更低成本、更高签约率。</p></div>
-    </div>
-  </div>
-</section>
+  <main>
+    <h2>什么是 AFE AI 3.0？</h2>
+    <p>
+      AFE AI 3.0 是由 <strong>美国 AFE US</strong> 打造的 <strong>智能投资平台</strong>，
+      结合人工智能选股算法与全球风控体系，帮助投资者实现
+      <strong>安全、稳健、可复制</strong> 的财富增长。
+    </p>
 
-<section class="section">
-  <div class="wrap">
-    <div class="sub">Why us</div>
-    <h2 class="headline-underline" data-reveal>我们的独特优势</h2>
-    <div class="grid" data-reveal="up">
-      <div class="card card-raise"><h3>行业落地经验</h3><p class="lead">服务不止是模型接入，而是端到端的增长闭环。</p></div>
-      <div class="card card-raise"><h3>可复用组件</h3><p class="lead">知识库、对话流程、转化漏斗、A/B 套件。</p></div>
-      <div class="card card-raise"><h3>数据与安全</h3><p class="lead">最小化采集、可控权限、日志可追溯。</p></div>
-    </div>
-  </div>
-</section>
+    <h2>AFE AI 3.0 的优势</h2>
+    <ul>
+      <li><strong>AI智能选股</strong>：基于大数据与机器学习的量化分析。</li>
+      <li><strong>风险托底机制</strong>：亏损一比一赔付，资金更安心。</li>
+      <li><strong>稳定收益</strong>：测试平均回报率达 328.7%，远超传统投资。</li>
+      <li><strong>全球化布局</strong>：覆盖美洲、欧洲、亚洲 12 国投资者。</li>
+    </ul>
 
-<section class="section">
-  <div class="wrap">
-    <div class="sub">Features</div>
-    <h1 class="headline-underline" data-reveal>核心功能模块</h1>
-    <p class="lead" data-reveal="fade">从“线索获取 → 对话引导 → 预约成交 → 留存复购”，提供全链路可复用能力。</p>
-    <div class="grid" data-reveal="up">
-      <div class="card card-raise"><h3>对话机器人</h3><p class="lead">官网、WhatsApp、公众号、私域一体化接入。</p></div>
-      <div class="card card-raise"><h3>知识库</h3><p class="lead">结构化你的 FAQ / 文档 / SOP，持续学习进化。</p></div>
-      <div class="card card-raise"><h3>转化组件</h3><p class="lead">CTA 话术、表单、预约流程、线索打分。</p></div>
-      <div class="card card-raise"><h3>运营面板</h3><p class="lead">实时监控、A/B 实验、归因分析与报表。</p></div>
-      <div class="card card-raise"><h3>权限与合规</h3><p class="lead">最小权限、日志审计、数据脱敏与合规守则。</p></div>
-      <div class="card card-raise"><h3>生态集成</h3><p class="lead">CRM/工单/支付/短信邮件，常见工具全支持。</p></div>
-    </div>
-  </div>
-</section>
+    <h2>为什么选择 AFE AI 3.0？</h2>
+    <p>
+      传统投资往往受限于信息不对称与人为情绪影响，
+      而 <strong>AFE AI 3.0</strong> 通过 AI 算法，让普通人也能享受到
+      专业机构级别的投资策略。
+    </p>
+    <p>
+      这不仅是一个投资工具，更是 <strong>走向财务自由</strong> 的智能助手。
+    </p>
+  </main>
 
-<section class="section">
-  <div class="wrap">
-    <div class="sub">Cases</div>
-    <h1 class="headline-underline" data-reveal>客户成功故事</h1>
-    <p class="lead" data-reveal="fade">真实的业务指标提升，是我们最看重的交付结果。</p>
-
-    <div class="grid" data-reveal="up">
-      <div class="card card-raise">
-        <div class="badge">教育</div>
-        <h3>线索转化率 +48%</h3>
-        <p class="lead">AI 顾问替代 70% 重复咨询，首响缩短至 12 秒。</p>
-      </div>
-      <div class="card card-raise">
-        <div class="badge">电商</div>
-        <h3>客服效率 +2.3x</h3>
-        <p class="lead">知识库驱动的自动回复 + 智能推荐，提升客单价。</p>
-      </div>
-      <div class="card card-raise">
-        <div class="badge">B2B 服务</div>
-        <h3>预约率 +35%</h3>
-        <p class="lead">对话式表单与日历集成，低成本获取高质量线索。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="sub">Pricing</div>
-    <h1 class="headline-underline" data-reveal>透明、可迭代的方案</h1>
-    <p class="lead" data-reveal="fade">按你的阶段与目标升级，用结果说话。</p>
-
-    <div class="grid" data-reveal="up">
-      <div class="card card-raise"><h3>基础版</h3><p class="lead">品牌展示/个人官网</p><div class="price">¥4,999 起</div><a class="btn" href="contact.html">咨询</a></div>
-      <div class="card card-raise"><h3>增长版</h3><p class="lead">博客/多语言/表单/动效</p><div class="price">¥9,999 起</div><a class="btn" href="contact.html">咨询</a></div>
-      <div class="card card-raise"><h3>高级版</h3><p class="lead">接入 CMS / CRM / 预约 / 支付</p><div class="price">定制</div><a class="btn" href="contact.html">咨询</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="sub">Blog</div>
-    <h1 class="headline-underline" data-reveal>洞见 / 文章</h1>
-    <p class="lead" data-reveal="fade">把经验沉淀为可复用的方法论与清单。</p>
-    <div class="grid" data-reveal="up">
-      <a class="card card-raise" href="#" target="_blank">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" alt=""></div>
-        <div class="post-body"><h3 class="post-title">客服自动化的三把钥匙</h3><p class="lead">速度、温度、准确性如何兼得。</p></div>
-      </a>
-      <a class="card card-raise" href="#" target="_blank">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0f2?q=80&w=1200&auto=format&fit=crop" alt=""></div>
-        <div class="post-body"><h3 class="post-title">知识库的结构化实践</h3><p class="lead">教你搭出会自进化的知识中台。</p></div>
-      </a>
-      <a class="card card-raise" href="#" target="_blank">
-        <div class="post-thumb"><img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop" alt=""></div>
-        <div class="post-body"><h3 class="post-title">对话式转化的 9 个细节</h3><p class="lead">按钮、表单、时机与话术的组合拳。</p></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="sub">Contact</div>
-    <h1 class="headline-underline" data-reveal>与我们取得联系</h1>
-    <p class="lead" data-reveal="fade">留下你的需求，我们 2 小时内响应。</p>
-
-    <div class="grid">
-      <form class="card card-raise" style="display:grid;gap:10px" data-reveal="up">
-        <input placeholder="你的名字" style="padding:12px;border-radius:10px;border:1px solid var(--stroke)">
-        <input placeholder="邮箱/微信" style="padding:12px;border-radius:10px;border:1px solid var(--stroke)">
-        <textarea placeholder="简单描述需求" rows="4" style="padding:12px;border-radius:10px;border:1px solid var(--stroke)"></textarea>
-        <button class="btn" type="submit">提交</button>
-      </form>
-
-      <div class="card card-raise" data-reveal="scale" style="text-align:center">
-        <h3>扫码添加 WhatsApp</h3>
-        <div class="float-wrap" style="margin:10px auto 14px">
-          <div class="gradient-ring"><div class="inner">
-            <img class="qr-img" src="images/photo_2025-09-24_18-15-53.jpg" alt="WhatsApp 二维码">
-          </div></div>
-        </div>
-        <p class="lead" style="margin:8px 0 12px">号码：+52 1 81 3568 0896</p>
-        <a class="btn" href="https://wa.me/5218135680896" target="_blank">📲 直接打开 WhatsApp</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>© 2025 大胆专属 · <a href="https://wa.me/5218135680896" class="btn" target="_blank" style="margin-left:8px;text-decoration:none">📲 WhatsApp</a></footer>
-<script>
-const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');if(e.target.classList.contains('headline-underline'))e.target.classList.add('show-underline');io.unobserve(e.target)}})},{threshold:.15});
-document.querySelectorAll('[data-reveal],.headline-underline').forEach(el=>io.observe(el));
-</script>
-</body></html>
-
+  <footer>
+    <p>© 2025 AFE US | 个人网站: https://lufei234565-svg.github.io/my-website/</p>
+  </footer>
+</body>
+</html>
