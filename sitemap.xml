@@ -9,7 +9,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- 关于 / Descubrir -->
+  <!-- 内页 -->
   <url>
     <loc>https://lufei234565-svg.github.io/descubrir.html</loc>
     <lastmod>2025-09-26</lastmod>
@@ -17,7 +17,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- 计划 / Plan Evolución -->
   <url>
     <loc>https://lufei234565-svg.github.io/plan-evolucion.html</loc>
     <lastmod>2025-09-26</lastmod>
@@ -25,7 +24,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- 志愿者 / Voluntariado -->
   <url>
     <loc>https://lufei234565-svg.github.io/voluntariado.html</loc>
     <lastmod>2025-09-26</lastmod>
@@ -33,7 +31,6 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- 新闻 / Noticias -->
   <url>
     <loc>https://lufei234565-svg.github.io/noticias.html</loc>
     <lastmod>2025-09-26</lastmod>
@@ -41,7 +38,6 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- 联系 / Contacto -->
   <url>
     <loc>https://lufei234565-svg.github.io/contacto.html</loc>
     <lastmod>2025-09-26</lastmod>
