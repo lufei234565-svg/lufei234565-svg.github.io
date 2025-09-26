@@ -3,149 +3,258 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AFE AI 3.0 — Plataforma educativa y de procesos | Sitio oficial</title>
-  <meta name="description" content="AFE AI 3.0 en México: educación financiera, herramientas de proceso y gestión de riesgo. Contenidos informativos; no constituyen asesoría de inversión." />
+  <title>AFE AI 3.0 — Educación financiera, procesos y gestión de riesgo</title>
+  <meta name="description" content="AFE AI 3.0 en México: educación financiera, procesos disciplinados y gestión de riesgo. Plataforma con enfoque tecnológico para aprender a decidir con mayor información." />
   <link rel="canonical" href="https://lufei234565-svg.github.io/" />
   <meta name="robots" content="index,follow" />
 
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="AFE AI 3.0 México" />
+  <meta property="og:title" content="AFE AI 3.0 — Inteligencia financiera para todos" />
+  <meta property="og:description" content="Aprende un marco disciplinado de inversión con procesos claros y gestión de riesgo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lufei234565-svg.github.io/" />
+
+  <!-- 品牌字体（可保留系统字体以提速） -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
-    :root{--brand:#0a3d62; --b2:#145a8d; --muted:#667085; --bg:#f6f8fb}
-    body{font-family:system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;margin:0;color:#222;line-height:1.7}
-    header{background:var(--brand);color:#fff;padding:20px}
-    header .nav{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
-    header a{color:#fff;text-decoration:none;opacity:.95}
-    main{max-width:1080px;margin:0 auto;padding:24px 16px}
-    h1,h2{color:var(--brand)}
-    .hero{display:grid;gap:20px;grid-template-columns:1fr;align-items:center;background:#f6f8fb;border-radius:14px;padding:20px}
-    @media(min-width:860px){.hero{grid-template-columns:1.2fr .8fr}}
-    .btn{display:inline-block;background:var(--brand);color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
-    .grid{display:grid;gap:16px}
-    @media(min-width:860px){.grid{grid-template-columns:repeat(3,1fr)}}
-    .card{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px}
-    footer{background:#f2f2f2;padding:16px;text-align:center;font-size:14px}
-
-    /* ==== 动态邀请码样式 ==== */
-    .invite-box{
-      font-size:1.6rem;
-      font-weight:700;
-      background:#f6f8fb;
-      border:2px dashed #145a8d;
-      padding:14px 24px;
-      border-radius:10px;
-      text-align:center;
-      animation:pulse 2.5s infinite;
+    :root{
+      --brand:#0a2540;       /* 深蓝：信任 */
+      --brand-2:#145ea8;     /* 科技蓝 */
+      --accent:#00c2ff;      /* 亮蓝：科技感 */
+      --gold:#f5b400;        /* 金色：财富感 */
+      --text:#0f172a;
+      --muted:#667085;
+      --bg:#0b1220;          /* 深色背景 */
+      --card:#0f1930;        /* 卡片底色 */
+      --border:#1b2a44;
+      --ring:rgba(0,194,255,.24);
     }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      color:#e6edf6;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,"Noto Sans",sans-serif;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #0f2b4d 0%, transparent 60%),
+        radial-gradient(900px 500px at 110% -20%, #0b3a66 0%, transparent 60%),
+        linear-gradient(180deg, #0a1423, #0a0f1a 60%, #070b14);
+      min-height:100%;
+    }
+
+    /* 顶部导航 */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(160%) blur(10px);
+      background:linear-gradient(180deg, rgba(10,21,37,.88), rgba(10,21,37,.55));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      max-width:1200px; margin:auto; padding:14px 18px;
+      display:flex; align-items:center; gap:18px;
+    }
+    .brand{font-family:Montserrat,Inter; font-weight:700; letter-spacing:.5px}
+    .brand a{color:#fff; text-decoration:none; font-size:18px}
+    .nav-spacer{flex:1}
+    .nav a{color:#d8e0ea; text-decoration:none; font-weight:600; margin:0 8px}
+    .nav a:hover{color:#fff}
+    .cta{background:linear-gradient(135deg, var(--accent), #4dc8ff);
+      color:#001427; padding:10px 14px; border-radius:12px; text-decoration:none; font-weight:800}
+
+    /* 头图 */
+    .hero{
+      max-width:1200px; margin:38px auto 10px; padding:18px;
+      display:grid; gap:22px; grid-template-columns:1.1fr .9fr; align-items:center;
+    }
+    @media (max-width: 980px){ .hero{grid-template-columns:1fr} }
+    .hero h1{
+      font-family:Montserrat,Inter; font-size:44px; line-height:1.14; margin:8px 0 12px;
+      background:linear-gradient(90deg,#ffffff,#bfe9ff,#ffffff);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero p{color:#c8d2de; font-size:17px}
+    .hero-cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
+    .btn{
+      background:#112949; border:1px solid var(--border);
+      color:#e6edf6; padding:12px 16px; border-radius:12px; text-decoration:none; font-weight:700
+    }
+    .btn:hover{border-color:#2b4e7a}
+    .btn-primary{background:linear-gradient(135deg, #00c2ff, #4dc8ff); color:#031121}
+    .btn-primary:hover{filter:brightness(1.05)}
+
+    /* 科技背景图形 */
+    .art{
+      height:340px; border-radius:18px; position:relative; overflow:hidden;
+      border:1px solid var(--border); background:radial-gradient(90% 60% at 60% 40%,#08223d,transparent 70%);
+      box-shadow:0 30px 100px rgba(0,0,0,.4) inset;
+    }
+    .orb{position:absolute; border-radius:50%; filter:blur(16px); opacity:.8}
+    .orb1{width:180px;height:180px; background:#004cff3b; top:40px; left:40px; animation:float 9s ease-in-out infinite}
+    .orb2{width:260px;height:260px; background:#00c2ff33; bottom:-40px; right:-10px; animation:float 12s ease-in-out infinite reverse}
+    .grid-lines::before{
+      content:""; position:absolute; inset:0;
+      background-image:
+        linear-gradient(transparent 95%, rgba(0,194,255,.15) 96%),
+        linear-gradient(90deg, transparent 95%, rgba(0,194,255,.12) 96%);
+      background-size: 40px 40px, 40px 40px;
+      opacity:.35;
+    }
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+    /* 核心优势 */
+    .section{max-width:1200px; margin:24px auto; padding:0 18px}
+    .kpis{display:grid; gap:16px; grid-template-columns:repeat(4,1fr)}
+    @media (max-width: 980px){ .kpis{grid-template-columns:1fr 1fr} }
+    .card{
+      background:rgba(17,27,46,.6); border:1px solid var(--border);
+      border-radius:16px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.25);
+      transition:transform .25s ease, box-shadow .25s ease; height:100%;
+    }
+    .card:hover{transform:translateY(-4px); box-shadow:0 20px 40px rgba(0,0,0,.35)}
+    .card h3{margin:6px 0 6px; font-size:18px}
+    .card p{color:#c8d2de; margin:0}
+
+    /* 开户邀请卡片 */
+    .invite{
+      background:linear-gradient(180deg, rgba(0,194,255,.08), rgba(0,0,0,.0));
+      border:1px solid var(--border); border-radius:18px; padding:22px;
+      max-width:940px; margin:28px auto; position:relative; overflow:hidden;
+    }
+    .invite::after{
+      content:""; position:absolute; inset:-2px; border-radius:20px;
+      box-shadow:0 0 80px var(--ring); pointer-events:none;
+    }
+    .invite-title{font-family:Montserrat,Inter; font-size:24px; margin:0 0 6px}
+    .invite-sub{color:#c9d4df; margin:0 0 14px}
     .invite-code{
-      background:linear-gradient(90deg,#0a3d62,#145a8d,#0a3d62);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      animation:shine 3s linear infinite;
+      font-family:Montserrat,Inter; font-weight:800; font-size:28px; letter-spacing:2px;
+      padding:14px 16px; border-radius:14px; display:inline-block;
+      background:linear-gradient(90deg,#fff,#bfe9ff,#fff);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      border:2px dashed #2c4e7b; box-shadow:0 12px 40px rgba(0,0,0,.35) inset;
+      animation:pulse 2.6s infinite;
     }
+    @keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.15)}}
+    .invite-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
+    .chip{font-size:13px; color:#cbd6e2}
 
-    @keyframes pulse{
-      0%,100%{box-shadow:0 0 0 rgba(20,90,141,0.3)}
-      50%{box-shadow:0 0 12px rgba(20,90,141,0.45)}
-    }
-    @keyframes shine{
-      0%{background-position:0% 50%}
-      100%{background-position:200% 50%}
-    }
-
-    .action-btn{
-      background:#0a3d62;color:#fff;font-weight:600;
-      padding:12px 20px;border-radius:10px;text-decoration:none;
-      display:inline-block;transition:.25s;
-    }
-    .action-btn:hover{background:#145a8d}
-    .copy-btn{
-      background:#e6eef6;color:#0b3a5a;border:0;border-radius:8px;
-      padding:10px 16px;cursor:pointer;font-weight:600;
-    }
+    /* 页脚 */
+    footer{border-top:1px solid var(--border); margin-top:40px}
+    .foot{max-width:1200px; margin:auto; padding:18px; color:#9fb0c5; font-size:14px}
+    .foot a{color:#cde6ff; text-decoration:none}
+    .foot a:hover{text-decoration:underline}
   </style>
 </head>
+
 <body>
+  <!-- 顶部导航 -->
   <header>
-    <nav class="nav">
-      <a href="./">Inicio</a>
-      <a href="descubrir.html">Quiénes Somos</a>
-      <a href="plan-plan-evolucion.html">Plan de Evolución</a>
-      <a href="voluntariado.html">Solicitud de Voluntariado</a>
-      <a href="noticias.html">Noticias & Novedades</a>
-      <a href="contacto.html">Contacto</a>
-    </nav>
-    <h1>AFE AI 3.0 · México</h1>
-    <p>Educación financiera + procesos disciplinados + gestión de riesgo. Información educativa; no es asesoría.</p>
+    <div class="nav">
+      <div class="brand"><a href="./">AFE&nbsp;AI&nbsp;3.0</a></div>
+      <div class="nav-spacer"></div>
+      <nav>
+        <a href="./">Inicio</a>
+        <a href="descubrir.html">Quiénes Somos</a>
+        <a href="plan-evolucion.html">Plan de Evolución</a>
+        <a href="voluntariado.html">Voluntariado</a>
+        <a href="noticias.html">Noticias</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <a class="cta" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener">Abrir cuenta</a>
+    </div>
   </header>
 
-  <main>
-    <!-- Hero breve -->
-    <section class="hero">
-      <div>
-        <h2>Aprende y practica con un marco claro</h2>
-        <p>AFE AI 3.0 ofrece materiales de aprendizaje, plantillas de proceso y hábitos de gestión de riesgo para ayudarte a decidir con mayor información.</p>
-        <p><a class="btn" href="descubrir.html">Conoce más</a></p>
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>Educación financiera + procesos + gestión de riesgo</h1>
+      <p>
+        AFE AI 3.0 ofrece un marco claro para aprender y practicar: materiales educativos,
+        plantillas de proceso y hábitos de gestión de riesgo, con una presentación moderna y tecnológica.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener">Comenzar ahora</a>
+        <a class="btn" href="descubrir.html">Conoce más</a>
       </div>
-    </section>
+      <div class="chip">* Contenido educativo; no constituye asesoría de inversión.</div>
+    </div>
 
-    <!-- ===== 邀请码 + 开户链接区块 ===== -->
-    <section id="afiliacion" style="max-width:800px;margin:28px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.05)">
-      <h2>Invitación de apertura de cuenta</h2>
-      <p style="color:#344054">Usa el siguiente código de invitación y el enlace oficial para abrir tu cuenta en AFE AI 3.0:</p>
+    <div class="art grid-lines">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+    </div>
+  </section>
 
-      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;margin:20px 0">
-        <!-- 动态邀请码 -->
-        <div class="invite-box">
-          Código de invitación: 9CLY79
-        </div>
+  <!-- 核心优势 -->
+  <section class="section">
+    <div class="kpis">
+      <article class="card">
+        <h3>🧠 IA y datos</h3>
+        <p>Enfoque metodológico apoyado en datos y aprendizaje automático para seleccionar señales con disciplina.</p>
+      </article>
+      <article class="card">
+        <h3>🛡 Gestión de riesgo</h3>
+        <p>Hábitos, límites y procesos claros para evitar decisiones impulsivas y mejorar consistencia.</p>
+      </article>
+      <article class="card">
+        <h3>💹 Disciplina de procesos</h3>
+        <p>Plantillas, listas de verificación y un flujo práctico para ejecutar siempre de forma ordenada.</p>
+      </article>
+      <article class="card">
+        <h3>🌍 Comunidad</h3>
+        <p>Aprendizaje continuo con materiales en evolución y actividades en múltiples regiones.</p>
+      </article>
+    </div>
+  </section>
 
-        <!-- 开户链接按钮 -->
-        <a id="open-link" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener" class="action-btn">
-          🚀 Abrir cuenta ahora
-        </a>
+  <!-- 开户邀请 -->
+  <section class="invite">
+    <h2 class="invite-title">Invitación de apertura de cuenta</h2>
+    <p class="invite-sub">Usa el siguiente código y el enlace oficial para registrar tu cuenta en AFE AI 3.0.</p>
 
-        <!-- 复制按钮 -->
-        <button id="copy-invite" class="copy-btn">📋 Copiar código y enlace</button>
-      </div>
+    <div>
+      <span class="invite-code" id="code">INVITE_CODE_AQUI</span>
+    </div>
 
-      <p style="font-size:13px;color:#667085;text-align:center">Si el botón no funciona, copia el código y abre manualmente el enlace en tu navegador.</p>
-    </section>
+    <div class="invite-actions">
+      <a id="openLink" class="btn btn-primary" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener">🚀 Abrir cuenta ahora</a>
+      <button id="copyAll" class="btn" type="button">📋 Copiar código y enlace</button>
+    </div>
+    <div class="chip">Si el botón no funciona, copia el código y pega el enlace en tu navegador.</div>
+  </section>
 
-    <script>
-      const code = document.getElementById("invite-code").textContent;
-      https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79// ← 改成你的开户链接
-      document.getElementById("open-link").href = url;
-
-      document.getElementById("copy-invite").addEventListener("click", async ()=>{
-        try{
-          await navigator.clipboard.writeText(`Código: ${code} | Enlace: ${url}`);
-          alert("✅ Código y enlace copiados al portapapeles");
-        }catch(e){
-          alert("No se pudo copiar. Copia manualmente: " + url);
-        }
-      });
-    </script>
-    <!-- ===== /邀请码 + 开户链接区块 ===== -->
-
-    <!-- Principios rápidos -->
-    <section>
-      <h2>Principios</h2>
-      <div class="grid">
-        <div class="card"><h3>Transparencia de metodología</h3><p>Priorizar comprensión y trazabilidad del proceso.</p></div>
-        <div class="card"><h3>Baja barrera de acceso</h3><p>Materiales claros, ejemplos simples y práctica gradual.</p></div>
-        <div class="card"><h3>Evolución inclusiva</h3><p>Aprendizaje continuo y mejora basada en evidencias.</p></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Aviso importante</h2>
-      <p>Los contenidos son informativos y educativos. No representan asesoría, recomendación ni promesa de rendimiento. Toda inversión conlleva riesgos.</p>
-    </section>
-  </main>
-
+  <!-- 页脚 -->
   <footer>
-    <p>© 2025 AFE US · Información educativa. <a href="contacto.html">Contacto</a></p>
+    <div class="foot">
+      © 2025 AFE US · Información educativa. 
+      <a href="contacto.html">Contacto</a> · 
+      <a href="noticias.html">Noticias</a>
+    </div>
   </footer>
+
+  <script>
+    // ===== 配置：请替换为你的真实值 =====
+    const INVITE_CODE = "INVITE_CODE_AQUI";               // ← 替换为你的邀请码
+    const OPEN_URL = "https://tu-enlace-de-apertura.com/"; // ← 替换为你的开户链接
+
+    // 应用到页面
+    document.getElementById("code").textContent = INVITE_CODE;
+    document.getElementById("openLink").href = OPEN_URL;
+
+    // 复制按钮
+    document.getElementById("copyAll").addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(`Código: ${INVITE_CODE} | Enlace: ${OPEN_URL}`);
+        const btn = document.getElementById("copyAll");
+        const old = btn.textContent;
+        btn.textContent = "✅ ¡Copiado!";
+        setTimeout(()=> btn.textContent = old, 1600);
+      }catch(e){
+        alert("No se pudo copiar. Copia manualmente: " + OPEN_URL);
+      }
+    });
+  </script>
 </body>
 </html>
-
-
