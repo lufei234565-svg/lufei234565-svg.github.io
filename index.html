@@ -1,54 +1,149 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AFE AI 3.0 - Plataforma Oficial</title>
-  <meta name="description" content="AFE AI 3.0 es una plataforma de inversión inteligente que combina IA con control de riesgos para ofrecer ganancias seguras, estables y replicables.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AFE AI 3.0 — Plataforma educativa y de procesos | Sitio oficial</title>
+  <meta name="description" content="AFE AI 3.0 en México: educación financiera, herramientas de proceso y gestión de riesgo. Contenidos informativos; no constituyen asesoría de inversión." />
+  <link rel="canonical" href="https://lufei234565-svg.github.io/" />
+  <meta name="robots" content="index,follow" />
+
   <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; }
-    header { background:#003366; color:white; padding:15px; text-align:center; }
-    nav { background:#0055a5; padding:10px; text-align:center; }
-    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
-    nav a:hover { text-decoration:underline; }
-    main { padding:40px; max-width:900px; margin:auto; }
-    footer { background:#f4f4f4; text-align:center; padding:15px; font-size:14px; color:#555; margin-top:30px; }
+    :root{--brand:#0a3d62; --b2:#145a8d; --muted:#667085; --bg:#f6f8fb}
+    body{font-family:system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;margin:0;color:#222;line-height:1.7}
+    header{background:var(--brand);color:#fff;padding:20px}
+    header .nav{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    header a{color:#fff;text-decoration:none;opacity:.95}
+    main{max-width:1080px;margin:0 auto;padding:24px 16px}
+    h1,h2{color:var(--brand)}
+    .hero{display:grid;gap:20px;grid-template-columns:1fr;align-items:center;background:#f6f8fb;border-radius:14px;padding:20px}
+    @media(min-width:860px){.hero{grid-template-columns:1.2fr .8fr}}
+    .btn{display:inline-block;background:var(--brand);color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
+    .grid{display:grid;gap:16px}
+    @media(min-width:860px){.grid{grid-template-columns:repeat(3,1fr)}}
+    .card{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px}
+    footer{background:#f2f2f2;padding:16px;text-align:center;font-size:14px}
+
+    /* ==== 动态邀请码样式 ==== */
+    .invite-box{
+      font-size:1.6rem;
+      font-weight:700;
+      background:#f6f8fb;
+      border:2px dashed #145a8d;
+      padding:14px 24px;
+      border-radius:10px;
+      text-align:center;
+      animation:pulse 2.5s infinite;
+    }
+    .invite-code{
+      background:linear-gradient(90deg,#0a3d62,#145a8d,#0a3d62);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      animation:shine 3s linear infinite;
+    }
+
+    @keyframes pulse{
+      0%,100%{box-shadow:0 0 0 rgba(20,90,141,0.3)}
+      50%{box-shadow:0 0 12px rgba(20,90,141,0.45)}
+    }
+    @keyframes shine{
+      0%{background-position:0% 50%}
+      100%{background-position:200% 50%}
+    }
+
+    .action-btn{
+      background:#0a3d62;color:#fff;font-weight:600;
+      padding:12px 20px;border-radius:10px;text-decoration:none;
+      display:inline-block;transition:.25s;
+    }
+    .action-btn:hover{background:#145a8d}
+    .copy-btn{
+      background:#e6eef6;color:#0b3a5a;border:0;border-radius:8px;
+      padding:10px 16px;cursor:pointer;font-weight:600;
+    }
   </style>
 </head>
 <body>
+  <header>
+    <nav class="nav">
+      <a href="./">Inicio</a>
+      <a href="descubrir.html">Quiénes Somos</a>
+      <a href="plan-evolucion.html">Plan de Evolución</a>
+      <a href="voluntariado.html">Solicitud de Voluntariado</a>
+      <a href="noticias.html">Noticias & Novedades</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <h1>AFE AI 3.0 · México</h1>
+    <p>Educación financiera + procesos disciplinados + gestión de riesgo. Información educativa; no es asesoría.</p>
+  </header>
 
-<header>
-  <h1>Bienvenido a AFE AI 3.0</h1>
-  <p>Inversión Inteligente · Ganancias Estables · Seguridad Garantizada</p>
-</header>
+  <main>
+    <!-- Hero breve -->
+    <section class="hero">
+      <div>
+        <h2>Aprende y practica con un marco claro</h2>
+        <p>AFE AI 3.0 ofrece materiales de aprendizaje, plantillas de proceso y hábitos de gestión de riesgo para ayudarte a decidir con mayor información.</p>
+        <p><a class="btn" href="descubrir.html">Conoce más</a></p>
+      </div>
+    </section>
 
-<nav>
-  <a href="index.html">Inicio</a>
-  <a href="descubrir.html">¿Qué es AFE?</a>
-  <a href="plan-evolucion.html">Plan de Evolución</a>
-  <a href="voluntariado.html">Voluntariado</a>
-  <a href="noticias.html">Noticias</a>
-  <a href="contacto.html">Contacto</a>
-</nav>
+    <!-- ===== 邀请码 + 开户链接区块 ===== -->
+    <section id="afiliacion" style="max-width:800px;margin:28px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.05)">
+      <h2>Invitación de apertura de cuenta</h2>
+      <p style="color:#344054">Usa el siguiente código de invitación y el enlace oficial para abrir tu cuenta en AFE AI 3.0:</p>
 
-<main>
-  <h2>¿Qué es AFE AI 3.0?</h2>
-  <p>
-    AFE AI 3.0 es una plataforma de inversión inteligente creada por <b>AFE US</b>, 
-    que combina algoritmos de selección de acciones basados en IA con un sistema global de control de riesgos.
-  </p>
-  <ul>
-    <li><b>IA Inteligente:</b> Selección de acciones con big data y aprendizaje automático.</li>
-    <li><b>Seguridad:</b> Mecanismo de compensación 1:1 en pérdidas.</li>
-    <li><b>Rentabilidad:</b> Retorno promedio probado del 328.7%.</li>
-    <li><b>Global:</b> Inversores en América, Europa y Asia.</li>
-  </ul>
-</main>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;margin:20px 0">
+        <!-- 动态邀请码 -->
+        <div class="invite-box">
+          Código de invitación: 9CLY79
+        </div>
 
-<footer>
-  © 2025 AFE US | Sitio oficial: 
-  <a href="https://lufei234565-svg.github.io/">https://lufei234565-svg.github.io/</a>
-</footer>
+        <!-- 开户链接按钮 -->
+        <a id="open-link" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener" class="action-btn">
+          🚀 Abrir cuenta ahora
+        </a>
 
+        <!-- 复制按钮 -->
+        <button id="copy-invite" class="copy-btn">📋 Copiar código y enlace</button>
+      </div>
+
+      <p style="font-size:13px;color:#667085;text-align:center">Si el botón no funciona, copia el código y abre manualmente el enlace en tu navegador.</p>
+    </section>
+
+    <script>
+      const code = document.getElementById("invite-code").textContent;
+      https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79// ← 改成你的开户链接
+      document.getElementById("open-link").href = url;
+
+      document.getElementById("copy-invite").addEventListener("click", async ()=>{
+        try{
+          await navigator.clipboard.writeText(`Código: ${code} | Enlace: ${url}`);
+          alert("✅ Código y enlace copiados al portapapeles");
+        }catch(e){
+          alert("No se pudo copiar. Copia manualmente: " + url);
+        }
+      });
+    </script>
+    <!-- ===== /邀请码 + 开户链接区块 ===== -->
+
+    <!-- Principios rápidos -->
+    <section>
+      <h2>Principios</h2>
+      <div class="grid">
+        <div class="card"><h3>Transparencia de metodología</h3><p>Priorizar comprensión y trazabilidad del proceso.</p></div>
+        <div class="card"><h3>Baja barrera de acceso</h3><p>Materiales claros, ejemplos simples y práctica gradual.</p></div>
+        <div class="card"><h3>Evolución inclusiva</h3><p>Aprendizaje continuo y mejora basada en evidencias.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Aviso importante</h2>
+      <p>Los contenidos son informativos y educativos. No representan asesoría, recomendación ni promesa de rendimiento. Toda inversión conlleva riesgos.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 AFE US · Información educativa. <a href="contacto.html">Contacto</a></p>
+  </footer>
 </body>
 </html>
