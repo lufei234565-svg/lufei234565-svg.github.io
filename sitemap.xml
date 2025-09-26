@@ -16,5 +16,35 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+  <loc>https://lufei234565-svg.github.io/my-website/descubrir.html</loc>
+  <lastmod>2025-09-26</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://lufei234565-svg.github.io/my-website/plan-evolucion.html</loc>
+  <lastmod>2025-09-26</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://lufei234565-svg.github.io/my-website/voluntariado.html</loc>
+  <lastmod>2025-09-26</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+<url>
+  <loc>https://lufei234565-svg.github.io/my-website/noticias.html</loc>
+  <lastmod>2025-09-26</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.6</priority>
+</url>
+<url>
+  <loc>https://lufei234565-svg.github.io/my-website/contacto.html</loc>
+  <lastmod>2025-09-26</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.5</priority>
+</url>
   -->
 </urlset>
