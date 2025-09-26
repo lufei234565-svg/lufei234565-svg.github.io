@@ -15,23 +15,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lufei234565-svg.github.io/" />
 
-  <!-- 品牌字体（可保留系统字体以提速） -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --brand:#0a2540;       /* 深蓝：信任 */
-      --brand-2:#145ea8;     /* 科技蓝 */
-      --accent:#00c2ff;      /* 亮蓝：科技感 */
-      --gold:#f5b400;        /* 金色：财富感 */
-      --text:#0f172a;
-      --muted:#667085;
-      --bg:#0b1220;          /* 深色背景 */
-      --card:#0f1930;        /* 卡片底色 */
-      --border:#1b2a44;
-      --ring:rgba(0,194,255,.24);
+      --brand:#0a2540; --brand-2:#145ea8; --accent:#00c2ff; --gold:#f5b400;
+      --text:#0f172a; --muted:#667085; --bg:#0b1220; --card:#0f1930;
+      --border:#1b2a44; --ring:rgba(0,194,255,.24);
     }
-
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
@@ -51,22 +42,19 @@
       background:linear-gradient(180deg, rgba(10,21,37,.88), rgba(10,21,37,.55));
       border-bottom:1px solid var(--border);
     }
-    .nav{
-      max-width:1200px; margin:auto; padding:14px 18px;
-      display:flex; align-items:center; gap:18px;
-    }
+    .nav{ max-width:1200px; margin:auto; padding:14px 18px; display:flex; align-items:center; gap:18px; }
     .brand{font-family:Montserrat,Inter; font-weight:700; letter-spacing:.5px}
     .brand a{color:#fff; text-decoration:none; font-size:18px}
     .nav-spacer{flex:1}
     .nav a{color:#d8e0ea; text-decoration:none; font-weight:600; margin:0 8px}
     .nav a:hover{color:#fff}
-    .cta{background:linear-gradient(135deg, var(--accent), #4dc8ff);
-      color:#001427; padding:10px 14px; border-radius:12px; text-decoration:none; font-weight:800}
+    .cta{background:linear-gradient(135deg, var(--accent), #4dc8ff); color:#001427; padding:10px 14px; border-radius:12px; text-decoration:none; font-weight:800}
 
     /* 头图 */
     .hero{
       max-width:1200px; margin:38px auto 10px; padding:18px;
       display:grid; gap:22px; grid-template-columns:1.1fr .9fr; align-items:center;
+      position:relative; /* 供按钮建立层级 */
     }
     @media (max-width: 980px){ .hero{grid-template-columns:1fr} }
     .hero h1{
@@ -76,6 +64,7 @@
     }
     .hero p{color:#c8d2de; font-size:17px}
     .hero-cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
+    .hero-cta .btn{ position:relative; z-index:10; pointer-events:auto; } /* 确保可点 */
     .btn{
       background:#112949; border:1px solid var(--border);
       color:#e6edf6; padding:12px 16px; border-radius:12px; text-decoration:none; font-weight:700
@@ -89,17 +78,17 @@
       height:340px; border-radius:18px; position:relative; overflow:hidden;
       border:1px solid var(--border); background:radial-gradient(90% 60% at 60% 40%,#08223d,transparent 70%);
       box-shadow:0 30px 100px rgba(0,0,0,.4) inset;
+      pointer-events:none; /* 不拦截点击 */
     }
-    .orb{position:absolute; border-radius:50%; filter:blur(16px); opacity:.8}
+    .orb{position:absolute; border-radius:50%; filter:blur(16px); opacity:.8; pointer-events:none}
     .orb1{width:180px;height:180px; background:#004cff3b; top:40px; left:40px; animation:float 9s ease-in-out infinite}
     .orb2{width:260px;height:260px; background:#00c2ff33; bottom:-40px; right:-10px; animation:float 12s ease-in-out infinite reverse}
     .grid-lines::before{
-      content:""; position:absolute; inset:0;
+      content:""; position:absolute; inset:0; pointer-events:none;
       background-image:
         linear-gradient(transparent 95%, rgba(0,194,255,.15) 96%),
         linear-gradient(90deg, transparent 95%, rgba(0,194,255,.12) 96%);
-      background-size: 40px 40px, 40px 40px;
-      opacity:.35;
+      background-size: 40px 40px, 40px 40px; opacity:.35;
     }
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 
@@ -122,10 +111,7 @@
       border:1px solid var(--border); border-radius:18px; padding:22px;
       max-width:940px; margin:28px auto; position:relative; overflow:hidden;
     }
-    .invite::after{
-      content:""; position:absolute; inset:-2px; border-radius:20px;
-      box-shadow:0 0 80px var(--ring); pointer-events:none;
-    }
+    .invite::after{ content:""; position:absolute; inset:-2px; border-radius:20px; box-shadow:0 0 80px var(--ring); pointer-events:none; }
     .invite-title{font-family:Montserrat,Inter; font-size:24px; margin:0 0 6px}
     .invite-sub{color:#c9d4df; margin:0 0 14px}
     .invite-code{
@@ -162,7 +148,8 @@
         <a href="noticias.html">Noticias</a>
         <a href="contacto.html">Contacto</a>
       </nav>
-      <a class="cta" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener">Abrir cuenta</a>
+      <!-- 顶部按钮也用真实链接 -->
+      <a class="cta" href="https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79" target="_blank" rel="noopener">Abrir cuenta</a>
     </div>
   </header>
 
@@ -175,7 +162,8 @@
         plantillas de proceso y hábitos de gestión de riesgo, con una presentación moderna y tecnológica.
       </p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener">Comenzar ahora</a>
+        <!-- 使用真实链接 -->
+        <a class="btn btn-primary" href="https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79" target="_blank" rel="noopener">Comenzar ahora</a>
         <a class="btn" href="descubrir.html">Conoce más</a>
       </div>
       <div class="chip">* Contenido educativo; no constituye asesoría de inversión.</div>
@@ -209,7 +197,7 @@
     </div>
   </section>
 
- <!-- 开户邀请 -->
+  <!-- 开户邀请 -->
   <section class="invite">
     <h2 class="invite-title">Invitación de apertura de cuenta</h2>
     <p class="invite-sub">Usa el siguiente código y el enlace oficial para registrar tu cuenta en AFE AI 3.0.</p>
@@ -219,26 +207,22 @@
     </div>
 
     <div class="invite-actions">
-      <!-- 🔗 点击跳转到你的开户链接 -->
       <a id="openLink" class="btn btn-primary" href="https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79" target="_blank" rel="noopener">
         🚀 Abrir cuenta ahora
       </a>
-
-      <!-- 📋 复制邀请码+链接 -->
       <button id="copyAll" class="btn" type="button">📋 Copiar código y enlace</button>
     </div>
     <div class="chip">Si el botón no funciona, copia el código y pega el enlace en tu navegador.</div>
   </section>
 
+  <!-- 仅保留这一段脚本（上方已删去占位脚本） -->
   <script>
-    const INVITE_CODE = "9CLY79"; // 你的邀请码
-    const OPEN_URL = "https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79"; // 你的开户链接
+    const INVITE_CODE = "9CLY79";
+    const OPEN_URL = "https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79";
 
-    // 应用到页面
     document.getElementById("code").textContent = INVITE_CODE;
     document.getElementById("openLink").href = OPEN_URL;
 
-    // 复制功能
     document.getElementById("copyAll").addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(`Código: ${INVITE_CODE} | Enlace: ${OPEN_URL}`);
@@ -255,34 +239,10 @@
   <!-- 页脚 -->
   <footer>
     <div class="foot">
-      © 2025 AFE US · Información educativa. 
-      <a href="contacto.html">Contacto</a> · 
+      © 2025 AFE US · Información educativa.
+      <a href="contacto.html">Contacto</a> ·
       <a href="noticias.html">Noticias</a>
     </div>
   </footer>
-
-  <script>
-    // ===== 配置：请替换为你的真实值 =====
-    const INVITE_CODE = "INVITE_CODE_AQUI";               // ← 替换为你的邀请码
-    const OPEN_URL = "https://tu-enlace-de-apertura.com/"; // ← 替换为你的开户链接
-
-    // 应用到页面
-    document.getElementById("code").textContent = INVITE_CODE;
-    document.getElementById("openLink").href = OPEN_URL;
-
-    // 复制按钮
-    document.getElementById("copyAll").addEventListener("click", async () => {
-      try{
-        await navigator.clipboard.writeText(`Código: ${INVITE_CODE} | Enlace: ${OPEN_URL}`);
-        const btn = document.getElementById("copyAll");
-        const old = btn.textContent;
-        btn.textContent = "✅ ¡Copiado!";
-        setTimeout(()=> btn.textContent = old, 1600);
-      }catch(e){
-        alert("No se pudo copiar. Copia manualmente: " + OPEN_URL);
-      }
-    });
-  </script>
 </body>
 </html>
-
