@@ -209,21 +209,48 @@
     </div>
   </section>
 
-  <!-- 开户邀请 -->
+ <!-- 开户邀请 -->
   <section class="invite">
     <h2 class="invite-title">Invitación de apertura de cuenta</h2>
     <p class="invite-sub">Usa el siguiente código y el enlace oficial para registrar tu cuenta en AFE AI 3.0.</p>
 
     <div>
-      <span class="invite-code" id="code">INVITE_CODE_AQUI</span>
+      <span class="invite-code" id="code">9CLY79</span>
     </div>
 
     <div class="invite-actions">
-      <a id="openLink" class="btn btn-primary" href="https://tu-enlace-de-apertura.com/" target="_blank" rel="noopener">🚀 Abrir cuenta ahora</a>
+      <!-- 🔗 点击跳转到你的开户链接 -->
+      <a id="openLink" class="btn btn-primary" href="https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79" target="_blank" rel="noopener">
+        🚀 Abrir cuenta ahora
+      </a>
+
+      <!-- 📋 复制邀请码+链接 -->
       <button id="copyAll" class="btn" type="button">📋 Copiar código y enlace</button>
     </div>
     <div class="chip">Si el botón no funciona, copia el código y pega el enlace en tu navegador.</div>
   </section>
+
+  <script>
+    const INVITE_CODE = "9CLY79"; // 你的邀请码
+    const OPEN_URL = "https://gp.buy-buy.cc/#/pages/account/register?inviteCode=9CLY79"; // 你的开户链接
+
+    // 应用到页面
+    document.getElementById("code").textContent = INVITE_CODE;
+    document.getElementById("openLink").href = OPEN_URL;
+
+    // 复制功能
+    document.getElementById("copyAll").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(`Código: ${INVITE_CODE} | Enlace: ${OPEN_URL}`);
+        const btn = document.getElementById("copyAll");
+        const old = btn.textContent;
+        btn.textContent = "✅ ¡Copiado!";
+        setTimeout(()=> btn.textContent = old, 1600);
+      } catch (e) {
+        alert("No se pudo copiar. Copia manualmente: " + OPEN_URL);
+      }
+    });
+  </script>
 
   <!-- 页脚 -->
   <footer>
@@ -258,3 +285,4 @@
   </script>
 </body>
 </html>
+
